@@ -82,6 +82,17 @@ jobs:
             cmake -T v141_xp -G "Visual Studio 16 2019" -A Win32 -B build
           fi
           cmake --build build --config ${{ matrix.config }}
+      - run: |
+          mkdir tmp
+          cp build/${{ matrix.config }}/VPinballX.exe tmp
+          cp build/${{ matrix.config }}/*.dll tmp
+          cp -r build/${{ matrix.config }}/scripts tmp
+          cp -r build/${{ matrix.config }}/tables tmp
+          cp -r build/${{ matrix.config }}/docs tmp
+      - uses: actions/upload-artifact@v3
+        with:
+          name: VPinballX-${{ needs.version.outputs.tag }}-${{ matrix.config }}-${{ matrix.platform }}
+          path: tmp
 
   build-gl:
     name: Build VPinballX_GL-${{ matrix.config }}-${{ matrix.platform }}
@@ -111,3 +122,15 @@ jobs:
             cmake -G "Visual Studio 17 2022" -A Win32 -B build
           fi
           cmake --build build --config ${{ matrix.config }}
+      - run: |
+          mkdir tmp
+          cp build/${{ matrix.config }}/VPinballX_GL.exe tmp
+          cp build/${{ matrix.config }}/*.dll tmp
+          cp -r build/${{ matrix.config }}/shader tmp
+          cp -r build/${{ matrix.config }}/scripts tmp
+          cp -r build/${{ matrix.config }}/tables tmp
+          cp -r build/${{ matrix.config }}/docs tmp
+      - uses: actions/upload-artifact@v3
+        with:
+          name: VPinballX_GL-${{ needs.version.outputs.tag }}-${{ matrix.config }}-${{ matrix.platform }}
+          path: tmp
