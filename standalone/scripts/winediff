@@ -1,0 +1,16 @@
+#!/bin/bash
+
+cd ../inc/wine
+
+for i in $(find .); do 
+  if [ ! -d "$i" ]; then
+     if [ -f "/Users/jmillard/wine/$i" ]; then
+	 echo "------------------------------------"
+	 echo ""
+	 echo "diff \"$i\" \"/Users/jmillard/wine/$i\""
+         echo ""
+	 diff "$i" "/Users/jmillard/wine/$i"
+     fi
+  fi
+done
+

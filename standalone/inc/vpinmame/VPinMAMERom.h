@@ -1,0 +1,53 @@
+#pragma once
+#if !defined(VPINMAMEROM_C_H__INCLUDED_)
+#define VPINMAMEROM_C_H__INCLUDED_
+
+#pragma GCC visibility push(hidden)
+
+#pragma push_macro("_WIN64")
+#pragma push_macro("DELETE")
+#pragma push_macro("CALLBACK")
+#undef _WIN64
+#undef DELETE
+#undef CALLBACK
+#include "libpinmame.h"
+#pragma pop_macro("CALLBACK")
+#pragma pop_macro("DELETE")
+#pragma pop_macro("_WIN64")
+
+#include "vpinmame_i.h"
+
+class VPinMAMERom :
+   public IDispatchImpl<IRom, &IID_IRom, &LIBID_VPinMAMELib>,
+   public CComObjectRoot,
+   public CComCoClass<VPinMAMERom, &CLSID_Rom>
+{
+public:
+   static name_disp_id_t m_nameIDMap[];
+   STDMETHOD(GetIDsOfNames)(REFIID /*riid*/, LPOLESTR* rgszNames, UINT cNames, LCID lcid,DISPID* rgDispId);
+   STDMETHOD(Invoke)(DISPID dispIdMember, REFIID /*riid*/, LCID lcid, WORD wFlags, DISPPARAMS* pDispParams, VARIANT* pVarResult, EXCEPINFO* pExcepInfo, UINT* puArgErr);
+   STDMETHOD(GetDocumentation)(INT index, BSTR *pBstrName, BSTR *pBstrDocString, DWORD *pdwHelpContext, BSTR *pBstrHelpFile);
+
+public:
+   VPinMAMERom();
+   ~VPinMAMERom();
+
+   BEGIN_COM_MAP(VPinMAMERom)
+      COM_INTERFACE_ENTRY(IRom)
+      COM_INTERFACE_ENTRY(IDispatch)
+   END_COM_MAP()
+
+   STDMETHOD(Audit)(/*[in]*/ VARIANT_BOOL fStrict);
+   STDMETHOD(get_StateDescription)(/*[out, retval]*/ BSTR *pVal);
+   STDMETHOD(get_State)(/*[out, retval]*/ long *pVal);
+   STDMETHOD(get_Name)(/*[out, retval]*/ BSTR *pVal);
+   STDMETHOD(get_Flags)(/*[out, retval]*/ long *pVal);
+   STDMETHOD(get_ExpChecksum)(/*[out, retval]*/ long *pVal);
+   STDMETHOD(get_Checksum)(/*[out, retval]*/ long *pVal);
+   STDMETHOD(get_ExpLength)(/*[out, retval]*/ long *pVal);
+   STDMETHOD(get_Length)(/*[out, retval]*/ long *pVal);
+};
+
+#pragma GCC visibility pop
+
+#endif // !defined(VPINMAMEROM_C_H__INCLUDED_)
