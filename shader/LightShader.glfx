@@ -20,7 +20,12 @@ layout(std140) uniform matrixBlock {
 ////VERTEX
 layout(location=0) in vec3 vPosition;
 layout(location=1) in vec2 tc;
+
+#ifndef SHADER_STANDALONE
 out vec3 tablePos_gs;
+#else
+out vec3 tablePos;
+#endif
 
 
 ////GEOMETRY
@@ -54,11 +59,28 @@ out vec4 color;
 ////vs_lightbulb_main
 void main()
 {
+#ifndef SHADER_STANDALONE
    gl_Position = vec4(vPosition, 1.0);
    if (disableVertexShader)
       tablePos_gs = float3(tc.x, tc.y, 0.0);
    else
       tablePos_gs = vPosition;
+#else
+   gl_Position = vec4(vPosition, 1.0);
+   if (disableVertexShader)
+      tablePos = float3(tc.x, tc.y, 0.0);
+   else
+      tablePos = vPosition;
+
+   if (disableVertexShader)
+   {
+   }
+   else
+   {
+      gl_Position = matWorldViewProj[0]*gl_Position;
+      gl_Position.z = max(gl_Position.z, 0.00001); // clamp lights to near clip plane to avoid them being partially clipped
+   }
+#endif
 }
 
 

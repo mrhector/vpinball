@@ -117,10 +117,14 @@ float3 DoPointLight(const float3 pos, const float3 N, const float3 V, const floa
        ambient += diffuse;
 
    const float3 result = Out * lightEmission[i].xyz * fAtten + ambient * cAmbient_LightRange.xyz;
+#ifndef SHADER_GLES30
    if (fDisableLighting_top_below.x != 0.0)
        return lerp(result,diffuse,fDisableLighting_top_below.x);
    else
        return result;
+#else
+   return (fDisableLighting_top_below.x != 0.0) ? lerp(result,diffuse,fDisableLighting_top_below.x) : result;
+#endif
 }
 
 // does /PI-corrected lookup/final color already

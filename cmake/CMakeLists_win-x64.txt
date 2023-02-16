@@ -549,7 +549,7 @@ target_include_directories(vpinball PUBLIC
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${CMAKE_CURRENT_BINARY_DIR}/$(IntDir)
    ${CMAKE_CURRENT_BINARY_DIR}/$(IntDir)/shader
-   inc
+   inc/rapidxml
    inc/win32xx/include
    dialogs
    media

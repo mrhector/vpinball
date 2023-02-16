@@ -5,9 +5,11 @@
 #include "backGlass.h"
 #include "RenderDevice.h"
 #include "Shader.h"
+#ifndef __STANDALONE__
 #include "captureExt.h"
 #ifdef ENABLE_VR
  #include <fstream>
+#endif
 #endif
 
 //#define WRITE_BACKGLASS_IMAGES
