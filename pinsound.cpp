@@ -149,6 +149,7 @@ HRESULT PinSound::ReInitialize()
 	   return S_OK;
    }
 
+#ifndef __STANDALONE__
    // else old wav code:
 
    PinDirectSound * const pds = GetPinDirectSound();
@@ -244,6 +245,7 @@ HRESULT PinSound::ReInitialize()
 
    if (SoundMode3D != SNDCFG_SND3D2CH)
       Get3DBuffer();
+#endif
 
    return S_OK;
 }
@@ -388,6 +390,7 @@ void PinDirectSound::InitDirectSound(const HWND hwnd, const bool IsBackglass)
          DSidx = 0; // The default primary sound device
    }
 
+#ifndef __STANDALONE__
    // Create IDirectSound using the selected sound device
    HRESULT hr;
    if (FAILED(hr = DirectSoundCreate((DSidx != 0) ? DSads[DSidx]->guid : nullptr, &m_pDS, nullptr)))
@@ -463,6 +466,7 @@ void PinDirectSound::InitDirectSound(const HWND hwnd, const bool IsBackglass)
 	   m_pDSListener->SetPosition(0.0f, 0.0f, 0.0f, DS3D_IMMEDIATE);
    }
    SAFE_PINSOUND_RELEASE(pDSBPrimary);
+#endif
 
    //return S_OK;
 }
@@ -476,6 +480,7 @@ PinSound *AudioMusicPlayer::LoadFile(const string& strFileName)
 
    if (pps->IsWav()) // only use old direct sound code and wav reader if playing wav's
    {
+#ifndef __STANDALONE__
 	   // Create a new wave file class
 	   CWaveSoundRead* const pWaveSoundRead = new CWaveSoundRead();
 
@@ -557,6 +562,7 @@ PinSound *AudioMusicPlayer::LoadFile(const string& strFileName)
          // Update the UI controls to show the sound as the file is loaded
          //SetFileUI( hDlg, strFileName );
          //OnEnablePlayUI( hDlg, TRUE );
+#endif
    }
    else
    {

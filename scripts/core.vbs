@@ -149,11 +149,17 @@ End Class
 '		Timer
 '--------------------
 Class cvpmTimer
-	Private mQue, mNow, mTimers
+	Private mNow, mTimers
+	Private mQue0, mQue1, mQue2, mQue3, mQue4
 	Private mSlowUpdates, mFastUpdates, mResets, mFastTimer
 
 	Private Sub Class_Initialize
-		ReDim mQue(conMaxTimers) : mNow = 0 : mTimers = 0
+		mNow = 0 : mTimers = 0
+		ReDim mQue0(conMaxTimers)
+		ReDim mQue1(conMaxTimers)
+		ReDim mQue2(conMaxTimers)
+		ReDim mQue3(conMaxTimers)
+		ReDim mQue4(conMaxTimers)
 		Set mSlowUpdates = New cvpmDictionary
 		Set mFastUpdates = New cvpmDictionary
 		Set mResets		 = New cvpmDictionary
@@ -197,23 +203,30 @@ Class cvpmTimer
 		mNow = mNow + 1 : ii = 1
 
 		Do While ii <= mTimers
-			If mQue(ii)(0) <= mNow Then
-				If mQue(ii)(1) = 0 Then
-					If isObject(mQue(ii)(3)) Then
-						Call mQue(ii)(3)(mQue(ii)(2))
-					ElseIf varType(mQue(ii)(3)) = vbString Then
-						If mQue(ii)(3) > "" Then Execute mQue(ii)(3) & " " & mQue(ii)(2) & " "
+			If mQue0(ii) <= mNow Then
+				If mQue1(ii)= 0 Then
+					If isObject(mQue3(ii)) Then
+						Call mQue3(ii)(mQue2(ii))
+					ElseIf varType(mQue3(ii)) = vbString Then
+						If mQue3(ii) > "" Then Execute mQue3(ii) & " " & mQue2(ii) & " "
 					End If
 					mTimers = mTimers - 1
-					For jj = ii To mTimers : mQue(jj) = mQue(jj+1) : Next : ii = ii - 1
-				ElseIf mQue(ii)(1) = 1 Then
-					mQuecopy = mQue(ii)(2)
+					For jj = ii To mTimers
+						mQue0(jj) = mQue0(jj+1)
+						mQue1(jj) = mQue1(jj+1)
+						mQue2(jj) = mQue2(jj+1)
+						mQue3(jj) = mQue3(jj+1)
+						mQue4(jj) = mQue4(jj+1)
+					Next
+					ii = ii - 1
+				ElseIf mQue1(ii) = 1 Then
+					mQuecopy = mQue2(ii)
 					Controller.Switch(mQuecopy) = False
-					mQue(ii)(0) = mNow + mQue(ii)(4) : mQue(ii)(1) = 0
+					mQue0(ii) = mNow + mQue4(ii) : mQue1(ii) = 0
 				Else '2
-					mQuecopy = mQue(ii)(2)
+					mQuecopy = mQue2(ii)
 					Controller.Switch(mQuecopy) = True
-					mQue(ii)(1) = 1
+					mQue1(ii) = 1
 				End If
 			End If
 			ii = ii + 1
@@ -228,23 +241,36 @@ Class cvpmTimer
 		Dim ii, count, last
 		count = 0
 		For ii = 1 To mTimers
-			If mQue(ii)(1) > 0 And mQue(ii)(2) = aSwNo Then count = count + 1 : last = ii
+			If mQue1(ii) > 0 And mQue2(ii) = aSwNo Then count = count + 1 : last = ii
 		Next
 		If count >= conMaxSwHit Or mTimers = conMaxTimers Then Exit Sub
-		mTimers = mTimers + 1 : mQue(mTimers) = Array(mNow, 2, aSwNo, aCallback, aDelay\conTimerPulse)
-		If count Then mQue(mTimers)(0) = mQue(last)(0) + mQue(last)(1)
+		mTimers = mTimers + 1
+		mQue0(mTimers) = mNow
+		mQue1(mTimers) = 2
+		mQue2(mTimers) = aSwNo
+		mQue3(mTimers) = aCallback
+		mQue4(mTimers) = aDelay \ conTimerPulse
+		If count Then mQue0(mTimers) = mQue0(last) + mQue1(last)
 	End Sub
 
 	Public Sub AddTimer(aDelay, aCallback)
 		If mTimers = conMaxTimers Then Exit Sub
 		mTimers = mTimers + 1
-		mQue(mTimers) = Array(mNow + aDelay \ conTimerPulse, 0, 0, aCallback)
+		mQue0(mTimers) = mNow + aDelay \ conTimerPulse
+		mQue1(mTimers) = 0
+		mQue2(mTimers) = 0
+		mQue3(mTimers) = aCallBack
+		mQue4(mTimers) = 0
 	End Sub
 
 	Public Sub AddTimer2(aDelay, aCallback, aID)
 		If mTimers = conMaxTimers Then Exit Sub
 		mTimers = mTimers + 1
-		mQue(mTimers) = Array(mNow + aDelay \ conTimerPulse, 0, aID, aCallback)
+		mQue0(mTimers) = mNow + aDelay \ conTimerPulse
+		mQue1(mTimers) = 0
+		mQue2(mTimers) = aID
+		mQue3(mTimers) = aCallback
+		mQue4(mTimers) = 0
 	End Sub
 End Class
 
@@ -1028,7 +1054,7 @@ Class cvpmBallStack
 				If isObject(mExitKicker) Then
 					If kForce < 1 Then kForce = 1
 					kDir = kBaseDir + (Rnd - 0.5)*KickAngleVar
-					vpmTimer.AddTimer (ii-1)*200, "vpmCreateBall(" & mExitKicker.Name & ").Kick " &_
+					vpmTimer.AddTimer 200*(ii-1), "vpmCreateBall(" & mExitKicker.Name & ").Kick " &_
 					  CInt(kDir) & "," & Replace(kForce,",",".") & "," & Replace(KickZ,",",".") & " '"
 				End If
 				kForce = kForce * 0.8
@@ -1928,15 +1954,15 @@ Class cvpmDips
 		End With
 		useDip = False : dips(1) = aExtra
 		For ii = 1 To mChkCount + mOptCount
-			mItems(ii)(1).Value = -((dips(mItems(ii)(0) And &H01) And mItems(ii)(4)) = mItems(ii)(3))
-			If (mItems(ii)(0) And &H01) = 0 Then useDip = True
+			'mItems(ii)(1).Value = -((dips(mItems(ii)(0) And &H01) And mItems(ii)(4)) = mItems(ii)(3))
+			'If (mItems(ii)(0) And &H01) = 0 Then useDip = True
 		Next
 		If vpmVPVer >= 10800 Then ShowCursor = True
 		mLWF.Show GetPlayerHWnd
 		If vpmVPVer >= 10800 Then ShowCursor = False
 		dips(0) = 0 : dips(1) = 0
 		For ii = 1 To mChkCount + mOptCount
-			If mItems(ii)(1).Value Then dips(mItems(ii)(0) And &H01) = dips(mItems(ii)(0) And &H01) Or mItems(ii)(3)
+			'If mItems(ii)(1).Value Then dips(mItems(ii)(0) And &H01) = dips(mItems(ii)(0) And &H01) Or mItems(ii)(3)
 		Next
 		If useDip Then
 			With Controller

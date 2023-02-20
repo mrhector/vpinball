@@ -14,6 +14,15 @@
 static ShaderTechniques m_bound_technique = ShaderTechniques::SHADER_TECHNIQUE_INVALID;
 #endif
 
+#ifdef __STANDALONE__
+#include <sstream>
+#endif
+
+#ifdef __STANDALONE__
+#undef WRITE_SHADER_FILES
+#define WRITE_SHADER_FILES 2
+#endif
+
 #if DEBUG_LEVEL_LOG == 0
 #define LOG(a,b,c)
 #endif
@@ -120,9 +129,11 @@ const string Shader::shaderTechniqueNames[SHADER_TECHNIQUE_COUNT]
    SHADER_TECHNIQUE(basic_noLight),
    SHADER_TECHNIQUE(bulb_light),
    SHADER_TECHNIQUE(bulb_light_with_ball_shadows),
+#ifndef __OPENGLES__
    SHADER_TECHNIQUE(SMAA_ColorEdgeDetection),
    SHADER_TECHNIQUE(SMAA_BlendWeightCalculation),
    SHADER_TECHNIQUE(SMAA_NeighborhoodBlending),
+#endif
    SHADER_TECHNIQUE(stereo),
    SHADER_TECHNIQUE(stereo_Int),
    SHADER_TECHNIQUE(stereo_Flipped_Int),
@@ -667,7 +678,29 @@ void Shader::SetMatrix(const ShaderUniforms hParameter, const Matrix3D* pMatrix)
    assert(0 <= hParameter && hParameter < SHADER_UNIFORM_COUNT);
    UniformCache* elem = &m_uniformCache[SHADER_TECHNIQUE_COUNT][hParameter];
    assert(elem->count == 0);
+#ifndef __OPENGLES__
    memcpy(elem->val.fv, pMatrix->m, 16 * sizeof(float));
+#else
+   elem->val.fv[0] = (pMatrix->m16[0] > 0 && pMatrix->m16[0] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[0];
+   elem->val.fv[1] = (pMatrix->m16[1] > 0 && pMatrix->m16[1] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[1];
+   elem->val.fv[2] = (pMatrix->m16[2] > 0 && pMatrix->m16[2] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[2];
+   elem->val.fv[3] = (pMatrix->m16[3] > 0 && pMatrix->m16[3] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[3];
+
+   elem->val.fv[4] = (pMatrix->m16[4] > 0 && pMatrix->m16[4] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[4];
+   elem->val.fv[5] = (pMatrix->m16[5] > 0 && pMatrix->m16[5] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[5];
+   elem->val.fv[6] = (pMatrix->m16[6] > 0 && pMatrix->m16[6] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[6];
+   elem->val.fv[7] = (pMatrix->m16[7] > 0 && pMatrix->m16[7] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[7];
+
+   elem->val.fv[8] = (pMatrix->m16[8] > 0 && pMatrix->m16[8] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[8];
+   elem->val.fv[9] = (pMatrix->m16[9] > 0 && pMatrix->m16[9] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[9];
+   elem->val.fv[10] = (pMatrix->m16[10] > 0 && pMatrix->m16[10] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[10];
+   elem->val.fv[11] = (pMatrix->m16[11] > 0 && pMatrix->m16[11] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[11];
+
+   elem->val.fv[12] = (pMatrix->m16[12] > 0 && pMatrix->m16[12] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[12];
+   elem->val.fv[13] = (pMatrix->m16[13] > 0 && pMatrix->m16[13] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[13];
+   elem->val.fv[14] = (pMatrix->m16[14] > 0 && pMatrix->m16[14] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[14];
+   elem->val.fv[15] = (pMatrix->m16[15] > 0 && pMatrix->m16[15] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[15];
+#endif
    ApplyUniform(hParameter);
 }
 
@@ -676,7 +709,29 @@ void Shader::SetMatrix(const ShaderUniforms hParameter, const D3DXMATRIX* pMatri
    assert(0 <= hParameter && hParameter < SHADER_UNIFORM_COUNT);
    UniformCache* elem = &m_uniformCache[SHADER_TECHNIQUE_COUNT][hParameter];
    assert(elem->count == 0);
+#ifndef __OPENGLES__
    memcpy(elem->val.fv, pMatrix->m, 16 * sizeof(float));
+#else
+   elem->val.fv[0] = (pMatrix->m16[0] > 0 && pMatrix->m16[0] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[0];
+   elem->val.fv[1] = (pMatrix->m16[1] > 0 && pMatrix->m16[1] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[1];
+   elem->val.fv[2] = (pMatrix->m16[2] > 0 && pMatrix->m16[2] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[2];
+   elem->val.fv[3] = (pMatrix->m16[3] > 0 && pMatrix->m16[3] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[3];
+
+   elem->val.fv[4] = (pMatrix->m16[4] > 0 && pMatrix->m16[4] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[4];
+   elem->val.fv[5] = (pMatrix->m16[5] > 0 && pMatrix->m16[5] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[5];
+   elem->val.fv[6] = (pMatrix->m16[6] > 0 && pMatrix->m16[6] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[6];
+   elem->val.fv[7] = (pMatrix->m16[7] > 0 && pMatrix->m16[7] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[7];
+
+   elem->val.fv[8] = (pMatrix->m16[8] > 0 && pMatrix->m16[8] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[8];
+   elem->val.fv[9] = (pMatrix->m16[9] > 0 && pMatrix->m16[9] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[9];
+   elem->val.fv[10] = (pMatrix->m16[10] > 0 && pMatrix->m16[10] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[10];
+   elem->val.fv[11] = (pMatrix->m16[11] > 0 && pMatrix->m16[11] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[11];
+
+   elem->val.fv[12] = (pMatrix->m16[12] > 0 && pMatrix->m16[12] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[12];
+   elem->val.fv[13] = (pMatrix->m16[13] > 0 && pMatrix->m16[13] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[13];
+   elem->val.fv[14] = (pMatrix->m16[14] > 0 && pMatrix->m16[14] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[14];
+   elem->val.fv[15] = (pMatrix->m16[15] > 0 && pMatrix->m16[15] < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pMatrix->m16[15];
+#endif
    ApplyUniform(hParameter);
 }
 
@@ -685,7 +740,14 @@ void Shader::SetVector(const ShaderUniforms hParameter, const vec4* pVector)
    assert(0 <= hParameter && hParameter < SHADER_UNIFORM_COUNT);
    UniformCache* elem = &m_uniformCache[SHADER_TECHNIQUE_COUNT][hParameter];
    assert(elem->count == 0);
+#ifndef __OPENGLES__
    memcpy(elem->val.fv, pVector, 4 * sizeof(float));
+#else
+   elem->val.fv[0] = (pVector->x > 0 && pVector->x < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pVector->x;
+   elem->val.fv[1] = (pVector->y > 0 && pVector->y < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pVector->y;
+   elem->val.fv[2] = (pVector->z > 0 && pVector->z < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pVector->z;
+   elem->val.fv[3] = (pVector->w > 0 && pVector->w < FLT_MIN_VALUE) ? FLT_MIN_VALUE : pVector->w;
+#endif
    ApplyUniform(hParameter);
 }
 
@@ -694,10 +756,17 @@ void Shader::SetVector(const ShaderUniforms hParameter, const float x, const flo
    assert(0 <= hParameter && hParameter < SHADER_UNIFORM_COUNT);
    UniformCache* elem = &m_uniformCache[SHADER_TECHNIQUE_COUNT][hParameter];
    assert(elem->count == 0);
+#ifndef __OPENGLES__
    elem->val.fv[0] = x;
    elem->val.fv[1] = y;
    elem->val.fv[2] = z;
    elem->val.fv[3] = w;
+#else
+   elem->val.fv[0] = (x > 0 && x < FLT_MIN_VALUE) ? FLT_MIN_VALUE : x;
+   elem->val.fv[1] = (y > 0 && y < FLT_MIN_VALUE) ? FLT_MIN_VALUE : y;
+   elem->val.fv[2] = (z > 0 && z < FLT_MIN_VALUE) ? FLT_MIN_VALUE : z;
+   elem->val.fv[3] = (w > 0 && w < FLT_MIN_VALUE) ? FLT_MIN_VALUE : w;
+#endif
    ApplyUniform(hParameter);
 }
 
@@ -706,7 +775,11 @@ void Shader::SetFloat(const ShaderUniforms hParameter, const float f)
    assert(0 <= hParameter && hParameter < SHADER_UNIFORM_COUNT);
    UniformCache* elem = &m_uniformCache[SHADER_TECHNIQUE_COUNT][hParameter];
    assert(elem->count == 0);
+#ifndef __OPENGLES__
    elem->val.f = f;
+#else
+   elem->val.f = (f > 0 && f < FLT_MIN_VALUE) ? FLT_MIN_VALUE : f;
+#endif
    ApplyUniform(hParameter);
 }
 
@@ -1073,6 +1146,7 @@ void Shader::LOG(const int level, const string& fileNameRoot, const string& mess
          logFile = new std::ofstream();
 bla:
          logFile->open(name);
+#ifndef __STANDALONE__
          if (!logFile->is_open()) {
             const wstring wzMkPath = g_pvp->m_wzMyPath + L"shader";
             if (_wmkdir(wzMkPath.c_str()) != 0 || _wmkdir((wzMkPath + PATH_SEPARATOR_WCHAR + L"log").c_str()) != 0)
@@ -1086,6 +1160,7 @@ bla:
             else
                goto bla;
          }
+#endif
       }
       switch (level) {
       case 1:
@@ -1134,6 +1209,9 @@ bool Shader::parseFile(const string& fileNameRoot, const string& fileName, int l
       size_t linenumber = 0;
       while (getline(glfxFile, line))
       {
+#ifdef __STANDALONE__
+         line = std::regex_replace(line, std::regex("\\s+$"), string(""));
+#endif
          linenumber++;
          if (line.compare(0, 4, "////") == 0) {
             string newMode = line.substr(4, line.length() - 4);
@@ -1204,7 +1282,12 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
       ReportError(msg, -1, __FILE__, __LINE__);
       free(errorText);
       success = false;
+
+#ifdef __STANDALONE__
+      PLOGI.printf("vertex:\n\n%s\n\n", vertexSource);
+#endif
    }
+#ifndef __STANDALONE__
    //Geometry Shader
    if (success && geometry.length()>0) {
       geometrySource = new GLchar[geometry.length() + 1];
@@ -1231,6 +1314,7 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
          success = false;
       }
    }
+#endif
    //Fragment Shader
    if (success) {
       fragmentSource = new GLchar[fragment.length() + 1];
@@ -1255,6 +1339,10 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
          ReportError(msg, -1, __FILE__, __LINE__);
          free(errorText);
          success = false;
+
+#ifdef __STANDALONE__
+         PLOGI.printf("fragment:\n\n%s\n\n", fragmentSource);
+#endif
       }
    }
 
@@ -1280,8 +1368,16 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
          /* Notice that glGetProgramInfoLog, not glGetShaderInfoLog. */
          glGetProgramInfoLog(shaderprogram, maxLength, &maxLength, errorText);
          LOG(1, fileNameRoot, string(shaderCodeName).append(": Linking Shader failed with: ").append(errorText));
+         char msg[16384];
+         sprintf_s(msg, sizeof(msg), "Fatal Error: Linking Shader %s:%s failed!\n\n%s", fileNameRoot.c_str(), shaderCodeName.c_str(), errorText);
+         ReportError(msg, -1, __FILE__, __LINE__);
          free(errorText);
          success = false;
+
+#ifdef __STANDALONE__
+         PLOGI.printf("vertex - %s\n\n", vertexSource);
+         PLOGI.printf("fragment - %s\n\n", fragmentSource);
+#endif
       }
    }
    if ((WRITE_SHADER_FILES == 2) || ((WRITE_SHADER_FILES == 1) && !success)) {
@@ -1451,6 +1547,43 @@ string Shader::analyzeFunction(const string& shaderCodeName, const string& _tech
    return functionCode;
 }
 
+#ifdef __STANDALONE__
+string Shader::preprocessGLShader(const string& shaderCode) {
+   std::istringstream iss(shaderCode);
+   string header;
+   string extensions;
+   string code;
+
+   for (std::string line; std::getline(iss, line); )
+   {
+      if (line.compare(0, 9, "#version ") == 0) {
+#if defined(__OPENGLES__)
+         header += "#version 300 es\n";
+         header += "#define SHADER_GLES30\n";
+#if (defined(__APPLE__) && (TARGET_OS_IOS || TARGET_OS_TV))
+         header += "#define SHADER_APPLE\n";
+#endif
+#elif defined(__APPLE__)
+         header += "#version 410\n";
+         header += "#define SHADER_GL410\n";
+         header += "#define SHADER_APPLE\n";
+#else
+         header += line + "\n";
+#endif
+         header += "#define SHADER_STANDALONE\n";
+      }
+      else if (line.compare(0, 11, "#extension ") == 0) {
+         extensions += line + "\n";
+      }
+      else {
+         code += line + "\n";
+      }
+   }
+
+   return header + extensions + code;
+}
+#endif
+
 bool Shader::Load(const std::string& name, const BYTE* code, unsigned int codeSize)
 {
    m_shaderCodeName = name;
@@ -1517,6 +1650,9 @@ bool Shader::Load(const std::string& name, const BYTE* code, unsigned int codeSi
                string vertexShaderCode = vertex;
                vertexShaderCode.append("\n//").append(_technique).append("\n//").append(element[2]).append("\n");
                vertexShaderCode.append(analyzeFunction(m_shaderCodeName, _technique, element[2], values)).append("\0");
+#ifdef __STANDALONE__
+               vertexShaderCode = preprocessGLShader(vertexShaderCode);
+#endif
                string geometryShaderCode;
                if (elem == 5 && element[3].length() > 0)
                {
@@ -1524,9 +1660,15 @@ bool Shader::Load(const std::string& name, const BYTE* code, unsigned int codeSi
                   geometryShaderCode.append("\n//").append(_technique).append("\n//").append(element[3]).append("\n");
                   geometryShaderCode.append(analyzeFunction(m_shaderCodeName, _technique, element[3], values)).append("\0");
                }
+#ifdef __STANDALONE__
+               geometryShaderCode = preprocessGLShader(geometryShaderCode);
+#endif
                string fragmentShaderCode = fragment;
                fragmentShaderCode.append("\n//").append(_technique).append("\n//").append(element[elem - 1]).append("\n");
                fragmentShaderCode.append(analyzeFunction(m_shaderCodeName, _technique, element[elem - 1], values)).append("\0");
+#ifdef __STANDALONE__
+               fragmentShaderCode = preprocessGLShader(fragmentShaderCode);
+#endif
                ShaderTechnique* build = compileGLShader(technique, m_shaderCodeName, element[0] /*.append("_").append(element[1])*/, vertexShaderCode, geometryShaderCode, fragmentShaderCode);
                if (build != nullptr)
                {
