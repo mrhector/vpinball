@@ -81,7 +81,9 @@ inline int FindIndexOf(const vector<T>& v, const T& val)
 #define fTrue 1
 #define fFalse 0
 
+#ifndef __STANDALONE__
 #define BOOL int
+#endif
 
 typedef uint32_t        U32;
 typedef int32_t         S32;
@@ -216,10 +218,10 @@ public:
 #elif (defined(__linux) || defined(__linux__))
 #define GET_PLATFORM_OS "linux"
 #elif defined(__APPLE__)
-#ifdef TARGET_OS_IOS
+#if defined(TARGET_OS_IOS) && TARGET_OS_IOS
 #define GET_PLATFORM_OS "ios"
-#elif TARGET_OS_TV
-#define GET_PLATFORM_OS "ostv"
+#elif defined(TARGET_OS_TV) && TARGET_OS_TV
+#define GET_PLATFORM_OS "tvos"
 #else
 #define GET_PLATFORM_OS "macos"
 #endif

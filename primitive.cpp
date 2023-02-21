@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h" 
-#include "forsyth.h"
+#include "inc/forsyth.h"
 #include "objloader.h"
 #include "inc/miniz.c"
 #include "inc/progmesh.h"
@@ -36,6 +36,7 @@ bool Mesh::LoadAnimation(const char *fname, const bool flipTV, const bool conver
    idx++;
    name = name.substr(0,idx);
    string sname = name + "*.obj";
+#ifndef __STANDALONE__
    WIN32_FIND_DATA data;
    const HANDLE h = FindFirstFile(sname.c_str(), &data);
    vector<string> allFiles;
@@ -74,6 +75,7 @@ bool Mesh::LoadAnimation(const char *fname, const bool flipTV, const bool conver
    }
    sname = std::to_string(frameCounter)+" frames imported!";
    g_pvp->MessageBox(sname.c_str(), "Info", MB_OK | MB_ICONEXCLAMATION);
+#endif
    return true;
 }
 
@@ -1896,6 +1898,7 @@ HRESULT Primitive::InitPostLoad()
 
 INT_PTR CALLBACK Primitive::ObjImportProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+#ifndef __STANDALONE__
    static Primitive *prim = nullptr;
    switch (uMsg)
    {
@@ -2060,12 +2063,15 @@ INT_PTR CALLBACK Primitive::ObjImportProc(HWND hwndDlg, UINT uMsg, WPARAM wParam
          }
       }
    }
+#endif
    return FALSE;
 }
 
 bool Primitive::BrowseFor3DMeshFile()
 {
+#ifndef __STANDALONE__
    DialogBoxParam(m_vpinball->theInstance, MAKEINTRESOURCE(IDD_MESH_IMPORT_DIALOG), m_vpinball->GetHwnd(), ObjImportProc, (size_t)this);
+#endif
 #if 1
    return false;
 #else
@@ -2217,6 +2223,7 @@ bool Primitive::LoadMeshDialog()
 
 void Primitive::ExportMeshDialog()
 {
+#ifndef __STANDALONE__
    string szInitialDir;
    HRESULT hr = LoadValue(regKey[RegName::RecentDir], "ImportDir"s, szInitialDir);
    if (hr != S_OK)
@@ -2236,7 +2243,7 @@ void Primitive::ExportMeshDialog()
       WideCharToMultiByteNull(CP_ACP, 0, m_wzName, -1, name, sizeof(name), nullptr, nullptr);
       m_mesh.SaveWavefrontObj(szFileName[0], m_d.m_use3DMesh ? string(name) : "Primitive"s);
    }
-
+#endif
 }
 
 bool Primitive::IsTransparent() const

@@ -6,7 +6,7 @@
 #define AFX_PRIMITIVE_H__31CD2D6B_9BDD_4B1B_BC62_B9DE588A0CAA__INCLUDED_
 
 #include "resource.h"
-#include <inc/robin_hood.h>
+#include "inc/robin_hood.h"
 
 class Mesh final
 {
@@ -114,6 +114,13 @@ class Primitive :
    public IFireEvents,
    public IPerPropertyBrowsing // Ability to fill in dropdown in property browser
 {
+#ifdef __STANDALONE__
+public:
+   STDMETHOD(GetIDsOfNames)(REFIID /*riid*/, LPOLESTR* rgszNames, UINT cNames, LCID lcid,DISPID* rgDispId);
+   STDMETHOD(Invoke)(DISPID dispIdMember, REFIID /*riid*/, LCID lcid, WORD wFlags, DISPPARAMS* pDispParams, VARIANT* pVarResult, EXCEPINFO* pExcepInfo, UINT* puArgErr);
+   STDMETHOD(GetDocumentation)(INT index, BSTR *pBstrName, BSTR *pBstrDocString, DWORD *pdwHelpContext, BSTR *pBstrHelpFile);
+   virtual HRESULT FireDispID(const DISPID dispid, DISPPARAMS * const pdispparams) override;
+#endif
 public:
    static constexpr int Max_Primitive_Sides = 100; //!! 100 works for sleepy, 99 doesn't
 
@@ -283,7 +290,7 @@ public:
    void ExportMeshDialog() final;
 
    bool IsPlayfield() const { return wcscmp(m_wzName, L"playfield_mesh") == 0; }
-   bool IsBackglass() const { return _stricmp(m_d.m_szImage.c_str(), "backglassimage") == 0; }
+   bool IsBackglass() const { return lstrcmpi(m_d.m_szImage.c_str(), "backglassimage") == 0; }
 
    float GetAlpha() const { return m_d.m_alpha; }
    void SetAlpha(const float value) { m_d.m_alpha = max(value, 0.f); }
