@@ -1,5 +1,7 @@
 #include "stdafx.h"
+#ifndef __STANDALONE__
 #include "Intshcut.h"
+#endif
 
 unsigned long long tinymt64state[2] = { 'T', 'M' };
 
@@ -103,18 +105,78 @@ int WzSzStrNCmp(const WCHAR *wz1, const char *sz2, const DWORD maxComparisonLen)
 
 LocalString::LocalString(const int resid)
 {
+#ifndef __STANDALONE__
    if (resid > 0)
       /*const int cchar =*/ LoadString(g_pvp->theInstance, resid, m_szbuffer, sizeof(m_szbuffer));
    else
       m_szbuffer[0] = '\0';
+#else
+   static robin_hood::unordered_map<int, const char*> ids_map = {
+     { IDS_TB_BUMPER, "Bumper" },
+     { IDS_TB_DECAL, "Decal" },
+     { IDS_TB_DISPREEL, "EMReel" },
+     { IDS_TB_FLASHER, "Flasher" },
+     { IDS_TB_FLIPPER, "Flipper" },
+     { IDS_TB_GATE, "Gate" },
+     { IDS_TB_KICKER, "Kicker" },
+     { IDS_TB_LIGHT, "Light" },
+     { IDS_TB_LIGHTSEQ, "LightSeq" },
+     { IDS_TB_PLUNGER, "Plunger" },
+     { IDS_TB_PRIMITIVE, "Primitive" },
+     { IDS_TB_WALL, "Wall" },
+     { IDS_TB_RAMP, "Ramp" },
+     { IDS_TB_RUBBER, "Rubber" },
+     { IDS_TB_SPINNER, "Spinner" },
+     { IDS_TB_TEXTBOX, "TextBox" },
+     { IDS_TB_TIMER, "Timer" },
+     { IDS_TB_TRIGGER, "Trigger" },
+     { IDS_TB_TARGET, "Target" }
+   };
+
+   memset(m_szbuffer, 0, sizeof(m_szbuffer));
+   const robin_hood::unordered_map<int, const char*>::iterator it = ids_map.find(resid);
+   if (it != ids_map.end())
+      strcpy(m_szbuffer, (const char*)&it->second);
+#endif
 }
 
 LocalStringW::LocalStringW(const int resid)
 {
+#ifndef __STANDALONE__
    if (resid > 0)
       LoadStringW(g_pvp->theInstance, resid, m_szbuffer, sizeof(m_szbuffer)/sizeof(WCHAR));
    else
       m_szbuffer[0] = L'\0';
+#else
+   static robin_hood::unordered_map<int, const WCHAR*> ids_map = {
+     { IDS_TB_BUMPER, L"Bumper" },
+     { IDS_TB_DECAL, L"Decal" },
+     { IDS_TB_DISPREEL, L"EMReel" },
+     { IDS_TB_FLASHER, L"Flasher" },
+     { IDS_TB_FLIPPER, L"Flipper" },
+     { IDS_TB_GATE, L"Gate" },
+     { IDS_TB_KICKER, L"Kicker" },
+     { IDS_TB_LIGHT, L"Light" },
+     { IDS_TB_LIGHTSEQ, L"LightSeq" },
+     { IDS_TB_PLUNGER, L"Plunger" },
+     { IDS_TB_PRIMITIVE, L"Primitive" },
+     { IDS_TB_WALL, L"Wall" },
+     { IDS_TB_RAMP, L"Ramp" },
+     { IDS_TB_RUBBER, L"Rubber" },
+     { IDS_TB_SPINNER, L"Spinner" },
+     { IDS_TB_TEXTBOX, L"TextBox" },
+     { IDS_TB_TIMER, L"Timer" },
+     { IDS_TB_TRIGGER, L"Trigger" },
+     { IDS_TB_TARGET, L"Target" }
+   };
+
+   memset(m_szbuffer, 0, sizeof(m_szbuffer));
+   const robin_hood::unordered_map<int, const WCHAR*>::iterator it = ids_map.find(resid);
+   if (it != ids_map.end())
+      wcscpy(m_szbuffer, (const WCHAR*)it->second);
+
+#endif
+
 }
 
 WCHAR *MakeWide(const string& sz)
@@ -137,6 +199,7 @@ char *MakeChar(const WCHAR * const wz)
 
 HRESULT OpenURL(const string& szURL)
 {
+#ifndef __STANDALONE__
    IUniformResourceLocator* pURL;
 
    HRESULT hres = CoCreateInstance(CLSID_InternetShortcut, nullptr, CLSCTX_INPROC_SERVER, IID_IUniformResourceLocator, (void**)&pURL);
@@ -162,6 +225,9 @@ HRESULT OpenURL(const string& szURL)
    hres = pURL->InvokeCommand(&ivci);
    pURL->Release();
    return (hres);
+#else
+   return 0L;
+#endif
 }
 
 char* replace(const char* const original, const char* const pattern, const char* const replacement)
@@ -210,10 +276,14 @@ char* replace(const char* const original, const char* const pattern, const char*
 // This exists such that we only check if we're on wine once, and assign the result of this function to a static const var
 static bool IsOnWineInternal()
 {
+#ifndef __STANDALONE__
    // See https://www.winehq.org/pipermail/wine-devel/2008-September/069387.html
    const HMODULE ntdllHandle = GetModuleHandleW(L"ntdll.dll");
    assert(ntdllHandle != nullptr && "Could not GetModuleHandleW(L\"ntdll.dll\")");
    return GetProcAddress(ntdllHandle, "wine_get_version") != nullptr;
+#else
+   return false;
+#endif
 }
 
 bool IsOnWine()
@@ -221,3 +291,26 @@ bool IsOnWine()
    static const bool result = IsOnWineInternal();
    return result;
 }
+
+#ifdef __STANDALONE__
+const char* glToString(GLuint value)
+{
+   static robin_hood::unordered_map<GLuint, const char*> value_map = {
+     { (GLuint)GL_RGB, "GL_RGB" },
+     { (GLuint)GL_RGBA, "GL_RGBA" },
+     { (GLuint)GL_RGB8, "GL_RGB8" },
+     { (GLuint)GL_RGBA8, "GL_RGBA8" },
+     { (GLuint)GL_SRGB8, "GL_SRGB8" },
+     { (GLuint)GL_SRGB8_ALPHA8, "GL_SRGB8_ALPHA8" },
+     { (GLuint)GL_RGB16F, "GL_RGB16F" },
+     { (GLuint)GL_UNSIGNED_BYTE, "GL_UNSIGNED_BYTE" },
+     { (GLuint)GL_HALF_FLOAT, "GL_HALF_FLOAT" },
+   };
+
+   const robin_hood::unordered_map<GLuint, const char*>::iterator it = value_map.find(value);
+   if (it != value_map.end()) {
+      return it->second;
+   }
+   return (const char*)"Unknown";
+}
+#endif

@@ -70,6 +70,7 @@ void Decal::SetDefaults(const bool fromMouseClick)
 
    if (!m_pIFont)
    {
+#ifndef __STANDALONE__
       FONTDESC fd;
       fd.cbSizeofstruct = sizeof(FONTDESC);
 
@@ -96,6 +97,7 @@ void Decal::SetDefaults(const bool fromMouseClick)
       fd.fStrikethrough = fromMouseClick ? LoadValueBoolWithDefault(regKey, "FontStrikeThrough"s, false) : false;
 
       OleCreateFontIndirect(&fd, IID_IFont, (void **)&m_pIFont);
+#endif
    }
 
 #undef regKey
@@ -132,6 +134,7 @@ void Decal::WriteRegDefaults()
 
    if (m_pIFont)
    {
+#ifndef __STANDALONE__
       FONTDESC fd;
       fd.cbSizeofstruct = sizeof(FONTDESC);
       m_pIFont->get_Size(&fd.cySize);
@@ -157,6 +160,7 @@ void Decal::WriteRegDefaults()
       SaveValueInt(regKey, "FontItalic"s, fd.fItalic);
       SaveValueInt(regKey, "FontUnderline"s, fd.fUnderline);
       SaveValueInt(regKey, "FontStrikeThrough"s, fd.fStrikethrough);
+#endif
    }
 
 #undef regKey
@@ -235,6 +239,7 @@ void Decal::GetTimers(vector<HitTimer*> &pvht)
 
 void Decal::GetTextSize(int * const px, int * const py)
 {
+#ifndef __STANDALONE__
    const int len = (int)m_d.m_sztext.length();
    const HFONT hFont = GetFont();
    constexpr int alignment = DT_LEFT;
@@ -278,6 +283,7 @@ void Decal::GetTextSize(int * const px, int * const py)
    clientDC.SelectObject(hFontOld);
 
    DeleteObject(hFont);
+#endif
 }
 
 void Decal::PreRenderText()
@@ -285,6 +291,7 @@ void Decal::PreRenderText()
    if (m_d.m_decaltype != DecalText)
       return;
 
+#ifndef __STANDALONE__
    RECT rcOut = { };
    const int len = (int)m_d.m_sztext.length();
    const HFONT hFont = GetFont();
@@ -396,6 +403,7 @@ void Decal::PreRenderText()
    dc.SelectObject(oldBmp);
    DeleteObject(hFont);
    DeleteObject(hbm);
+#endif
 }
 
 void Decal::GetHitShapes(vector<HitObject*> &pvho)
@@ -491,8 +499,13 @@ void Decal::RenderSetup()
       for (int i = 0; i < 4; ++i)
       {
 #ifdef ENABLE_SDL
+#ifndef __STANDALONE__
          vertices[i].x =        2.0f * (vertices[i].x * mult  - 0.5f) / (float)pd3dDevice->GetBackBufferTexture()->GetWidth() - 1.0f;
          vertices[i].y = 1.0f - 2.0f * (vertices[i].y * ymult - 0.5f) / (float)pd3dDevice->GetBackBufferTexture()->GetHeight();
+#else
+         vertices[i].x = vertices[i].x * mult  - 0.5f;
+         vertices[i].y = vertices[i].y * ymult - 0.5f;
+#endif
 #else
          vertices[i].x = vertices[i].x * mult  - 0.5f;
          vertices[i].y = vertices[i].y * ymult - 0.5f;
@@ -652,9 +665,11 @@ HRESULT Decal::SaveData(IStream *pstm, HCRYPTHASH hcrypthash, const bool backupF
    ISelect::SaveData(pstm, hcrypthash);
 
    bw.WriteTag(FID(FONT));
+#ifndef __STANDALONE__
    IPersistStream * ips;
    m_pIFont->QueryInterface(IID_IPersistStream, (void **)&ips);
    ips->Save(pstm, TRUE);
+#endif
 
    bw.WriteTag(FID(ENDB));
 
@@ -694,6 +709,7 @@ bool Decal::LoadToken(const int id, BiffReader * const pbr)
    case FID(BGLS): pbr->GetBool(m_backglass); break;
    case FID(FONT):
    {
+#ifndef __STANDALONE__
       if (!m_pIFont)
       {
          FONTDESC fd;
@@ -713,6 +729,19 @@ bool Decal::LoadToken(const int id, BiffReader * const pbr)
 
       ips->Load(pbr->m_pistream);
 
+#else
+      // https://github.com/freezy/VisualPinball.Engine/blob/master/VisualPinball.Engine/VPT/Font.cs#L25
+
+      char data[255];
+
+      ULONG read;
+      pbr->ReadBytes(data, 3, &read); 
+      pbr->ReadBytes(data, 1, &read); // Italic
+      pbr->ReadBytes(data, 2, &read); // Weight 
+      pbr->ReadBytes(data, 4, &read); // Size
+      pbr->ReadBytes(data, 1, &read); // nameLen
+      pbr->ReadBytes(data, (int)data[0], &read); // name
+#endif
       break;
    }
    default: ISelect::LoadToken(id, pbr); break;
@@ -810,9 +839,13 @@ HFONT Decal::GetFont()
 
    lf.lfItalic = (BYTE)bl;
 
+#ifndef __STANDALONE__
    const HFONT hFont = CreateFontIndirect(&lf);
 
    return hFont;
+#else
+   return 0L;
+#endif
 }
 
 STDMETHODIMP Decal::get_Rotation(float *pVal)

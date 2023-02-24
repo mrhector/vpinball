@@ -5,12 +5,20 @@
 #if !defined(AFX_PINTABLE_H__D14A2DAB_2984_4FE7_A102_D0283ECE31B4__INCLUDED_)
 #define AFX_PINTABLE_H__D14A2DAB_2984_4FE7_A102_D0283ECE31B4__INCLUDED_
 
-#include <inc/robin_hood.h>
+#include "inc/robin_hood.h"
 
 #include <atomic>
 #include "hash.h"
+
+#ifndef __STANDALONE__
 #include "SearchSelectDialog.h"
+#endif
 #include "RenderProbe.h"
+
+#ifdef __STANDALONE__
+#include <iostream>
+class Light;
+#endif
 
 #define VIEW_PLAYFIELD 1
 #define VIEW_BACKGLASS 2
@@ -66,14 +74,33 @@ class ProgressDialog : public CDialog
 {
 public:
    ProgressDialog();
-   void SetProgress(const int value) { m_progressBar.SetPos(value); }
+   void SetProgress(const int value) {
+#ifndef __STANDALONE__
+      m_progressBar.SetPos(value);
+#else
+      if (m_progress != value) {
+         PLOGI.printf("%s %d%%", m_szName.c_str(), value);
+      }
+      m_progress = value;
+#endif
+   }
 
-   void SetName(const string &text) { m_progressName.SetWindowText(text.c_str()); }
+   void SetName(const string &text) { 
+#ifndef __STANDALONE__
+      m_progressName.SetWindowText(text.c_str());
+#else
+      m_szName = text;
+#endif
+   }
 
 protected:
    BOOL OnInitDialog() final;
 
 private:
+#ifdef __STANDALONE__
+   string m_szName;
+   int m_progress;
+#endif
    CProgressBar m_progressBar;
    CStatic m_progressName;
 };
@@ -93,6 +120,13 @@ class PinTable : public CWnd,
                  public IEditable,
                  public IPerPropertyBrowsing // Ability to fill in dropdown in property browser
 {
+#ifdef __STANDALONE__
+public:
+   STDMETHOD(GetIDsOfNames)(REFIID /*riid*/, LPOLESTR* rgszNames, UINT cNames, LCID lcid,DISPID* rgDispId);
+   STDMETHOD(Invoke)(DISPID dispIdMember, REFIID /*riid*/, LCID lcid, WORD wFlags, DISPPARAMS* pDispParams, VARIANT* pVarResult, EXCEPINFO* pExcepInfo, UINT* puArgErr);
+   STDMETHOD(GetDocumentation)(INT index, BSTR *pBstrName, BSTR *pBstrDocString, DWORD *pdwHelpContext, BSTR *pBstrHelpFile);
+   virtual HRESULT FireDispID(const DISPID dispid, DISPPARAMS * const pdispparams) override;
+#endif
 public:
    STDMETHOD(get_BallFrontDecal)(/*[out, retval]*/ BSTR *pVal);
    STDMETHOD(put_BallFrontDecal)(/*[in]*/ BSTR newVal);
@@ -900,8 +934,19 @@ private:
    bool m_moving;
 };
 
-class ScriptGlobalTable : public CComObjectRootEx<CComSingleThreadModel>, public IDispatchImpl<ITableGlobal, &IID_ITableGlobal, &LIBID_VPinballLib>, public IScriptable
+class ScriptGlobalTable : 
+   public CComObjectRootEx<CComSingleThreadModel>, 
+   public IDispatchImpl<ITableGlobal, &IID_ITableGlobal, &LIBID_VPinballLib>, 
+   public IScriptable
 {
+#ifdef __STANDALONE__
+public:
+   STDMETHOD(GetIDsOfNames)(REFIID /*riid*/, LPOLESTR* rgszNames, UINT cNames, LCID lcid,DISPID* rgDispId);
+   STDMETHOD(Invoke)(DISPID dispIdMember, REFIID /*riid*/, LCID lcid, WORD wFlags, DISPPARAMS* pDispParams, VARIANT* pVarResult, EXCEPINFO* pExcepInfo, UINT* puArgErr);
+   STDMETHOD(GetDocumentation)(INT index, BSTR *pBstrName, BSTR *pBstrDocString, DWORD *pdwHelpContext, BSTR *pBstrHelpFile);
+
+   static vector<string> m_scriptNameList;
+#endif
 public:
    // Headers to support communication between the game and the script.
    STDMETHOD(EndModal)();
