@@ -81,7 +81,9 @@ inline int FindIndexOf(const vector<T>& v, const T& val)
 #define fTrue 1
 #define fFalse 0
 
+#ifndef __STANDALONE__
 #define BOOL int
+#endif
 
 typedef uint32_t        U32;
 typedef int32_t         S32;
@@ -177,7 +179,7 @@ class LocalString final
 public:
    LocalString(const int resid);
 
-   char m_szbuffer[256];
+   char m_szbuffer[256] = { 0 };
 };
 
 class LocalStringW final
@@ -185,7 +187,7 @@ class LocalStringW final
 public:
    LocalStringW(const int resid);
 
-   WCHAR m_szbuffer[256];
+   WCHAR m_szbuffer[256] = { 0 };
 };
 
 #ifndef M_PI
@@ -216,10 +218,10 @@ public:
 #elif (defined(__linux) || defined(__linux__))
 #define GET_PLATFORM_OS "linux"
 #elif defined(__APPLE__)
-#ifdef TARGET_OS_IOS
+#if defined(TARGET_OS_IOS) && TARGET_OS_IOS
 #define GET_PLATFORM_OS "ios"
-#elif TARGET_OS_TV
-#define GET_PLATFORM_OS "ostv"
+#elif defined(TARGET_OS_TV) && TARGET_OS_TV
+#define GET_PLATFORM_OS "tvos"
 #else
 #define GET_PLATFORM_OS "macos"
 #endif
@@ -502,3 +504,12 @@ char* replace(const char* const original, const char* const pattern, const char*
  * @brief Detect whether the program is running on the Wine compatibility layer
  */
 bool IsOnWine();
+
+#ifdef __STANDALONE__
+#include "typedefs3D.h"
+const char* glToString(GLuint value);
+
+extern "C" HRESULT external_create_object(const WCHAR *progid, IClassFactory* cf, IUnknown* obj);
+extern "C" void external_log_info(const char* format, ...);
+extern "C" void external_log_debug(const char* format, ...);
+#endif
