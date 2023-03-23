@@ -1,0 +1,3517 @@
+// Generated .IDL file (by the OLE/COM Object Viewer)
+// 
+// typelib filename: <could not determine filename>
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+#define int64_t INT64
+
+typedef int64_t int64;
+
+[
+  uuid(9270E97A-8E50-35CD-B3D6-B8452EE0FBFC),
+  version(7.0),
+  helpstring("Provides access to GDI+ graphics functionality.\r\n\r\nCommonly Used Types:\r\nSystem.Drawing.Bitmap\r\nSystem.Drawing.BitmapData\r\nSystem.Drawing.Brush\r\nSystem.Drawing.Font\r\nSystem.Drawing.Graphics\r\nSystem.Drawing.Icon\r\n\r\nSince .NET 7, non-Windows platforms are not supported, even with the runtime configuration switch. See https://aka.ms/systemdrawingnonwindows for more information."),
+  //custom(90883F05-3D28-11D2-8F17-00A0C9A6186D, "System.Drawing.Common, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51")
+
+]
+library System_Drawing_Common
+{
+    // TLib :  : {BEE4BFEC-6683-3E67-9167-3C0CBC68F40A}
+    importlib("System.tlb");
+    // TLib : mscorlib.dll : {BED7F4EA-1A96-11D2-8F08-00A0C9A6186D}
+    importlib("mscorlib.tlb");
+    // TLib : OLE Automation : {00020430-0000-0000-C000-000000000046}
+    importlib("stdole2.tlb");
+
+    // Forward declare all types defined in this typelib
+    interface IDeviceContext;
+    interface _Bitmap;
+    interface _BitmapSuffixInSameAssemblyAttribute;
+    interface _BitmapSuffixInSatelliteAssemblyAttribute;
+    interface _Brush;
+    interface _Brushes;
+    interface _BufferedGraphics;
+    interface _BufferedGraphicsContext;
+    interface _BufferedGraphicsManager;
+    interface _Font;
+    interface _FontConverter;
+    interface _FontFamily;
+    interface _Graphics;
+    interface _Icon;
+    interface _IconConverter;
+    interface _Image;
+    interface _ImageAnimator;
+    interface _ImageConverter;
+    interface _ImageFormatConverter;
+    interface _Pen;
+    interface _Pens;
+    interface _Region;
+    interface _SolidBrush;
+    interface _StringFormat;
+    interface _SystemBrushes;
+    interface _SystemFonts;
+    interface _SystemIcons;
+    interface _SystemPens;
+    interface _TextureBrush;
+    interface _ToolboxBitmapAttribute;
+    interface _ColorTranslator;
+    interface _SystemColors;
+    interface _FontCollection;
+    interface _InstalledFontCollection;
+    interface _PrivateFontCollection;
+    interface _InvalidPrinterException;
+    interface _Margins;
+    interface _MarginsConverter;
+    interface _PageSettings;
+    interface _PaperSize;
+    interface _PaperSource;
+    interface _PreviewPageInfo;
+    interface _PreviewPrintController;
+    interface _PrintController;
+    interface _PrintDocument;
+    interface _PrinterResolution;
+    interface _PrinterSettings;
+    interface _PrinterUnitConvert;
+    interface _PrintEventArgs;
+    interface _PrintEventHandler;
+    interface _PrintPageEventArgs;
+    interface _PrintPageEventHandler;
+    interface _QueryPageSettingsEventArgs;
+    interface _QueryPageSettingsEventHandler;
+    interface _StandardPrintController;
+    interface _BitmapData;
+    interface _ColorMap;
+    interface _ColorMatrix;
+    interface _ColorPalette;
+    interface _Encoder;
+    interface _EncoderParameter;
+    interface _EncoderParameters;
+    interface _FrameDimension;
+    interface _ImageAttributes;
+    interface _ImageCodecInfo;
+    interface _ImageFormat;
+    interface _Metafile;
+    interface _MetafileHeader;
+    interface _MetaHeader;
+    interface _PlayRecordCallback;
+    interface _PropertyItem;
+    interface _WmfPlaceableFileHeader;
+    interface _AdjustableArrowCap;
+    interface _Blend;
+    interface _ColorBlend;
+    interface _CustomLineCap;
+    interface _GraphicsContainer;
+    interface _GraphicsPath;
+    interface _GraphicsPathIterator;
+    interface _GraphicsState;
+    interface _HatchBrush;
+    interface _LinearGradientBrush;
+    interface _Matrix;
+    interface _PathData;
+    interface _PathGradientBrush;
+    interface _RegionData;
+    interface _CategoryNameCollection;
+    interface _FontNameConverter;
+    interface _FontUnitConverter;
+    interface _DrawImageAbort;
+    interface _EnumerateMetafileProc;
+    interface _GetThumbnailImageAbort;
+    interface _PaperSizeCollection;
+    interface _PaperSourceCollection;
+    interface _PrinterResolutionCollection;
+    interface _StringCollection;
+
+    [
+      uuid(71264EDD-E6D3-3A50-BF8F-F627745C3642),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Bitmap")
+    ]
+    coclass Bitmap {
+        [default] interface _Bitmap;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(0DD1216E-314C-307A-8A26-EBBF9B0BEA8F),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BitmapSuffixInSameAssemblyAttribute")
+    ]
+    coclass BitmapSuffixInSameAssemblyAttribute {
+        [default] interface _BitmapSuffixInSameAssemblyAttribute;
+        interface _Object;
+        interface _Attribute;
+    };
+
+    [
+      uuid(F0BC5E44-449E-3C3A-905D-4D48A308AC95),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BitmapSuffixInSatelliteAssemblyAttribute")
+    ]
+    coclass BitmapSuffixInSatelliteAssemblyAttribute {
+        [default] interface _BitmapSuffixInSatelliteAssemblyAttribute;
+        interface _Object;
+        interface _Attribute;
+    };
+
+    [
+      uuid(6A7DE63E-A639-3007-8A10-9C3494BFAB46),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Brush")
+    ]
+    coclass Brush {
+        [default] interface _Brush;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    [
+      uuid(C6738D50-A611-3F53-B0EA-66C3246A5232),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Brushes")
+    ]
+    coclass Brushes {
+        [default] interface _Brushes;
+        interface _Object;
+    };
+
+    [
+      uuid(AAB20836-B748-365B-A6A3-E6959A099BDD),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BufferedGraphics")
+    ]
+    coclass BufferedGraphics {
+        [default] interface _BufferedGraphics;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    [
+      uuid(0748B595-0AF7-3F72-99F0-52130AFFCA97),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BufferedGraphicsContext")
+    ]
+    coclass BufferedGraphicsContext {
+        [default] interface _BufferedGraphicsContext;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    [
+      uuid(8D46DAA6-E921-36CE-A3C2-7393D6A1FAD4),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BufferedGraphicsManager")
+    ]
+    coclass BufferedGraphicsManager {
+        [default] interface _BufferedGraphicsManager;
+        interface _Object;
+    };
+
+    typedef [uuid(14F3B2DE-C601-3D3C-9548-E8E1B55E3BCB), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.CharacterRange")    
+]
+    struct tagCharacterRange {
+                
+long _dummyPrimitive;
+    } CharacterRange;
+
+    typedef [uuid(FD13B6FF-C2B3-34A4-8C82-1E89741D128D), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ContentAlignment")    
+]
+    enum {
+        ContentAlignment_TopLeft = 1,
+        ContentAlignment_TopCenter = 2,
+        ContentAlignment_TopRight = 4,
+        ContentAlignment_MiddleLeft = 16,
+        ContentAlignment_MiddleCenter = 32,
+        ContentAlignment_MiddleRight = 64,
+        ContentAlignment_BottomLeft = 256,
+        ContentAlignment_BottomCenter = 512,
+        ContentAlignment_BottomRight = 1024
+    } ContentAlignment;
+
+    typedef [uuid(CB547D4A-33CC-3E01-86A5-A99997A91205), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.CopyPixelOperation")    
+]
+    enum {
+        CopyPixelOperation_NoMirrorBitmap = 0x80000000,
+        CopyPixelOperation_Blackness = 66,
+        CopyPixelOperation_NotSourceErase = 0x001100a6,
+        CopyPixelOperation_NotSourceCopy = 0x00330008,
+        CopyPixelOperation_SourceErase = 0x00440328,
+        CopyPixelOperation_DestinationInvert = 0x00550009,
+        CopyPixelOperation_PatInvert = 0x005a0049,
+        CopyPixelOperation_SourceInvert = 0x00660046,
+        CopyPixelOperation_SourceAnd = 0x008800c6,
+        CopyPixelOperation_MergePaint = 0x00bb0226,
+        CopyPixelOperation_MergeCopy = 0x00c000ca,
+        CopyPixelOperation_SourceCopy = 0x00cc0020,
+        CopyPixelOperation_SourcePaint = 0x00ee0086,
+        CopyPixelOperation_PatCopy = 0x00f00021,
+        CopyPixelOperation_PatPaint = 0x00fb0a09,
+        CopyPixelOperation_Whiteness = 0x00ff0062,
+        CopyPixelOperation_CaptureBlt = 0x40000000
+    } CopyPixelOperation;
+
+    [
+      uuid(D7CC9BC9-4061-36B4-AA58-36BA88FAAA8F),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Font")
+    ]
+    coclass Font {
+        [default] interface _Font;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(709C5D89-E5A0-337C-AF53-080A95A31958),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontConverter")
+    ]
+    coclass FontConverter {
+        [default] interface _FontConverter;
+        interface _Object;
+    };
+
+    [
+      uuid(2DC91209-C735-34AA-9F72-3B5C13CC1209),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontFamily")
+    ]
+    coclass FontFamily {
+        [default] interface _FontFamily;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    typedef [uuid(F5DD997E-33DA-35B6-ABF6-B3F09F705A48), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontStyle")    
+]
+    enum {
+        FontStyle_Regular = 0,
+        FontStyle_Bold = 1,
+        FontStyle_Italic = 2,
+        FontStyle_Underline = 4,
+        FontStyle_Strikeout = 8
+    } FontStyle;
+
+    [
+      uuid(6B73F54E-2422-3224-91E0-382C54C6B8AB),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Graphics")
+    ]
+    coclass Graphics {
+        [default] interface _Graphics;
+        interface _Object;
+        interface IDeviceContext;
+        interface IDisposable;
+    };
+
+    typedef [uuid(4A99EF6B-18B7-3971-A53C-EFF232DB7441), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.GraphicsUnit")    
+]
+    enum {
+        GraphicsUnit_World = 0,
+        GraphicsUnit_Display = 1,
+        GraphicsUnit_Pixel = 2,
+        GraphicsUnit_Point = 3,
+        GraphicsUnit_Inch = 4,
+        GraphicsUnit_Document = 5,
+        GraphicsUnit_Millimeter = 6
+    } GraphicsUnit;
+
+    [
+      uuid(45F18927-2F29-3891-A565-9D4919CFC4A2),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Icon")
+    ]
+    coclass Icon {
+        [default] interface _Icon;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(E303CC10-9284-339F-B4C5-D1DFE5CEB0BC),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.IconConverter")
+    ]
+    coclass IconConverter {
+        [default] interface _IconConverter;
+        interface _Object;
+    };
+
+    [
+      odl,
+      uuid(3B0820CC-0BAB-3225-A135-975CF1F66BA5),
+      version(1.0),
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.IDeviceContext")    
+
+    ]
+    interface IDeviceContext : IDispatch {
+        [id(0x60020000)]
+        HRESULT GetHdc([out, retval] int64* pRetVal);
+        [id(0x60020001)]
+        HRESULT ReleaseHdc();
+    };
+
+    [
+      uuid(387F5544-9308-31EF-A95D-812CEAE7757C),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Image")
+    ]
+    coclass Image {
+        [default] interface _Image;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(29191302-A0E5-36D0-8F39-8BFEACE2A9D2),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ImageAnimator")
+    ]
+    coclass ImageAnimator {
+        [default] interface _ImageAnimator;
+        interface _Object;
+    };
+
+    [
+      uuid(A3A59E93-7BA9-3FCF-9682-39CF14C1A878),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ImageConverter")
+    ]
+    coclass ImageConverter {
+        [default] interface _ImageConverter;
+        interface _Object;
+    };
+
+    [
+      uuid(9D046017-AE17-3567-AE50-AFC9C140A866),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ImageFormatConverter")
+    ]
+    coclass ImageFormatConverter {
+        [default] interface _ImageFormatConverter;
+        interface _Object;
+    };
+
+    [
+      uuid(2CCE7381-D3BA-38B1-ACA6-FF7669275A0B),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Pen")
+    ]
+    coclass Pen {
+        [default] interface _Pen;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    [
+      uuid(40C81D9E-BADA-31BD-B7E5-C270FA8D4372),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Pens")
+    ]
+    coclass Pens {
+        [default] interface _Pens;
+        interface _Object;
+    };
+
+    [
+      uuid(78AB63F6-767E-35F0-BD86-73C139C46013),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Region")
+    ]
+    coclass Region {
+        [default] interface _Region;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    typedef [uuid(5588CB81-BF8C-34A9-AF2B-C08793F5A1F0), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.RotateFlipType")    
+]
+    enum {
+        RotateFlipType_Rotate180FlipXY = 0,
+        RotateFlipType_RotateNoneFlipNone = 0,
+        RotateFlipType_Rotate270FlipXY = 1,
+        RotateFlipType_Rotate90FlipNone = 1,
+        RotateFlipType_Rotate180FlipNone = 2,
+        RotateFlipType_RotateNoneFlipXY = 2,
+        RotateFlipType_Rotate270FlipNone = 3,
+        RotateFlipType_Rotate90FlipXY = 3,
+        RotateFlipType_Rotate180FlipY = 4,
+        RotateFlipType_RotateNoneFlipX = 4,
+        RotateFlipType_Rotate270FlipY = 5,
+        RotateFlipType_Rotate90FlipX = 5,
+        RotateFlipType_Rotate180FlipX = 6,
+        RotateFlipType_RotateNoneFlipY = 6,
+        RotateFlipType_Rotate270FlipX = 7,
+        RotateFlipType_Rotate90FlipY = 7
+    } RotateFlipType;
+
+    [
+      uuid(CAFFD03B-C40A-32EA-BBB2-4F7C6DDFB5CE),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SolidBrush")
+    ]
+    coclass SolidBrush {
+        [default] interface _SolidBrush;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    typedef [uuid(6F3D1F27-03A0-3EAF-AC5A-1BAE89D1B8B9), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.StringAlignment")    
+]
+    enum {
+        StringAlignment_Near = 0,
+        StringAlignment_Center = 1,
+        StringAlignment_Far = 2
+    } StringAlignment;
+
+    typedef [uuid(4265B982-B180-39DB-9C42-85BEF89A1FD0), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.StringDigitSubstitute")    
+]
+    enum {
+        StringDigitSubstitute_User = 0,
+        StringDigitSubstitute_None = 1,
+        StringDigitSubstitute_National = 2,
+        StringDigitSubstitute_Traditional = 3
+    } StringDigitSubstitute;
+
+    [
+      uuid(C9E28B53-4743-3CEF-ACFF-743767B12A7E),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.StringFormat")
+    ]
+    coclass StringFormat {
+        [default] interface _StringFormat;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    typedef [uuid(3D90358C-7D45-3E14-9B8E-7FD534148A52), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.StringFormatFlags")    
+]
+    enum {
+        StringFormatFlags_DirectionRightToLeft = 1,
+        StringFormatFlags_DirectionVertical = 2,
+        StringFormatFlags_FitBlackBox = 4,
+        StringFormatFlags_DisplayFormatControl = 32,
+        StringFormatFlags_NoFontFallback = 1024,
+        StringFormatFlags_MeasureTrailingSpaces = 2048,
+        StringFormatFlags_NoWrap = 4096,
+        StringFormatFlags_LineLimit = 8192,
+        StringFormatFlags_NoClip = 16384
+    } StringFormatFlags;
+
+    typedef [uuid(C2E25B17-C6D6-3E75-B8CC-1D0DB1DF57EA), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.StringTrimming")    
+]
+    enum {
+        StringTrimming_None = 0,
+        StringTrimming_Character = 1,
+        StringTrimming_Word = 2,
+        StringTrimming_EllipsisCharacter = 3,
+        StringTrimming_EllipsisWord = 4,
+        StringTrimming_EllipsisPath = 5
+    } StringTrimming;
+
+    typedef [uuid(663E055B-E537-3705-BD8F-F327D850BCF8), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.StringUnit")    
+]
+    enum {
+        StringUnit_World = 0,
+        StringUnit_Display = 1,
+        StringUnit_Pixel = 2,
+        StringUnit_Point = 3,
+        StringUnit_Inch = 4,
+        StringUnit_Document = 5,
+        StringUnit_Millimeter = 6,
+        StringUnit_Em = 32
+    } StringUnit;
+
+    [
+      uuid(BA4C7942-3A9B-3162-86D6-F1C8F924B925),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemBrushes")
+    ]
+    coclass SystemBrushes {
+        [default] interface _SystemBrushes;
+        interface _Object;
+    };
+
+    [
+      uuid(8BCEFDF6-243E-38C5-A7F4-5A5B962C4E3C),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemFonts")
+    ]
+    coclass SystemFonts {
+        [default] interface _SystemFonts;
+        interface _Object;
+    };
+
+    [
+      uuid(BBCC3952-EFC6-3FFB-B99D-4E630C23B8ED),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemIcons")
+    ]
+    coclass SystemIcons {
+        [default] interface _SystemIcons;
+        interface _Object;
+    };
+
+    [
+      uuid(EB2144A5-FC26-34DB-B21E-27608485CDF1),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemPens")
+    ]
+    coclass SystemPens {
+        [default] interface _SystemPens;
+        interface _Object;
+    };
+
+    [
+      uuid(4FD0A1E6-C38A-3982-90F1-7396DD89FDDD),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.TextureBrush")
+    ]
+    coclass TextureBrush {
+        [default] interface _TextureBrush;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    [
+      uuid(A8C4A581-A5B9-3A5A-9E4D-7908D17711C2),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ToolboxBitmapAttribute")
+    ]
+    coclass ToolboxBitmapAttribute {
+        [default] interface _ToolboxBitmapAttribute;
+        interface _Object;
+        interface _Attribute;
+    };
+
+    [
+      uuid(EDCA55D9-BB06-3FA6-AF1C-8D67C25CA542),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ColorTranslator")
+    ]
+    coclass ColorTranslator {
+        [default] interface _ColorTranslator;
+        interface _Object;
+    };
+
+    [
+      uuid(6F1935AC-33A3-32F9-B786-05A15BB569B6),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemColors")
+    ]
+    coclass SystemColors {
+        [default] interface _SystemColors;
+        interface _Object;
+    };
+
+    [
+      uuid(B11D91A0-2D53-3AA6-9AB6-C8296C233E0D),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.FontCollection")
+    ]
+    coclass FontCollection {
+        [default] interface _FontCollection;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    typedef [uuid(7559FAF6-C63F-3B02-BD88-CD578C260DFC), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.GenericFontFamilies")    
+]
+    enum {
+        GenericFontFamilies_Serif = 0,
+        GenericFontFamilies_SansSerif = 1,
+        GenericFontFamilies_Monospace = 2
+    } GenericFontFamilies;
+
+    typedef [uuid(9D4EAA69-DA2B-3406-ABF6-960FBFFDD2D6), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.HotkeyPrefix")    
+]
+    enum {
+        HotkeyPrefix_None = 0,
+        HotkeyPrefix_Show = 1,
+        HotkeyPrefix_Hide = 2
+    } HotkeyPrefix;
+
+    [
+      uuid(29316BA1-6555-3BCC-AFBF-51307D1D0BA8),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.InstalledFontCollection")
+    ]
+    coclass InstalledFontCollection {
+        [default] interface _InstalledFontCollection;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    [
+      uuid(EB18E7C8-A2B8-35F7-A00D-680AA59C6299),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.PrivateFontCollection")
+    ]
+    coclass PrivateFontCollection {
+        [default] interface _PrivateFontCollection;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    typedef [uuid(37E7548F-5B3E-31F6-A867-C79B7BF9FA00), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.TextRenderingHint")    
+]
+    enum {
+        TextRenderingHint_SystemDefault = 0,
+        TextRenderingHint_SingleBitPerPixelGridFit = 1,
+        TextRenderingHint_SingleBitPerPixel = 2,
+        TextRenderingHint_AntiAliasGridFit = 3,
+        TextRenderingHint_AntiAlias = 4,
+        TextRenderingHint_ClearTypeGridFit = 5
+    } TextRenderingHint;
+
+    typedef [uuid(E1481DC9-0F09-3DC4-BDFA-D4810A81977E), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.Duplex")    
+]
+    enum {
+        Duplex_Default = 0xffffffff,
+        Duplex_Simplex = 1,
+        Duplex_Vertical = 2,
+        Duplex_Horizontal = 3
+    } Duplex;
+
+    [
+      uuid(026D92FC-7CBD-3DA8-A99B-36164BA72CC1),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.InvalidPrinterException")
+    ]
+    coclass InvalidPrinterException {
+        [default] interface _InvalidPrinterException;
+        interface _Object;
+        interface ISerializable;
+        interface _Exception;
+    };
+
+    [
+      uuid(D4F51614-C163-3873-9B5B-B2E7EE393C1E),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.Margins")
+    ]
+    coclass Margins {
+        [default] interface _Margins;
+        interface _Object;
+        interface ICloneable;
+    };
+
+    [
+      uuid(84FB8232-FBB5-32CA-8851-4739F5A84ACC),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.MarginsConverter")
+    ]
+    coclass MarginsConverter {
+        [default] interface _MarginsConverter;
+        interface _Object;
+    };
+
+    [
+      uuid(76CA3054-399D-3006-99C0-620C64FC7BF6),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PageSettings")
+    ]
+    coclass PageSettings {
+        [default] interface _PageSettings;
+        interface _Object;
+        interface ICloneable;
+    };
+
+    typedef [uuid(320EED1D-70D4-3D92-8A1A-6A94791097C1), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PaperKind")    
+]
+    enum {
+        PaperKind_Custom = 0,
+        PaperKind_Letter = 1,
+        PaperKind_LetterSmall = 2,
+        PaperKind_Tabloid = 3,
+        PaperKind_Ledger = 4,
+        PaperKind_Legal = 5,
+        PaperKind_Statement = 6,
+        PaperKind_Executive = 7,
+        PaperKind_A3 = 8,
+        PaperKind_A4 = 9,
+        PaperKind_A4Small = 10,
+        PaperKind_A5 = 11,
+        PaperKind_B4 = 12,
+        PaperKind_B5 = 13,
+        PaperKind_Folio = 14,
+        PaperKind_Quarto = 15,
+        PaperKind_Standard10x14 = 16,
+        PaperKind_Standard11x17 = 17,
+        PaperKind_Note = 18,
+        PaperKind_Number9Envelope = 19,
+        PaperKind_Number10Envelope = 20,
+        PaperKind_Number11Envelope = 21,
+        PaperKind_Number12Envelope = 22,
+        PaperKind_Number14Envelope = 23,
+        PaperKind_CSheet = 24,
+        PaperKind_DSheet = 25,
+        PaperKind_ESheet = 26,
+        PaperKind_DLEnvelope = 27,
+        PaperKind_C5Envelope = 28,
+        PaperKind_C3Envelope = 29,
+        PaperKind_C4Envelope = 30,
+        PaperKind_C6Envelope = 31,
+        PaperKind_C65Envelope = 32,
+        PaperKind_B4Envelope = 33,
+        PaperKind_B5Envelope = 34,
+        PaperKind_B6Envelope = 35,
+        PaperKind_ItalyEnvelope = 36,
+        PaperKind_MonarchEnvelope = 37,
+        PaperKind_PersonalEnvelope = 38,
+        PaperKind_USStandardFanfold = 39,
+        PaperKind_GermanStandardFanfold = 40,
+        PaperKind_GermanLegalFanfold = 41,
+        PaperKind_IsoB4 = 42,
+        PaperKind_JapanesePostcard = 43,
+        PaperKind_Standard9x11 = 44,
+        PaperKind_Standard10x11 = 45,
+        PaperKind_Standard15x11 = 46,
+        PaperKind_InviteEnvelope = 47,
+        PaperKind_LetterExtra = 50,
+        PaperKind_LegalExtra = 51,
+        PaperKind_TabloidExtra = 52,
+        PaperKind_A4Extra = 53,
+        PaperKind_LetterTransverse = 54,
+        PaperKind_A4Transverse = 55,
+        PaperKind_LetterExtraTransverse = 56,
+        PaperKind_APlus = 57,
+        PaperKind_BPlus = 58,
+        PaperKind_LetterPlus = 59,
+        PaperKind_A4Plus = 60,
+        PaperKind_A5Transverse = 61,
+        PaperKind_B5Transverse = 62,
+        PaperKind_A3Extra = 63,
+        PaperKind_A5Extra = 64,
+        PaperKind_B5Extra = 65,
+        PaperKind_A2 = 66,
+        PaperKind_A3Transverse = 67,
+        PaperKind_A3ExtraTransverse = 68,
+        PaperKind_JapaneseDoublePostcard = 69,
+        PaperKind_A6 = 70,
+        PaperKind_JapaneseEnvelopeKakuNumber2 = 71,
+        PaperKind_JapaneseEnvelopeKakuNumber3 = 72,
+        PaperKind_JapaneseEnvelopeChouNumber3 = 73,
+        PaperKind_JapaneseEnvelopeChouNumber4 = 74,
+        PaperKind_LetterRotated = 75,
+        PaperKind_A3Rotated = 76,
+        PaperKind_A4Rotated = 77,
+        PaperKind_A5Rotated = 78,
+        PaperKind_B4JisRotated = 79,
+        PaperKind_B5JisRotated = 80,
+        PaperKind_JapanesePostcardRotated = 81,
+        PaperKind_JapaneseDoublePostcardRotated = 82,
+        PaperKind_A6Rotated = 83,
+        PaperKind_JapaneseEnvelopeKakuNumber2Rotated = 84,
+        PaperKind_JapaneseEnvelopeKakuNumber3Rotated = 85,
+        PaperKind_JapaneseEnvelopeChouNumber3Rotated = 86,
+        PaperKind_JapaneseEnvelopeChouNumber4Rotated = 87,
+        PaperKind_B6Jis = 88,
+        PaperKind_B6JisRotated = 89,
+        PaperKind_Standard12x11 = 90,
+        PaperKind_JapaneseEnvelopeYouNumber4 = 91,
+        PaperKind_JapaneseEnvelopeYouNumber4Rotated = 92,
+        PaperKind_Prc16K = 93,
+        PaperKind_Prc32K = 94,
+        PaperKind_Prc32KBig = 95,
+        PaperKind_PrcEnvelopeNumber1 = 96,
+        PaperKind_PrcEnvelopeNumber2 = 97,
+        PaperKind_PrcEnvelopeNumber3 = 98,
+        PaperKind_PrcEnvelopeNumber4 = 99,
+        PaperKind_PrcEnvelopeNumber5 = 100,
+        PaperKind_PrcEnvelopeNumber6 = 101,
+        PaperKind_PrcEnvelopeNumber7 = 102,
+        PaperKind_PrcEnvelopeNumber8 = 103,
+        PaperKind_PrcEnvelopeNumber9 = 104,
+        PaperKind_PrcEnvelopeNumber10 = 105,
+        PaperKind_Prc16KRotated = 106,
+        PaperKind_Prc32KRotated = 107,
+        PaperKind_Prc32KBigRotated = 108,
+        PaperKind_PrcEnvelopeNumber1Rotated = 109,
+        PaperKind_PrcEnvelopeNumber2Rotated = 110,
+        PaperKind_PrcEnvelopeNumber3Rotated = 111,
+        PaperKind_PrcEnvelopeNumber4Rotated = 112,
+        PaperKind_PrcEnvelopeNumber5Rotated = 113,
+        PaperKind_PrcEnvelopeNumber6Rotated = 114,
+        PaperKind_PrcEnvelopeNumber7Rotated = 115,
+        PaperKind_PrcEnvelopeNumber8Rotated = 116,
+        PaperKind_PrcEnvelopeNumber9Rotated = 117,
+        PaperKind_PrcEnvelopeNumber10Rotated = 118
+    } PaperKind;
+
+    [
+      uuid(955BB52B-A200-3A90-8872-B549943CBDA0),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PaperSize")
+    ]
+    coclass PaperSize {
+        [default] interface _PaperSize;
+        interface _Object;
+    };
+
+    [
+      uuid(E76CDD2C-63AE-3359-BC21-41ED690CD3C3),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PaperSource")
+    ]
+    coclass PaperSource {
+        [default] interface _PaperSource;
+        interface _Object;
+    };
+
+    typedef [uuid(F0E936EC-E7FB-34E4-AF90-EACE1A929F9E), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PaperSourceKind")    
+]
+    enum {
+        PaperSourceKind_Upper = 1,
+        PaperSourceKind_Lower = 2,
+        PaperSourceKind_Middle = 3,
+        PaperSourceKind_Manual = 4,
+        PaperSourceKind_Envelope = 5,
+        PaperSourceKind_ManualFeed = 6,
+        PaperSourceKind_AutomaticFeed = 7,
+        PaperSourceKind_TractorFeed = 8,
+        PaperSourceKind_SmallFormat = 9,
+        PaperSourceKind_LargeFormat = 10,
+        PaperSourceKind_LargeCapacity = 11,
+        PaperSourceKind_Cassette = 14,
+        PaperSourceKind_FormSource = 15,
+        PaperSourceKind_Custom = 257
+    } PaperSourceKind;
+
+    [
+      uuid(16CEA31A-8D89-38EC-8C4C-1E2C08B7611D),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PreviewPageInfo")
+    ]
+    coclass PreviewPageInfo {
+        [default] interface _PreviewPageInfo;
+        interface _Object;
+    };
+
+    [
+      uuid(75875EFC-06BA-3E8C-B7BA-C733BD12C243),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PreviewPrintController")
+    ]
+    coclass PreviewPrintController {
+        [default] interface _PreviewPrintController;
+        interface _Object;
+    };
+
+    typedef [uuid(C72CD7E2-28E0-361C-B6CA-48365539E37A), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintAction")    
+]
+    enum {
+        PrintAction_PrintToFile = 0,
+        PrintAction_PrintToPreview = 1,
+        PrintAction_PrintToPrinter = 2
+    } PrintAction;
+
+    [
+      uuid(989D0580-A48F-3869-B532-1DA315CA24F2),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintController")
+    ]
+    coclass PrintController {
+        [default] interface _PrintController;
+        interface _Object;
+    };
+
+    [
+      uuid(F4D95EC3-13CB-3EFD-85E5-F2E885C1B9C5),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintDocument")
+    ]
+    coclass PrintDocument {
+        [default] interface _PrintDocument;
+        interface _Object;
+        interface IComponent;
+        interface IDisposable;
+    };
+
+    [
+      uuid(EE2782B8-0E0B-3587-8D32-A9035993C14B),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterResolution")
+    ]
+    coclass PrinterResolution {
+        [default] interface _PrinterResolution;
+        interface _Object;
+    };
+
+    typedef [uuid(62C3B913-A390-35D2-9649-6FCF08CA93EB), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterResolutionKind")    
+]
+    enum {
+        PrinterResolutionKind_High = 0xfffffffc,
+        PrinterResolutionKind_Medium = 0xfffffffd,
+        PrinterResolutionKind_Low = 0xfffffffe,
+        PrinterResolutionKind_Draft = 0xffffffff,
+        PrinterResolutionKind_Custom = 0
+    } PrinterResolutionKind;
+
+    [
+      uuid(75FE1B85-E289-3B5D-9AEA-56A390AB16B7),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings")
+    ]
+    coclass PrinterSettings {
+        [default] interface _PrinterSettings;
+        interface _Object;
+        interface ICloneable;
+    };
+
+    typedef [uuid(99D2DBC3-8D15-3C42-95E0-026A458594DF), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterUnit")    
+]
+    enum {
+        PrinterUnit_Display = 0,
+        PrinterUnit_ThousandthsOfAnInch = 1,
+        PrinterUnit_HundredthsOfAMillimeter = 2,
+        PrinterUnit_TenthsOfAMillimeter = 3
+    } PrinterUnit;
+
+    [
+      uuid(69B310CE-57F5-3969-AEDA-AF108F1BE384),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterUnitConvert")
+    ]
+    coclass PrinterUnitConvert {
+        [default] interface _PrinterUnitConvert;
+        interface _Object;
+    };
+
+    [
+      uuid(7837BC08-AD8C-3F9A-8645-724B954FB42A),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintEventArgs")
+    ]
+    coclass PrintEventArgs {
+        [default] interface _PrintEventArgs;
+        interface _Object;
+    };
+
+    [
+      uuid(E3853E07-C9AA-3B1C-895C-D0FD06596DF4),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintEventHandler")
+    ]
+    coclass PrintEventHandler {
+        [default] interface _PrintEventHandler;
+        interface _Delegate;
+        interface _Object;
+        interface ICloneable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(D08D511E-D2A1-3F1E-98D5-45E551213B2E),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintPageEventArgs")
+    ]
+    coclass PrintPageEventArgs {
+        [default] interface _PrintPageEventArgs;
+        interface _Object;
+    };
+
+    [
+      uuid(5C5883A2-7672-3D55-85E7-1CC4461D6491),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintPageEventHandler")
+    ]
+    coclass PrintPageEventHandler {
+        [default] interface _PrintPageEventHandler;
+        interface _Delegate;
+        interface _Object;
+        interface ICloneable;
+        interface ISerializable;
+    };
+
+    typedef [uuid(22052455-72ED-305F-B3F7-97F22E7A68D7), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintRange")    
+]
+    enum {
+        PrintRange_AllPages = 0,
+        PrintRange_Selection = 1,
+        PrintRange_SomePages = 2,
+        PrintRange_CurrentPage = 0x00400000
+    } PrintRange;
+
+    [
+      uuid(BAF5E682-2195-3D2B-8445-CB1D8EBABFFE),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.QueryPageSettingsEventArgs")
+    ]
+    coclass QueryPageSettingsEventArgs {
+        [default] interface _QueryPageSettingsEventArgs;
+        interface _Object;
+    };
+
+    [
+      uuid(051FE59F-6BF5-37FA-8D5A-0C9195A0CBC8),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.QueryPageSettingsEventHandler")
+    ]
+    coclass QueryPageSettingsEventHandler {
+        [default] interface _QueryPageSettingsEventHandler;
+        interface _Delegate;
+        interface _Object;
+        interface ICloneable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(AF2694BF-553B-327E-890B-400E2475D358),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.StandardPrintController")
+    ]
+    coclass StandardPrintController {
+        [default] interface _StandardPrintController;
+        interface _Object;
+    };
+
+    [
+      uuid(94E20A46-5674-333C-AF33-2BD683CB5F07),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.BitmapData")
+    ]
+    coclass BitmapData {
+        [default] interface _BitmapData;
+        interface _Object;
+    };
+
+    typedef [uuid(5F1118B3-D606-32FC-90A4-1D9CFB49D02B), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorAdjustType")    
+]
+    enum {
+        ColorAdjustType_Default = 0,
+        ColorAdjustType_Bitmap = 1,
+        ColorAdjustType_Brush = 2,
+        ColorAdjustType_Pen = 3,
+        ColorAdjustType_Text = 4,
+        ColorAdjustType_Count = 5,
+        ColorAdjustType_Any = 6
+    } ColorAdjustType;
+
+    typedef [uuid(E66CC517-B4EA-3BF2-AF70-0251B3B2C391), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorChannelFlag")    
+]
+    enum {
+        ColorChannelFlag_ColorChannelC = 0,
+        ColorChannelFlag_ColorChannelM = 1,
+        ColorChannelFlag_ColorChannelY = 2,
+        ColorChannelFlag_ColorChannelK = 3,
+        ColorChannelFlag_ColorChannelLast = 4
+    } ColorChannelFlag;
+
+    [
+      uuid(C27E2F6C-A0E0-39F3-997E-9C11FD6784E0),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorMap")
+    ]
+    coclass ColorMap {
+        [default] interface _ColorMap;
+        interface _Object;
+    };
+
+    typedef [uuid(E4EB801C-11A5-3258-B7F1-1925DA4D0597), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorMapType")    
+]
+    enum {
+        ColorMapType_Default = 0,
+        ColorMapType_Brush = 1
+    } ColorMapType;
+
+    [
+      uuid(C1ECB7E2-E6C7-35F5-88D0-FDEB9BA7C99D),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorMatrix")
+    ]
+    coclass ColorMatrix {
+        [default] interface _ColorMatrix;
+        interface _Object;
+    };
+
+    typedef [uuid(C39DE33C-1898-3769-9131-43B6E002C789), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorMatrixFlag")    
+]
+    enum {
+        ColorMatrixFlag_Default = 0,
+        ColorMatrixFlag_SkipGrays = 1,
+        ColorMatrixFlag_AltGrays = 2
+    } ColorMatrixFlag;
+
+    typedef [uuid(00B12D44-B5C8-3B61-9369-6A0C3A21ABF3), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorMode")    
+]
+    enum {
+        ColorMode_Argb32Mode = 0,
+        ColorMode_Argb64Mode = 1
+    } ColorMode;
+
+    [
+      uuid(1D9538D8-5F49-3C68-A93E-7254A9160E89),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorPalette")
+    ]
+    coclass ColorPalette {
+        [default] interface _ColorPalette;
+        interface _Object;
+    };
+
+    typedef [uuid(2679C1A9-F9D4-358D-BF4E-46D8437045B9), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.EmfPlusRecordType")    
+]
+    enum {
+        EmfPlusRecordType_EmfHeader = 1,
+        EmfPlusRecordType_EmfMin = 1,
+        EmfPlusRecordType_EmfPolyBezier = 2,
+        EmfPlusRecordType_EmfPolygon = 3,
+        EmfPlusRecordType_EmfPolyline = 4,
+        EmfPlusRecordType_EmfPolyBezierTo = 5,
+        EmfPlusRecordType_EmfPolyLineTo = 6,
+        EmfPlusRecordType_EmfPolyPolyline = 7,
+        EmfPlusRecordType_EmfPolyPolygon = 8,
+        EmfPlusRecordType_EmfSetWindowExtEx = 9,
+        EmfPlusRecordType_EmfSetWindowOrgEx = 10,
+        EmfPlusRecordType_EmfSetViewportExtEx = 11,
+        EmfPlusRecordType_EmfSetViewportOrgEx = 12,
+        EmfPlusRecordType_EmfSetBrushOrgEx = 13,
+        EmfPlusRecordType_EmfEof = 14,
+        EmfPlusRecordType_EmfSetPixelV = 15,
+        EmfPlusRecordType_EmfSetMapperFlags = 16,
+        EmfPlusRecordType_EmfSetMapMode = 17,
+        EmfPlusRecordType_EmfSetBkMode = 18,
+        EmfPlusRecordType_EmfSetPolyFillMode = 19,
+        EmfPlusRecordType_EmfSetROP2 = 20,
+        EmfPlusRecordType_EmfSetStretchBltMode = 21,
+        EmfPlusRecordType_EmfSetTextAlign = 22,
+        EmfPlusRecordType_EmfSetColorAdjustment = 23,
+        EmfPlusRecordType_EmfSetTextColor = 24,
+        EmfPlusRecordType_EmfSetBkColor = 25,
+        EmfPlusRecordType_EmfOffsetClipRgn = 26,
+        EmfPlusRecordType_EmfMoveToEx = 27,
+        EmfPlusRecordType_EmfSetMetaRgn = 28,
+        EmfPlusRecordType_EmfExcludeClipRect = 29,
+        EmfPlusRecordType_EmfIntersectClipRect = 30,
+        EmfPlusRecordType_EmfScaleViewportExtEx = 31,
+        EmfPlusRecordType_EmfScaleWindowExtEx = 32,
+        EmfPlusRecordType_EmfSaveDC = 33,
+        EmfPlusRecordType_EmfRestoreDC = 34,
+        EmfPlusRecordType_EmfSetWorldTransform = 35,
+        EmfPlusRecordType_EmfModifyWorldTransform = 36,
+        EmfPlusRecordType_EmfSelectObject = 37,
+        EmfPlusRecordType_EmfCreatePen = 38,
+        EmfPlusRecordType_EmfCreateBrushIndirect = 39,
+        EmfPlusRecordType_EmfDeleteObject = 40,
+        EmfPlusRecordType_EmfAngleArc = 41,
+        EmfPlusRecordType_EmfEllipse = 42,
+        EmfPlusRecordType_EmfRectangle = 43,
+        EmfPlusRecordType_EmfRoundRect = 44,
+        EmfPlusRecordType_EmfRoundArc = 45,
+        EmfPlusRecordType_EmfChord = 46,
+        EmfPlusRecordType_EmfPie = 47,
+        EmfPlusRecordType_EmfSelectPalette = 48,
+        EmfPlusRecordType_EmfCreatePalette = 49,
+        EmfPlusRecordType_EmfSetPaletteEntries = 50,
+        EmfPlusRecordType_EmfResizePalette = 51,
+        EmfPlusRecordType_EmfRealizePalette = 52,
+        EmfPlusRecordType_EmfExtFloodFill = 53,
+        EmfPlusRecordType_EmfLineTo = 54,
+        EmfPlusRecordType_EmfArcTo = 55,
+        EmfPlusRecordType_EmfPolyDraw = 56,
+        EmfPlusRecordType_EmfSetArcDirection = 57,
+        EmfPlusRecordType_EmfSetMiterLimit = 58,
+        EmfPlusRecordType_EmfBeginPath = 59,
+        EmfPlusRecordType_EmfEndPath = 60,
+        EmfPlusRecordType_EmfCloseFigure = 61,
+        EmfPlusRecordType_EmfFillPath = 62,
+        EmfPlusRecordType_EmfStrokeAndFillPath = 63,
+        EmfPlusRecordType_EmfStrokePath = 64,
+        EmfPlusRecordType_EmfFlattenPath = 65,
+        EmfPlusRecordType_EmfWidenPath = 66,
+        EmfPlusRecordType_EmfSelectClipPath = 67,
+        EmfPlusRecordType_EmfAbortPath = 68,
+        EmfPlusRecordType_EmfReserved069 = 69,
+        EmfPlusRecordType_EmfGdiComment = 70,
+        EmfPlusRecordType_EmfFillRgn = 71,
+        EmfPlusRecordType_EmfFrameRgn = 72,
+        EmfPlusRecordType_EmfInvertRgn = 73,
+        EmfPlusRecordType_EmfPaintRgn = 74,
+        EmfPlusRecordType_EmfExtSelectClipRgn = 75,
+        EmfPlusRecordType_EmfBitBlt = 76,
+        EmfPlusRecordType_EmfStretchBlt = 77,
+        EmfPlusRecordType_EmfMaskBlt = 78,
+        EmfPlusRecordType_EmfPlgBlt = 79,
+        EmfPlusRecordType_EmfSetDIBitsToDevice = 80,
+        EmfPlusRecordType_EmfStretchDIBits = 81,
+        EmfPlusRecordType_EmfExtCreateFontIndirect = 82,
+        EmfPlusRecordType_EmfExtTextOutA = 83,
+        EmfPlusRecordType_EmfExtTextOutW = 84,
+        EmfPlusRecordType_EmfPolyBezier16 = 85,
+        EmfPlusRecordType_EmfPolygon16 = 86,
+        EmfPlusRecordType_EmfPolyline16 = 87,
+        EmfPlusRecordType_EmfPolyBezierTo16 = 88,
+        EmfPlusRecordType_EmfPolylineTo16 = 89,
+        EmfPlusRecordType_EmfPolyPolyline16 = 90,
+        EmfPlusRecordType_EmfPolyPolygon16 = 91,
+        EmfPlusRecordType_EmfPolyDraw16 = 92,
+        EmfPlusRecordType_EmfCreateMonoBrush = 93,
+        EmfPlusRecordType_EmfCreateDibPatternBrushPt = 94,
+        EmfPlusRecordType_EmfExtCreatePen = 95,
+        EmfPlusRecordType_EmfPolyTextOutA = 96,
+        EmfPlusRecordType_EmfPolyTextOutW = 97,
+        EmfPlusRecordType_EmfSetIcmMode = 98,
+        EmfPlusRecordType_EmfCreateColorSpace = 99,
+        EmfPlusRecordType_EmfSetColorSpace = 100,
+        EmfPlusRecordType_EmfDeleteColorSpace = 101,
+        EmfPlusRecordType_EmfGlsRecord = 102,
+        EmfPlusRecordType_EmfGlsBoundedRecord = 103,
+        EmfPlusRecordType_EmfPixelFormat = 104,
+        EmfPlusRecordType_EmfDrawEscape = 105,
+        EmfPlusRecordType_EmfExtEscape = 106,
+        EmfPlusRecordType_EmfStartDoc = 107,
+        EmfPlusRecordType_EmfSmallTextOut = 108,
+        EmfPlusRecordType_EmfForceUfiMapping = 109,
+        EmfPlusRecordType_EmfNamedEscpae = 110,
+        EmfPlusRecordType_EmfColorCorrectPalette = 111,
+        EmfPlusRecordType_EmfSetIcmProfileA = 112,
+        EmfPlusRecordType_EmfSetIcmProfileW = 113,
+        EmfPlusRecordType_EmfAlphaBlend = 114,
+        EmfPlusRecordType_EmfSetLayout = 115,
+        EmfPlusRecordType_EmfTransparentBlt = 116,
+        EmfPlusRecordType_EmfReserved117 = 117,
+        EmfPlusRecordType_EmfGradientFill = 118,
+        EmfPlusRecordType_EmfSetLinkedUfis = 119,
+        EmfPlusRecordType_EmfSetTextJustification = 120,
+        EmfPlusRecordType_EmfColorMatchToTargetW = 121,
+        EmfPlusRecordType_EmfCreateColorSpaceW = 122,
+        EmfPlusRecordType_EmfMax = 122,
+        EmfPlusRecordType_EmfPlusRecordBase = 16384,
+        EmfPlusRecordType_Invalid = 16384,
+        EmfPlusRecordType_Header = 16385,
+        EmfPlusRecordType_Min = 16385,
+        EmfPlusRecordType_EndOfFile = 16386,
+        EmfPlusRecordType_Comment = 16387,
+        EmfPlusRecordType_GetDC = 16388,
+        EmfPlusRecordType_MultiFormatStart = 16389,
+        EmfPlusRecordType_MultiFormatSection = 16390,
+        EmfPlusRecordType_MultiFormatEnd = 16391,
+        EmfPlusRecordType_Object = 16392,
+        EmfPlusRecordType_Clear = 16393,
+        EmfPlusRecordType_FillRects = 16394,
+        EmfPlusRecordType_DrawRects = 16395,
+        EmfPlusRecordType_FillPolygon = 16396,
+        EmfPlusRecordType_DrawLines = 16397,
+        EmfPlusRecordType_FillEllipse = 16398,
+        EmfPlusRecordType_DrawEllipse = 16399,
+        EmfPlusRecordType_FillPie = 16400,
+        EmfPlusRecordType_DrawPie = 16401,
+        EmfPlusRecordType_DrawArc = 16402,
+        EmfPlusRecordType_FillRegion = 16403,
+        EmfPlusRecordType_FillPath = 16404,
+        EmfPlusRecordType_DrawPath = 16405,
+        EmfPlusRecordType_FillClosedCurve = 16406,
+        EmfPlusRecordType_DrawClosedCurve = 16407,
+        EmfPlusRecordType_DrawCurve = 16408,
+        EmfPlusRecordType_DrawBeziers = 16409,
+        EmfPlusRecordType_DrawImage = 16410,
+        EmfPlusRecordType_DrawImagePoints = 16411,
+        EmfPlusRecordType_DrawString = 16412,
+        EmfPlusRecordType_SetRenderingOrigin = 16413,
+        EmfPlusRecordType_SetAntiAliasMode = 16414,
+        EmfPlusRecordType_SetTextRenderingHint = 16415,
+        EmfPlusRecordType_SetTextContrast = 16416,
+        EmfPlusRecordType_SetInterpolationMode = 16417,
+        EmfPlusRecordType_SetPixelOffsetMode = 16418,
+        EmfPlusRecordType_SetCompositingMode = 16419,
+        EmfPlusRecordType_SetCompositingQuality = 16420,
+        EmfPlusRecordType_Save = 16421,
+        EmfPlusRecordType_Restore = 16422,
+        EmfPlusRecordType_BeginContainer = 16423,
+        EmfPlusRecordType_BeginContainerNoParams = 16424,
+        EmfPlusRecordType_EndContainer = 16425,
+        EmfPlusRecordType_SetWorldTransform = 16426,
+        EmfPlusRecordType_ResetWorldTransform = 16427,
+        EmfPlusRecordType_MultiplyWorldTransform = 16428,
+        EmfPlusRecordType_TranslateWorldTransform = 16429,
+        EmfPlusRecordType_ScaleWorldTransform = 16430,
+        EmfPlusRecordType_RotateWorldTransform = 16431,
+        EmfPlusRecordType_SetPageTransform = 16432,
+        EmfPlusRecordType_ResetClip = 16433,
+        EmfPlusRecordType_SetClipRect = 16434,
+        EmfPlusRecordType_SetClipPath = 16435,
+        EmfPlusRecordType_SetClipRegion = 16436,
+        EmfPlusRecordType_OffsetClip = 16437,
+        EmfPlusRecordType_DrawDriverString = 16438,
+        EmfPlusRecordType_Max = 16438,
+        EmfPlusRecordType_Total = 16439,
+        EmfPlusRecordType_WmfRecordBase = 0x00010000,
+        EmfPlusRecordType_WmfSaveDC = 0x0001001e,
+        EmfPlusRecordType_WmfRealizePalette = 0x00010035,
+        EmfPlusRecordType_WmfSetPalEntries = 0x00010037,
+        EmfPlusRecordType_WmfCreatePalette = 0x000100f7,
+        EmfPlusRecordType_WmfSetBkMode = 0x00010102,
+        EmfPlusRecordType_WmfSetMapMode = 0x00010103,
+        EmfPlusRecordType_WmfSetROP2 = 0x00010104,
+        EmfPlusRecordType_WmfSetRelAbs = 0x00010105,
+        EmfPlusRecordType_WmfSetPolyFillMode = 0x00010106,
+        EmfPlusRecordType_WmfSetStretchBltMode = 0x00010107,
+        EmfPlusRecordType_WmfSetTextCharExtra = 0x00010108,
+        EmfPlusRecordType_WmfRestoreDC = 0x00010127,
+        EmfPlusRecordType_WmfInvertRegion = 0x0001012a,
+        EmfPlusRecordType_WmfPaintRegion = 0x0001012b,
+        EmfPlusRecordType_WmfSelectClipRegion = 0x0001012c,
+        EmfPlusRecordType_WmfSelectObject = 0x0001012d,
+        EmfPlusRecordType_WmfSetTextAlign = 0x0001012e,
+        EmfPlusRecordType_WmfResizePalette = 0x00010139,
+        EmfPlusRecordType_WmfDibCreatePatternBrush = 0x00010142,
+        EmfPlusRecordType_WmfSetLayout = 0x00010149,
+        EmfPlusRecordType_WmfDeleteObject = 0x000101f0,
+        EmfPlusRecordType_WmfCreatePatternBrush = 0x000101f9,
+        EmfPlusRecordType_WmfSetBkColor = 0x00010201,
+        EmfPlusRecordType_WmfSetTextColor = 0x00010209,
+        EmfPlusRecordType_WmfSetTextJustification = 0x0001020a,
+        EmfPlusRecordType_WmfSetWindowOrg = 0x0001020b,
+        EmfPlusRecordType_WmfSetWindowExt = 0x0001020c,
+        EmfPlusRecordType_WmfSetViewportOrg = 0x0001020d,
+        EmfPlusRecordType_WmfSetViewportExt = 0x0001020e,
+        EmfPlusRecordType_WmfOffsetWindowOrg = 0x0001020f,
+        EmfPlusRecordType_WmfOffsetViewportOrg = 0x00010211,
+        EmfPlusRecordType_WmfLineTo = 0x00010213,
+        EmfPlusRecordType_WmfMoveTo = 0x00010214,
+        EmfPlusRecordType_WmfOffsetCilpRgn = 0x00010220,
+        EmfPlusRecordType_WmfFillRegion = 0x00010228,
+        EmfPlusRecordType_WmfSetMapperFlags = 0x00010231,
+        EmfPlusRecordType_WmfSelectPalette = 0x00010234,
+        EmfPlusRecordType_WmfCreatePenIndirect = 0x000102fa,
+        EmfPlusRecordType_WmfCreateFontIndirect = 0x000102fb,
+        EmfPlusRecordType_WmfCreateBrushIndirect = 0x000102fc,
+        EmfPlusRecordType_WmfPolygon = 0x00010324,
+        EmfPlusRecordType_WmfPolyline = 0x00010325,
+        EmfPlusRecordType_WmfScaleWindowExt = 0x00010410,
+        EmfPlusRecordType_WmfScaleViewportExt = 0x00010412,
+        EmfPlusRecordType_WmfExcludeClipRect = 0x00010415,
+        EmfPlusRecordType_WmfIntersectClipRect = 0x00010416,
+        EmfPlusRecordType_WmfEllipse = 0x00010418,
+        EmfPlusRecordType_WmfFloodFill = 0x00010419,
+        EmfPlusRecordType_WmfRectangle = 0x0001041b,
+        EmfPlusRecordType_WmfSetPixel = 0x0001041f,
+        EmfPlusRecordType_WmfFrameRegion = 0x00010429,
+        EmfPlusRecordType_WmfAnimatePalette = 0x00010436,
+        EmfPlusRecordType_WmfTextOut = 0x00010521,
+        EmfPlusRecordType_WmfPolyPolygon = 0x00010538,
+        EmfPlusRecordType_WmfExtFloodFill = 0x00010548,
+        EmfPlusRecordType_WmfRoundRect = 0x0001061c,
+        EmfPlusRecordType_WmfPatBlt = 0x0001061d,
+        EmfPlusRecordType_WmfEscape = 0x00010626,
+        EmfPlusRecordType_WmfCreateRegion = 0x000106ff,
+        EmfPlusRecordType_WmfArc = 0x00010817,
+        EmfPlusRecordType_WmfPie = 0x0001081a,
+        EmfPlusRecordType_WmfChord = 0x00010830,
+        EmfPlusRecordType_WmfBitBlt = 0x00010922,
+        EmfPlusRecordType_WmfDibBitBlt = 0x00010940,
+        EmfPlusRecordType_WmfExtTextOut = 0x00010a32,
+        EmfPlusRecordType_WmfStretchBlt = 0x00010b23,
+        EmfPlusRecordType_WmfDibStretchBlt = 0x00010b41,
+        EmfPlusRecordType_WmfSetDibToDev = 0x00010d33,
+        EmfPlusRecordType_WmfStretchDib = 0x00010f43
+    } EmfPlusRecordType;
+
+    typedef [uuid(66B68EF2-3BD4-32EC-B6A8-8151A4A683BD), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.EmfType")    
+]
+    enum {
+        EmfType_EmfOnly = 3,
+        EmfType_EmfPlusOnly = 4,
+        EmfType_EmfPlusDual = 5
+    } EmfType;
+
+    [
+      uuid(AC541A83-3316-3BA1-A04D-B1C5B59C26E8),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.Encoder")
+    ]
+    coclass Encoder {
+        [default] interface _Encoder;
+        interface _Object;
+    };
+
+    [
+      uuid(24E94D5A-6ED8-3073-99CE-F4FCEBF69DFF),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.EncoderParameter")
+    ]
+    coclass EncoderParameter {
+        [default] interface _EncoderParameter;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    [
+      uuid(59196F56-8250-3FC4-B8AD-972EC7E707BA),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.EncoderParameters")
+    ]
+    coclass EncoderParameters {
+        [default] interface _EncoderParameters;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    typedef [uuid(AA066BCA-12BA-358D-9646-B53D2149301B), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.EncoderParameterValueType")    
+]
+    enum {
+        EncoderParameterValueType_ValueTypeByte = 1,
+        EncoderParameterValueType_ValueTypeAscii = 2,
+        EncoderParameterValueType_ValueTypeShort = 3,
+        EncoderParameterValueType_ValueTypeLong = 4,
+        EncoderParameterValueType_ValueTypeRational = 5,
+        EncoderParameterValueType_ValueTypeLongRange = 6,
+        EncoderParameterValueType_ValueTypeUndefined = 7,
+        EncoderParameterValueType_ValueTypeRationalRange = 8,
+        EncoderParameterValueType_ValueTypePointer = 9
+    } EncoderParameterValueType;
+
+    typedef [uuid(3412ED30-681B-3611-A162-49A493761B4C), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.EncoderValue")    
+]
+    enum {
+        EncoderValue_ColorTypeCMYK = 0,
+        EncoderValue_ColorTypeYCCK = 1,
+        EncoderValue_CompressionLZW = 2,
+        EncoderValue_CompressionCCITT3 = 3,
+        EncoderValue_CompressionCCITT4 = 4,
+        EncoderValue_CompressionRle = 5,
+        EncoderValue_CompressionNone = 6,
+        EncoderValue_ScanMethodInterlaced = 7,
+        EncoderValue_ScanMethodNonInterlaced = 8,
+        EncoderValue_VersionGif87 = 9,
+        EncoderValue_VersionGif89 = 10,
+        EncoderValue_RenderProgressive = 11,
+        EncoderValue_RenderNonProgressive = 12,
+        EncoderValue_TransformRotate90 = 13,
+        EncoderValue_TransformRotate180 = 14,
+        EncoderValue_TransformRotate270 = 15,
+        EncoderValue_TransformFlipHorizontal = 16,
+        EncoderValue_TransformFlipVertical = 17,
+        EncoderValue_MultiFrame = 18,
+        EncoderValue_LastFrame = 19,
+        EncoderValue_Flush = 20,
+        EncoderValue_FrameDimensionTime = 21,
+        EncoderValue_FrameDimensionResolution = 22,
+        EncoderValue_FrameDimensionPage = 23
+    } EncoderValue;
+
+    [
+      uuid(60918B57-A791-3235-A322-7528A9ED429C),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.FrameDimension")
+    ]
+    coclass FrameDimension {
+        [default] interface _FrameDimension;
+        interface _Object;
+    };
+
+    [
+      uuid(F212D409-F91F-3310-A5A0-D49F802B55DE),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageAttributes")
+    ]
+    coclass ImageAttributes {
+        [default] interface _ImageAttributes;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    typedef [uuid(F470B47A-1993-3F10-BF11-963F4FCA1C04), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageCodecFlags")    
+]
+    enum {
+        ImageCodecFlags_Encoder = 1,
+        ImageCodecFlags_Decoder = 2,
+        ImageCodecFlags_SupportBitmap = 4,
+        ImageCodecFlags_SupportVector = 8,
+        ImageCodecFlags_SeekableEncode = 16,
+        ImageCodecFlags_BlockingDecode = 32,
+        ImageCodecFlags_Builtin = 0x00010000,
+        ImageCodecFlags_System = 0x00020000,
+        ImageCodecFlags_User = 0x00040000
+    } ImageCodecFlags;
+
+    [
+      uuid(B423C535-80DF-3293-9DC9-09D7049A47B6),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageCodecInfo")
+    ]
+    coclass ImageCodecInfo {
+        [default] interface _ImageCodecInfo;
+        interface _Object;
+    };
+
+    typedef [uuid(097D784D-D5A9-3D6D-AE0B-E8EC4386FA09), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageFlags")    
+]
+    enum {
+        ImageFlags_None = 0,
+        ImageFlags_Scalable = 1,
+        ImageFlags_HasAlpha = 2,
+        ImageFlags_HasTranslucent = 4,
+        ImageFlags_PartiallyScalable = 8,
+        ImageFlags_ColorSpaceRgb = 16,
+        ImageFlags_ColorSpaceCmyk = 32,
+        ImageFlags_ColorSpaceGray = 64,
+        ImageFlags_ColorSpaceYcbcr = 128,
+        ImageFlags_ColorSpaceYcck = 256,
+        ImageFlags_HasRealDpi = 4096,
+        ImageFlags_HasRealPixelSize = 8192,
+        ImageFlags_ReadOnly = 0x00010000,
+        ImageFlags_Caching = 0x00020000
+    } ImageFlags;
+
+    [
+      uuid(1008B6E4-ED16-319B-93E3-D76C4CEC50D9),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageFormat")
+    ]
+    coclass ImageFormat {
+        [default] interface _ImageFormat;
+        interface _Object;
+    };
+
+    typedef [uuid(7421D8B1-88CA-32CC-BB31-26EAD2EE4BCA), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageLockMode")    
+]
+    enum {
+        ImageLockMode_ReadOnly = 1,
+        ImageLockMode_WriteOnly = 2,
+        ImageLockMode_ReadWrite = 3,
+        ImageLockMode_UserInputBuffer = 4
+    } ImageLockMode;
+
+    [
+      uuid(92577FE5-CA96-3E17-9150-4A2033E2A8D8),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.Metafile")
+    ]
+    coclass Metafile {
+        [default] interface _Metafile;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+        interface ISerializable;
+    };
+
+    typedef [uuid(64CA3674-FE6C-3E0F-B22B-DBD4C023938A), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.MetafileFrameUnit")    
+]
+    enum {
+        MetafileFrameUnit_Pixel = 2,
+        MetafileFrameUnit_Point = 3,
+        MetafileFrameUnit_Inch = 4,
+        MetafileFrameUnit_Document = 5,
+        MetafileFrameUnit_Millimeter = 6,
+        MetafileFrameUnit_GdiCompatible = 7
+    } MetafileFrameUnit;
+
+    [
+      uuid(88CA4C33-D44D-3530-AA80-FE75C123DBB0),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.MetafileHeader")
+    ]
+    coclass MetafileHeader {
+        [default] interface _MetafileHeader;
+        interface _Object;
+    };
+
+    typedef [uuid(79B96A71-A2BE-3A28-A913-83115DEE7BEF), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.MetafileType")    
+]
+    enum {
+        MetafileType_Invalid = 0,
+        MetafileType_Wmf = 1,
+        MetafileType_WmfPlaceable = 2,
+        MetafileType_Emf = 3,
+        MetafileType_EmfPlusOnly = 4,
+        MetafileType_EmfPlusDual = 5
+    } MetafileType;
+
+    [
+      uuid(2B31B751-9352-3F15-BE5E-A0EEFB7B4137),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.MetaHeader")
+    ]
+    coclass MetaHeader {
+        [default] interface _MetaHeader;
+        interface _Object;
+    };
+
+    typedef [uuid(E389A1A0-2F7E-3247-923D-DB4C98031919), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.PaletteFlags")    
+]
+    enum {
+        PaletteFlags_HasAlpha = 1,
+        PaletteFlags_GrayScale = 2,
+        PaletteFlags_Halftone = 4
+    } PaletteFlags;
+
+    typedef [uuid(400CB1F2-00CF-36E2-969A-CE830067124A), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.PixelFormat")    
+]
+    enum {
+        PixelFormat_DontCare = 0,
+        PixelFormat_Undefined = 0,
+        PixelFormat_Max = 15,
+        PixelFormat_Indexed = 0x00010000,
+        PixelFormat_Gdi = 0x00020000,
+        PixelFormat_Format16bppRgb555 = 0x00021005,
+        PixelFormat_Format16bppRgb565 = 0x00021006,
+        PixelFormat_Format24bppRgb = 0x00021808,
+        PixelFormat_Format32bppRgb = 0x00022009,
+        PixelFormat_Format1bppIndexed = 0x00030101,
+        PixelFormat_Format4bppIndexed = 0x00030402,
+        PixelFormat_Format8bppIndexed = 0x00030803,
+        PixelFormat_Alpha = 0x00040000,
+        PixelFormat_Format16bppArgb1555 = 0x00061007,
+        PixelFormat_PAlpha = 0x00080000,
+        PixelFormat_Format32bppPArgb = 0x000e200b,
+        PixelFormat_Extended = 0x00100000,
+        PixelFormat_Format16bppGrayScale = 0x00101004,
+        PixelFormat_Format48bppRgb = 0x0010300c,
+        PixelFormat_Format64bppPArgb = 0x001c400e,
+        PixelFormat_Canonical = 0x00200000,
+        PixelFormat_Format32bppArgb = 0x0026200a,
+        PixelFormat_Format64bppArgb = 0x0034400d
+    } PixelFormat;
+
+    [
+      uuid(39274FBA-BE79-344E-AFAC-394DC574064D),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.PlayRecordCallback")
+    ]
+    coclass PlayRecordCallback {
+        [default] interface _PlayRecordCallback;
+        interface _Delegate;
+        interface _Object;
+        interface ICloneable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(878F2D21-1A54-32C7-B605-5BCCA14F86FE),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.PropertyItem")
+    ]
+    coclass PropertyItem {
+        [default] interface _PropertyItem;
+        interface _Object;
+    };
+
+    [
+      uuid(C8A50949-431A-3892-84BE-E94924A6ECE3),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.WmfPlaceableFileHeader")
+    ]
+    coclass WmfPlaceableFileHeader {
+        [default] interface _WmfPlaceableFileHeader;
+        interface _Object;
+    };
+
+    [
+      uuid(EC370E79-4F93-3AF2-A6F5-ECC0E0AD7DCA),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.AdjustableArrowCap")
+    ]
+    coclass AdjustableArrowCap {
+        [default] interface _AdjustableArrowCap;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    [
+      uuid(B47B8416-22F1-3180-BEDE-0D9E9F027154),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.Blend")
+    ]
+    coclass Blend {
+        [default] interface _Blend;
+        interface _Object;
+    };
+
+    [
+      uuid(97F8A988-BA8B-3C4B-8536-BA4B69A8569A),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.ColorBlend")
+    ]
+    coclass ColorBlend {
+        [default] interface _ColorBlend;
+        interface _Object;
+    };
+
+    typedef [uuid(99955E13-4B85-379F-B9AD-1E85B10DBCF2), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.CombineMode")    
+]
+    enum {
+        CombineMode_Replace = 0,
+        CombineMode_Intersect = 1,
+        CombineMode_Union = 2,
+        CombineMode_Xor = 3,
+        CombineMode_Exclude = 4,
+        CombineMode_Complement = 5
+    } CombineMode;
+
+    typedef [uuid(DA700596-B99E-30B9-BAEC-8260CC88318B), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.CompositingMode")    
+]
+    enum {
+        CompositingMode_SourceOver = 0,
+        CompositingMode_SourceCopy = 1
+    } CompositingMode;
+
+    typedef [uuid(8749E747-ADA8-36FA-9E33-2E9E23D4690B), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.CompositingQuality")    
+]
+    enum {
+        CompositingQuality_Invalid = 0xffffffff,
+        CompositingQuality_Default = 0,
+        CompositingQuality_HighSpeed = 1,
+        CompositingQuality_HighQuality = 2,
+        CompositingQuality_GammaCorrected = 3,
+        CompositingQuality_AssumeLinear = 4
+    } CompositingQuality;
+
+    typedef [uuid(8645CBAD-92DB-353F-92A2-24A9DB11FDA4), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.CoordinateSpace")    
+]
+    enum {
+        CoordinateSpace_World = 0,
+        CoordinateSpace_Page = 1,
+        CoordinateSpace_Device = 2
+    } CoordinateSpace;
+
+    [
+      uuid(6D198E54-2D60-3D39-A596-A7D71874D0A8),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.CustomLineCap")
+    ]
+    coclass CustomLineCap {
+        [default] interface _CustomLineCap;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    typedef [uuid(73E82689-20DF-3600-A79E-BB8CCE79D04C), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.DashCap")    
+]
+    enum {
+        DashCap_Flat = 0,
+        DashCap_Round = 2,
+        DashCap_Triangle = 3
+    } DashCap;
+
+    typedef [uuid(158676FF-32F4-38DE-BE5A-98D3CBF071DA), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.DashStyle")    
+]
+    enum {
+        DashStyle_Solid = 0,
+        DashStyle_Dash = 1,
+        DashStyle_Dot = 2,
+        DashStyle_DashDot = 3,
+        DashStyle_DashDotDot = 4,
+        DashStyle_Custom = 5
+    } DashStyle;
+
+    typedef [uuid(6A1C9656-9ED6-327C-B987-87742C5FD615), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.FillMode")    
+]
+    enum {
+        FillMode_Alternate = 0,
+        FillMode_Winding = 1
+    } FillMode;
+
+    typedef [uuid(0B9745B7-E72E-3993-AEFC-AFD5E3C8556F), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.FlushIntention")    
+]
+    enum {
+        FlushIntention_Flush = 0,
+        FlushIntention_Sync = 1
+    } FlushIntention;
+
+    [
+      uuid(AF5546F0-8AD9-31DA-AFA1-3CC576C05A8C),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.GraphicsContainer")
+    ]
+    coclass GraphicsContainer {
+        [default] interface _GraphicsContainer;
+        interface _Object;
+    };
+
+    [
+      uuid(0AD97EF5-75DD-3881-8590-32FCBAB51765),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.GraphicsPath")
+    ]
+    coclass GraphicsPath {
+        [default] interface _GraphicsPath;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    [
+      uuid(563115A1-2FC3-3ADF-AC1F-B807572D63E4),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.GraphicsPathIterator")
+    ]
+    coclass GraphicsPathIterator {
+        [default] interface _GraphicsPathIterator;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    [
+      uuid(B6BEDD72-81A5-39E2-93AF-CE6D8726FEEC),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.GraphicsState")
+    ]
+    coclass GraphicsState {
+        [default] interface _GraphicsState;
+        interface _Object;
+    };
+
+    [
+      uuid(5DF1A7A3-0B6C-3637-A9A6-5F3EEB31143C),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.HatchBrush")
+    ]
+    coclass HatchBrush {
+        [default] interface _HatchBrush;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    typedef [uuid(F365127C-C545-3042-AC1D-772FB92E1732), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.HatchStyle")    
+]
+    enum {
+        HatchStyle_Horizontal = 0,
+        HatchStyle_Min = 0,
+        HatchStyle_Vertical = 1,
+        HatchStyle_ForwardDiagonal = 2,
+        HatchStyle_BackwardDiagonal = 3,
+        HatchStyle_Cross = 4,
+        HatchStyle_LargeGrid = 4,
+        HatchStyle_Max = 4,
+        HatchStyle_DiagonalCross = 5,
+        HatchStyle_Percent05 = 6,
+        HatchStyle_Percent10 = 7,
+        HatchStyle_Percent20 = 8,
+        HatchStyle_Percent25 = 9,
+        HatchStyle_Percent30 = 10,
+        HatchStyle_Percent40 = 11,
+        HatchStyle_Percent50 = 12,
+        HatchStyle_Percent60 = 13,
+        HatchStyle_Percent70 = 14,
+        HatchStyle_Percent75 = 15,
+        HatchStyle_Percent80 = 16,
+        HatchStyle_Percent90 = 17,
+        HatchStyle_LightDownwardDiagonal = 18,
+        HatchStyle_LightUpwardDiagonal = 19,
+        HatchStyle_DarkDownwardDiagonal = 20,
+        HatchStyle_DarkUpwardDiagonal = 21,
+        HatchStyle_WideDownwardDiagonal = 22,
+        HatchStyle_WideUpwardDiagonal = 23,
+        HatchStyle_LightVertical = 24,
+        HatchStyle_LightHorizontal = 25,
+        HatchStyle_NarrowVertical = 26,
+        HatchStyle_NarrowHorizontal = 27,
+        HatchStyle_DarkVertical = 28,
+        HatchStyle_DarkHorizontal = 29,
+        HatchStyle_DashedDownwardDiagonal = 30,
+        HatchStyle_DashedUpwardDiagonal = 31,
+        HatchStyle_DashedHorizontal = 32,
+        HatchStyle_DashedVertical = 33,
+        HatchStyle_SmallConfetti = 34,
+        HatchStyle_LargeConfetti = 35,
+        HatchStyle_ZigZag = 36,
+        HatchStyle_Wave = 37,
+        HatchStyle_DiagonalBrick = 38,
+        HatchStyle_HorizontalBrick = 39,
+        HatchStyle_Weave = 40,
+        HatchStyle_Plaid = 41,
+        HatchStyle_Divot = 42,
+        HatchStyle_DottedGrid = 43,
+        HatchStyle_DottedDiamond = 44,
+        HatchStyle_Shingle = 45,
+        HatchStyle_Trellis = 46,
+        HatchStyle_Sphere = 47,
+        HatchStyle_SmallGrid = 48,
+        HatchStyle_SmallCheckerBoard = 49,
+        HatchStyle_LargeCheckerBoard = 50,
+        HatchStyle_OutlinedDiamond = 51,
+        HatchStyle_SolidDiamond = 52
+    } HatchStyle;
+
+    typedef [uuid(B7B2AC29-6D0C-3320-AB72-4CBA4B8A1DFE), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.InterpolationMode")    
+]
+    enum {
+        InterpolationMode_Invalid = 0xffffffff,
+        InterpolationMode_Default = 0,
+        InterpolationMode_Low = 1,
+        InterpolationMode_High = 2,
+        InterpolationMode_Bilinear = 3,
+        InterpolationMode_Bicubic = 4,
+        InterpolationMode_NearestNeighbor = 5,
+        InterpolationMode_HighQualityBilinear = 6,
+        InterpolationMode_HighQualityBicubic = 7
+    } InterpolationMode;
+
+    [
+      uuid(C83F139B-7117-3B23-8B82-870DE0A1952A),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.LinearGradientBrush")
+    ]
+    coclass LinearGradientBrush {
+        [default] interface _LinearGradientBrush;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    typedef [uuid(1E210BAB-7E21-3BA3-8D79-90EEB45354FB), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.LinearGradientMode")    
+]
+    enum {
+        LinearGradientMode_Horizontal = 0,
+        LinearGradientMode_Vertical = 1,
+        LinearGradientMode_ForwardDiagonal = 2,
+        LinearGradientMode_BackwardDiagonal = 3
+    } LinearGradientMode;
+
+    typedef [uuid(10D18A71-8260-3AC2-825E-D8852C6B969B), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.LineCap")    
+]
+    enum {
+        LineCap_Flat = 0,
+        LineCap_Square = 1,
+        LineCap_Round = 2,
+        LineCap_Triangle = 3,
+        LineCap_NoAnchor = 16,
+        LineCap_SquareAnchor = 17,
+        LineCap_RoundAnchor = 18,
+        LineCap_DiamondAnchor = 19,
+        LineCap_ArrowAnchor = 20,
+        LineCap_AnchorMask = 240,
+        LineCap_Custom = 255
+    } LineCap;
+
+    typedef [uuid(2D387306-ABE6-3270-A08D-552CE50DE9BC), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.LineJoin")    
+]
+    enum {
+        LineJoin_Miter = 0,
+        LineJoin_Bevel = 1,
+        LineJoin_Round = 2,
+        LineJoin_MiterClipped = 3
+    } LineJoin;
+
+    [
+      uuid(268BDEE5-295A-3B1E-A46F-ED2EA1F8B148),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.Matrix")
+    ]
+    coclass Matrix {
+        [default] interface _Matrix;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    typedef [uuid(1517B3AD-79BC-3CAA-8E97-F40ECA0ADCA6), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.MatrixOrder")    
+]
+    enum {
+        MatrixOrder_Prepend = 0,
+        MatrixOrder_Append = 1
+    } MatrixOrder;
+
+    [
+      uuid(27670BDC-18A0-3645-AF2C-A133CCCD20DF),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.PathData")
+    ]
+    coclass PathData {
+        [default] interface _PathData;
+        interface _Object;
+    };
+
+    [
+      uuid(70BC16E8-5A97-3E5E-9ADB-7A8DC61D3ED4),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.PathGradientBrush")
+    ]
+    coclass PathGradientBrush {
+        [default] interface _PathGradientBrush;
+        interface _Object;
+        interface ICloneable;
+        interface IDisposable;
+    };
+
+    typedef [uuid(97CA5A04-2179-3E58-B7AF-0D0BDE3E85DF), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.PathPointType")    
+]
+    enum {
+        PathPointType_Start = 0,
+        PathPointType_Line = 1,
+        PathPointType_Bezier = 3,
+        PathPointType_Bezier3 = 3,
+        PathPointType_PathTypeMask = 7,
+        PathPointType_DashMode = 16,
+        PathPointType_PathMarker = 32,
+        PathPointType_CloseSubpath = 128
+    } PathPointType;
+
+    typedef [uuid(A29E5FE2-543B-32EE-BFBD-94B38A406218), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.PenAlignment")    
+]
+    enum {
+        PenAlignment_Center = 0,
+        PenAlignment_Inset = 1,
+        PenAlignment_Outset = 2,
+        PenAlignment_Left = 3,
+        PenAlignment_Right = 4
+    } PenAlignment;
+
+    typedef [uuid(D370B5E5-A452-36B7-A75C-94585DBE3AFC), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.PenType")    
+]
+    enum {
+        PenType_SolidColor = 0,
+        PenType_HatchFill = 1,
+        PenType_TextureFill = 2,
+        PenType_PathGradient = 3,
+        PenType_LinearGradient = 4
+    } PenType;
+
+    typedef [uuid(09833990-08EC-3F35-9029-2F76754C794E), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.PixelOffsetMode")    
+]
+    enum {
+        PixelOffsetMode_Invalid = 0xffffffff,
+        PixelOffsetMode_Default = 0,
+        PixelOffsetMode_HighSpeed = 1,
+        PixelOffsetMode_HighQuality = 2,
+        PixelOffsetMode_None = 3,
+        PixelOffsetMode_Half = 4
+    } PixelOffsetMode;
+
+    typedef [uuid(F64EF26F-04ED-320D-BEB6-7F06F4666744), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.QualityMode")    
+]
+    enum {
+        QualityMode_Invalid = 0xffffffff,
+        QualityMode_Default = 0,
+        QualityMode_Low = 1,
+        QualityMode_High = 2
+    } QualityMode;
+
+    [
+      uuid(4317F61F-616A-3EA6-80EF-CB92F3C375AA),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.RegionData")
+    ]
+    coclass RegionData {
+        [default] interface _RegionData;
+        interface _Object;
+    };
+
+    typedef [uuid(0AD88D06-E5F7-3108-83E3-7448E41108B9), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.SmoothingMode")    
+]
+    enum {
+        SmoothingMode_Invalid = 0xffffffff,
+        SmoothingMode_Default = 0,
+        SmoothingMode_HighSpeed = 1,
+        SmoothingMode_HighQuality = 2,
+        SmoothingMode_None = 3,
+        SmoothingMode_AntiAlias = 4
+    } SmoothingMode;
+
+    typedef [uuid(792A78F5-BC40-34E1-9D6B-90BEF1CCD382), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.WarpMode")    
+]
+    enum {
+        WarpMode_Perspective = 0,
+        WarpMode_Bilinear = 1
+    } WarpMode;
+
+    typedef [uuid(16A08D00-FE65-3C41-8EBF-0C1682B01543), version(1.0)    ,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.WrapMode")    
+]
+    enum {
+        WrapMode_Tile = 0,
+        WrapMode_TileFlipX = 1,
+        WrapMode_TileFlipY = 2,
+        WrapMode_TileFlipXY = 3,
+        WrapMode_Clamp = 4
+    } WrapMode;
+
+    [
+      uuid(AA83C1BB-92A6-33F0-A2B4-FBB5DCB922E0),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Design.CategoryNameCollection")
+    ]
+    coclass CategoryNameCollection {
+        [default] interface _CategoryNameCollection;
+        interface _Object;
+        interface ICollection;
+        interface IEnumerable;
+    };
+
+    [
+      uuid(BD400AF7-63AC-3AF4-B597-7F7F7B383B9F),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontConverter+FontNameConverter")
+    ]
+    coclass FontNameConverter {
+        [default] interface _FontNameConverter;
+        interface _Object;
+        interface IDisposable;
+    };
+
+    [
+      uuid(88213E6F-C6A2-379D-B7BE-6932A097B654),
+      version(1.0),
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontConverter+FontUnitConverter")
+    ]
+    coclass FontUnitConverter {
+        [default] interface _FontUnitConverter;
+        interface _Object;
+    };
+
+    [
+      uuid(783117B7-E559-35D4-9CA6-5701DD2C1D35),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Graphics+DrawImageAbort")
+    ]
+    coclass DrawImageAbort {
+        [default] interface _DrawImageAbort;
+        interface _Delegate;
+        interface _Object;
+        interface ICloneable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(8748FEDB-2B2D-3B7B-A3F9-69D22D3EAB10),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Graphics+EnumerateMetafileProc")
+    ]
+    coclass EnumerateMetafileProc {
+        [default] interface _EnumerateMetafileProc;
+        interface _Delegate;
+        interface _Object;
+        interface ICloneable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(AB31D803-7815-3A87-8662-2EA642D83599),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Image+GetThumbnailImageAbort")
+    ]
+    coclass GetThumbnailImageAbort {
+        [default] interface _GetThumbnailImageAbort;
+        interface _Delegate;
+        interface _Object;
+        interface ICloneable;
+        interface ISerializable;
+    };
+
+    [
+      uuid(FA216B89-005F-31CB-AB32-A2B4F145E6DC),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings+PaperSizeCollection")
+    ]
+    coclass PaperSizeCollection {
+        [default] interface _PaperSizeCollection;
+        interface _Object;
+        interface ICollection;
+        interface IEnumerable;
+    };
+
+    [
+      uuid(A8827DDD-11E7-368F-9139-3B34B25EC892),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings+PaperSourceCollection")
+    ]
+    coclass PaperSourceCollection {
+        [default] interface _PaperSourceCollection;
+        interface _Object;
+        interface ICollection;
+        interface IEnumerable;
+    };
+
+    [
+      uuid(BE3E8FC3-68F4-33C4-A68A-12F6FB262706),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings+PrinterResolutionCollection")
+    ]
+    coclass PrinterResolutionCollection {
+        [default] interface _PrinterResolutionCollection;
+        interface _Object;
+        interface ICollection;
+        interface IEnumerable;
+    };
+
+    [
+      uuid(A1366356-624A-3639-9556-6D66AEF6F464),
+      version(1.0),
+      noncreatable,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings+StringCollection")
+    ]
+    coclass StringCollection {
+        [default] interface _StringCollection;
+        interface _Object;
+        interface ICollection;
+        interface IEnumerable;
+    };
+
+    [
+      odl,
+      uuid(F86086E0-A89E-3EBE-B036-79BF72354656),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Bitmap")    
+
+    ]
+    interface _Bitmap : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(037F7572-1981-3760-ADC3-9156BEDEAAC2),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BitmapSuffixInSameAssemblyAttribute")    
+
+    ]
+    interface _BitmapSuffixInSameAssemblyAttribute : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(F4D24B9E-2AC4-32A3-A91B-C6E3A970EE96),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BitmapSuffixInSatelliteAssemblyAttribute")    
+
+    ]
+    interface _BitmapSuffixInSatelliteAssemblyAttribute : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(1186EA62-5B7D-312A-9406-C26E81A6F200),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Brush")    
+
+    ]
+    interface _Brush : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(D5B46EAB-76F4-3355-BB72-970BA387AC76),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Brushes")    
+
+    ]
+    interface _Brushes : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(14823F42-7906-3929-8C87-686139C64646),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BufferedGraphics")    
+
+    ]
+    interface _BufferedGraphics : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(2C79584D-0882-3BAA-A27C-54E382151E82),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BufferedGraphicsContext")    
+
+    ]
+    interface _BufferedGraphicsContext : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(E7E181A3-DACD-3FF5-91D2-8F9FCB8A4E71),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.BufferedGraphicsManager")    
+
+    ]
+    interface _BufferedGraphicsManager : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(BC28F4B1-B9AB-3DD8-A471-5B7AE757F8F9),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Font")    
+
+    ]
+    interface _Font : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(22D21F5F-AF19-3FB8-9C3D-52944D881F8B),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontConverter")    
+
+    ]
+    interface _FontConverter : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(1B068FDB-615D-3DBF-BFF4-12140CE9EC6F),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontFamily")    
+
+    ]
+    interface _FontFamily : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(0699772B-D704-3FB6-A2C2-652521663A71),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Graphics")    
+
+    ]
+    interface _Graphics : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(4768D044-6380-3AFD-BAFD-612B5A287595),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Icon")    
+
+    ]
+    interface _Icon : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(C14EF1BE-9D8A-3E5B-91DC-734234CFC3AD),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.IconConverter")    
+
+    ]
+    interface _IconConverter : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(2948EBCD-5E0A-3184-9A87-37D3258C0D98),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Image")    
+
+    ]
+    interface _Image : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(A64B221C-E75A-3F40-9E94-5A5937FCE7B5),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ImageAnimator")    
+
+    ]
+    interface _ImageAnimator : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(EAD0DC57-2C82-34FA-B043-56466B7C72D6),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ImageConverter")    
+
+    ]
+    interface _ImageConverter : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(F0F92892-8D7A-37D9-A4F7-61CFA1A93067),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ImageFormatConverter")    
+
+    ]
+    interface _ImageFormatConverter : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(329F96BB-F871-3FC0-84BC-935828A780C5),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Pen")    
+
+    ]
+    interface _Pen : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(EB577FF7-CE2F-389D-BDDB-594F4862253F),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Pens")    
+
+    ]
+    interface _Pens : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(D4598BC8-3C4C-392B-9164-553040076AE1),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Region")    
+
+    ]
+    interface _Region : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(1AB2F043-62E1-3DE6-9127-F17AF18CDEE8),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SolidBrush")    
+
+    ]
+    interface _SolidBrush : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(ABF1EE56-258D-3F0A-91AD-387081A866B0),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.StringFormat")    
+
+    ]
+    interface _StringFormat : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(68264A62-7CBE-34C8-B760-4F6EFACC22D6),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemBrushes")    
+
+    ]
+    interface _SystemBrushes : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(6D3A8AFA-A23D-3CBF-8063-A8126DBAED5E),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemFonts")    
+
+    ]
+    interface _SystemFonts : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(1E1882D2-19B5-3111-B112-7E9F427C4B24),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemIcons")    
+
+    ]
+    interface _SystemIcons : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(4771C9D9-62EE-390B-99D5-ACB3A74BC630),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemPens")    
+
+    ]
+    interface _SystemPens : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(E52CDA96-E934-379A-B20A-F39CD9B887C4),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.TextureBrush")    
+
+    ]
+    interface _TextureBrush : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(C6D96F18-FF52-392B-9295-D678F1A365A1),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ToolboxBitmapAttribute")    
+
+    ]
+    interface _ToolboxBitmapAttribute : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(7543B32F-D69A-3609-9299-0C63FA05C379),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.ColorTranslator")    
+
+    ]
+    interface _ColorTranslator : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(C3F82317-2C74-3840-AB98-1866E246551A),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.SystemColors")    
+
+    ]
+    interface _SystemColors : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(C0411521-603C-3C83-83D5-298F9700FC28),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.FontCollection")    
+
+    ]
+    interface _FontCollection : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(8350B5CF-D906-386A-BB97-6C573EA3F80E),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.InstalledFontCollection")    
+
+    ]
+    interface _InstalledFontCollection : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(EB245C2A-292A-3FDB-B5EC-5CDAE580EC3B),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Text.PrivateFontCollection")    
+
+    ]
+    interface _PrivateFontCollection : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(3152C849-5FD3-3D1D-902A-4F21D3EFCE9B),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.InvalidPrinterException")    
+
+    ]
+    interface _InvalidPrinterException : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(3575B5A4-774A-3D20-B8C1-B3688452BD4D),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.Margins")    
+
+    ]
+    interface _Margins : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(ACBAE4C7-3857-305F-B854-91A4569F6E08),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.MarginsConverter")    
+
+    ]
+    interface _MarginsConverter : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(9662705D-354A-3488-AA82-F7A252AD5C2F),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PageSettings")    
+
+    ]
+    interface _PageSettings : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(159111DB-87B7-3B11-B770-C21C64A6E233),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PaperSize")    
+
+    ]
+    interface _PaperSize : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(AF4DEB5C-B704-3538-BEBF-1C11154951F0),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PaperSource")    
+
+    ]
+    interface _PaperSource : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(6764B06B-67A3-32F7-B215-A1E473D13523),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PreviewPageInfo")    
+
+    ]
+    interface _PreviewPageInfo : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(F66748B5-9E37-3808-99D8-815F29475793),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PreviewPrintController")    
+
+    ]
+    interface _PreviewPrintController : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(03ECF787-21DB-37FC-A24C-B9680F4F042C),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintController")    
+
+    ]
+    interface _PrintController : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(BAB7C894-40CC-3B05-BE2C-B675D6AF1FB8),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintDocument")    
+
+    ]
+    interface _PrintDocument : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(5D740F98-A8A8-33FD-88BF-1C4605A4B4DC),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterResolution")    
+
+    ]
+    interface _PrinterResolution : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(CB0A8216-DBDC-386C-9BED-F8251FB164A1),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings")    
+
+    ]
+    interface _PrinterSettings : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(ECB8245E-A5A8-3A18-BDD4-9F8CAE88EA58),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterUnitConvert")    
+
+    ]
+    interface _PrinterUnitConvert : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(B530AA5D-5235-3AC2-BCD0-F00CBE60E9AD),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintEventArgs")    
+
+    ]
+    interface _PrintEventArgs : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(38915149-7E8B-3859-B232-E41E3948282D),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintEventHandler")    
+
+    ]
+    interface _PrintEventHandler : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(4B47728C-D38D-3A9C-9D7F-D0308051157B),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintPageEventArgs")    
+
+    ]
+    interface _PrintPageEventArgs : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(F43080F8-ED8E-36C1-807A-2FCA93A62EF1),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrintPageEventHandler")    
+
+    ]
+    interface _PrintPageEventHandler : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(0B0767EA-F421-3946-98DC-50961558CCC7),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.QueryPageSettingsEventArgs")    
+
+    ]
+    interface _QueryPageSettingsEventArgs : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(ADBDF409-66F5-3274-93E5-BDB4A4F72455),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.QueryPageSettingsEventHandler")    
+
+    ]
+    interface _QueryPageSettingsEventHandler : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(417B0F7E-1DDD-36BE-AC4B-4F322E929BC8),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.StandardPrintController")    
+
+    ]
+    interface _StandardPrintController : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(C874C570-D4BE-31D9-A0B6-CE07D3E680B1),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.BitmapData")    
+
+    ]
+    interface _BitmapData : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(2B557DFB-E231-3B06-ADD7-C81F7993C991),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorMap")    
+
+    ]
+    interface _ColorMap : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(2155340C-257C-3BD7-93E3-E8A1EB63D403),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorMatrix")    
+
+    ]
+    interface _ColorMatrix : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(5ED5A1BA-A87D-320C-B9E4-ED077BCB61F9),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ColorPalette")    
+
+    ]
+    interface _ColorPalette : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(3C5ADD48-9CBA-3F2F-AE25-3ACC6E908623),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.Encoder")    
+
+    ]
+    interface _Encoder : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(B784457C-3CE9-34EA-92AC-D8E2952D8FD4),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.EncoderParameter")    
+
+    ]
+    interface _EncoderParameter : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(C0FC7134-0F88-3991-A9F0-FBA0726F778C),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.EncoderParameters")    
+
+    ]
+    interface _EncoderParameters : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(578050D3-4051-3E86-A970-C013D7C58B88),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.FrameDimension")    
+
+    ]
+    interface _FrameDimension : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(09ADEDE4-C3DE-3270-ACB5-962C239F7992),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageAttributes")    
+
+    ]
+    interface _ImageAttributes : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(D391274A-823C-3B03-9991-50BEFE3C6D44),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageCodecInfo")    
+
+    ]
+    interface _ImageCodecInfo : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(EA2B3079-9047-30F8-987E-0AF531E3700F),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.ImageFormat")    
+
+    ]
+    interface _ImageFormat : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(F568DAD3-125C-3CA9-B770-3C006F543ECA),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.Metafile")    
+
+    ]
+    interface _Metafile : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(198D0CF2-DD20-3268-BC1D-95C572D7F4C9),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.MetafileHeader")    
+
+    ]
+    interface _MetafileHeader : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(99934CA4-42B5-36F6-A4EF-30187231050C),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.MetaHeader")    
+
+    ]
+    interface _MetaHeader : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(DEE2EECD-11DA-3213-9620-7897DE2782BC),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.PlayRecordCallback")    
+
+    ]
+    interface _PlayRecordCallback : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(0EA5F2E9-2F27-336B-947F-CFED729A8130),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.PropertyItem")    
+
+    ]
+    interface _PropertyItem : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(AE9FA17C-7B52-34B2-B47A-7E3A7118271D),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Imaging.WmfPlaceableFileHeader")    
+
+    ]
+    interface _WmfPlaceableFileHeader : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(406469BD-63BD-3F35-B06A-FCD356960E95),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.AdjustableArrowCap")    
+
+    ]
+    interface _AdjustableArrowCap : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(45542432-D3A1-3EC1-8801-4129B45E9D6A),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.Blend")    
+
+    ]
+    interface _Blend : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(128FA9CD-889D-3787-AD47-A2C19A4014F1),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.ColorBlend")    
+
+    ]
+    interface _ColorBlend : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(13A3B801-84DE-3F10-9DD5-148AB2C305DA),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.CustomLineCap")    
+
+    ]
+    interface _CustomLineCap : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(AA33261C-5021-3CF9-97C0-7B6D2B09F790),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.GraphicsContainer")    
+
+    ]
+    interface _GraphicsContainer : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(832DD669-8542-3A41-8B46-F5955C03F8A9),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.GraphicsPath")    
+
+    ]
+    interface _GraphicsPath : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(5CA0078C-0779-3875-A797-F1A1229C5C41),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.GraphicsPathIterator")    
+
+    ]
+    interface _GraphicsPathIterator : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(566B01D0-B890-37A0-A81F-DA97E4FE6741),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.GraphicsState")    
+
+    ]
+    interface _GraphicsState : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(A5AA1346-08A8-30C9-AFDC-2772FDA6274E),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.HatchBrush")    
+
+    ]
+    interface _HatchBrush : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(56E7E2BE-EAC0-3CEC-9D24-4049529EAB4D),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.LinearGradientBrush")    
+
+    ]
+    interface _LinearGradientBrush : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(A6F36EAC-BAC5-32E9-B113-4DF6515CD0A0),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.Matrix")    
+
+    ]
+    interface _Matrix : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(2FBF2B48-9772-3867-9677-0D1C14F7F70E),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.PathData")    
+
+    ]
+    interface _PathData : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(06CE58A2-C765-3677-B071-71487A7F85DE),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.PathGradientBrush")    
+
+    ]
+    interface _PathGradientBrush : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(01BD9520-EECE-3CF4-81A4-E827FBE562B6),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Drawing2D.RegionData")    
+
+    ]
+    interface _RegionData : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(14AD1F31-63F4-3964-9A0A-CED280C363DC),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Design.CategoryNameCollection")    
+
+    ]
+    interface _CategoryNameCollection : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(F6442EBC-4851-375E-AFDD-C640695A4DAB),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontConverter+FontNameConverter")    
+
+    ]
+    interface _FontNameConverter : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(02FE909C-6111-3912-9629-EB27C97F4021),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.FontConverter+FontUnitConverter")    
+
+    ]
+    interface _FontUnitConverter : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(7C1ACDE6-7242-3615-AFE1-BB16394D6FB0),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Graphics+DrawImageAbort")    
+
+    ]
+    interface _DrawImageAbort : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(22A6B4D8-BA5E-3241-9905-4B2E63A42813),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Graphics+EnumerateMetafileProc")    
+
+    ]
+    interface _EnumerateMetafileProc : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(2EFF2A93-2767-31A1-89A5-78CB3B16C3DB),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Image+GetThumbnailImageAbort")    
+
+    ]
+    interface _GetThumbnailImageAbort : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(EF4A918B-1674-315A-9EAE-5BACB9E6C4E2),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings+PaperSizeCollection")    
+
+    ]
+    interface _PaperSizeCollection : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(A6BE1C0D-DA8A-3B1C-B5F8-B994EB5F12BE),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings+PaperSourceCollection")    
+
+    ]
+    interface _PaperSourceCollection : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(5C9CBCE7-7FD2-3B3A-BB01-AFB938543AFD),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings+PrinterResolutionCollection")    
+
+    ]
+    interface _PrinterResolutionCollection : IDispatch {
+    };
+
+    [
+      odl,
+      uuid(87425F0E-BEE6-3503-A4DB-C2EBD7445FDB),
+      hidden,
+      dual,
+      oleautomation,
+      //custom(0F21F359-AB84-41E8-9A78-36D110E6D2F9, "System.Drawing.Printing.PrinterSettings+StringCollection")    
+
+    ]
+    interface _StringCollection : IDispatch {
+    };
+};

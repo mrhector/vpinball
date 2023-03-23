@@ -11,12 +11,21 @@
 #include "imgui/imgui.h"
 #ifdef ENABLE_SDL
 #include "imgui/imgui_impl_opengl3.h"
+#ifdef __STANDALONE__
+  #include "imgui/imgui_impl_sdl.h"
+#endif
 #else
 #include "imgui/imgui_impl_dx9.h"
 #endif
+#ifndef __STANDALONE__
 #include "imgui/imgui_impl_win32.h"
+#endif
 #include "imgui/implot/implot.h"
 #include "imgui/imgui_stdlib.h"
+
+#ifdef __STANDALONE__
+#include <unordered_map>
+#endif
 
 #if __cplusplus >= 202002L && !defined(__clang__)
 #define stable_sort std::ranges::stable_sort
@@ -26,7 +35,9 @@
 #define sort std::sort
 #endif
 
-#include "BAM/BAMView.h"
+#ifndef __STANDALONE__
+#include "inc/BAM/BAMView.h"
+#endif
 
 // Titles (used as Ids) of modal dialogs
 #define ID_MODAL_SPLASH "In Game UI"
@@ -531,6 +542,7 @@ static void HelpEditableHeader(bool is_live, IEditable *editable, IEditable *liv
    case eItemTextbox: title = "TextBox"s; break;
    case eItemTimer: title = "Timer"s; break;
    case eItemTrigger: title = "Trigger"s; break;
+   default: break;
    }
    HelpTextCentered(title);
    ImGui::BeginDisabled(is_live); // Do not edit name of live objects, it would likely break the script
@@ -569,12 +581,25 @@ LiveUI::LiveUI(RenderDevice* const rd)
    ImGuiIO &io = ImGui::GetIO();
    io.IniFilename = nullptr; //don't use an ini file for configuration
 
+#ifndef __STANDALONE__
    ImGui_ImplWin32_Init(rd->getHwnd());
+#else
+   ImGui_ImplSDL2_InitForOpenGL(rd->m_sdl_playfieldHwnd, rd->m_sdl_context);
+#endif
 
    SetupImGuiStyle(1.0f);
 
+#ifndef __STANDALONE__
    ImGui_ImplWin32_EnableDpiAwareness();
    m_dpi = ImGui_ImplWin32_GetDpiScaleForHwnd(rd->getHwnd());
+#else
+#ifdef __ANDROID__
+   int displayIndex = SDL_GetWindowDisplayIndex(rd->m_sdl_playfieldHwnd);
+   float ddpi, hdpi, vdpi;
+   if (SDL_GetDisplayDPI(displayIndex, &ddpi, &hdpi, &vdpi) == 0)
+      m_dpi = (hdpi + vdpi) / 2.0f / 96.0f;
+#endif
+#endif
    ImGui::GetStyle().ScaleAllSizes(m_dpi);
 
    float overlaySize = min(32.f * m_dpi, min(m_player->m_wnd_width, m_player->m_wnd_height) / (26.f * 2.0f)); // Fit 26 lines of text on screen
@@ -604,7 +629,11 @@ LiveUI::~LiveUI()
 #else
       ImGui_ImplDX9_Shutdown();
 #endif
+#ifndef __STANDALONE__
       ImGui_ImplWin32_Shutdown();
+#else
+      ImGui_ImplSDL2_Shutdown();
+#endif
       ImPlot::DestroyContext();
       ImGui::DestroyContext();
    }
@@ -707,7 +736,11 @@ void LiveUI::Update()
 #else
    ImGui_ImplDX9_NewFrame();
 #endif
+#ifndef __STANDALONE__
    ImGui_ImplWin32_NewFrame();
+#else
+   ImGui_ImplSDL2_NewFrame();
+#endif
    if (m_ShowUI || m_ShowSplashModal)
       m_rotate = 0;
    else
@@ -1357,6 +1390,7 @@ void LiveUI::UpdatePropertyUI()
                   case eItemSurface: SurfaceProperties(is_live, (Surface *)startup_obj, (Surface *)live_obj); break;
                   case eItemRamp: RampProperties(is_live, (Ramp *)startup_obj, (Ramp *)live_obj); break;
                   case eItemRubber: RubberProperties(is_live, (Rubber *)startup_obj, (Rubber *)live_obj); break;
+                  default: break;
                   }
                }
                break;
@@ -1407,7 +1441,9 @@ void LiveUI::UpdateVideoOptionsModal()
 
 void LiveUI::UpdateHeadTrackingModal()
 {
+#ifndef __STANDALONE__
    BAMView::drawMenu();
+#endif
 }
 
 void LiveUI::UpdateRendererInspectionModal()
@@ -1501,6 +1537,7 @@ void LiveUI::UpdateMainSplashModal()
          ImGui::CloseCurrentPopup();
          HideUI();
       }
+#if !((defined(__APPLE__) && ((defined(TARGET_OS_IOS) && TARGET_OS_IOS) || (defined(TARGET_OS_TV) && TARGET_OS_TV))) || defined(__ANDROID__))
       if (ImGui::Button("Live Editor", size))
       {
          m_ShowUI = true;
@@ -1508,6 +1545,8 @@ void LiveUI::UpdateMainSplashModal()
          ImGui::CloseCurrentPopup();
          EnterEditMode();
       }
+#endif
+#ifndef __STANDALONE__
       if (ImGui::Button("Debugger", size) || (enableKeyboardShortcuts && ImGui::IsKeyPressed(dikToImGuiKeys[m_player->m_rgKeys[eDebugger]])))
       {
          ImGui::CloseCurrentPopup();
@@ -1522,6 +1561,16 @@ void LiveUI::UpdateMainSplashModal()
          HideUI();
          m_table->QuitPlayer(Player::CS_STOP_PLAY);
       }
+#endif
+#ifdef __STANDALONE__
+      if (ImGui::Button("Quit", size) || (enableKeyboardShortcuts && ImGui::IsKeyPressed(dikToImGuiKeys[m_player->m_rgKeys[eExitGame]]))
+         || (quitToEditor != 0 && (msec() - quitToEditor) > m_table->m_tblExitConfirm))
+      {
+         ImGui::CloseCurrentPopup();
+         HideUI();
+         m_table->QuitPlayer(Player::CS_CLOSE_APP);
+      }
+#endif
       ImVec2 pos = ImGui::GetWindowPos();
       ImVec2 max = ImGui::GetWindowSize();
       bool hovered = ImGui::IsWindowHovered();
