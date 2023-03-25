@@ -1611,7 +1611,13 @@ STDMETHODIMP Ramp::put_Type(RampType newVal)
    {
       m_d.m_type = newVal;
       m_dynamicVertexBufferRegenerate = true;
-      PLOGE_IF(m_isStaticRendering) << "Setting type on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+
+      if (m_isStaticRendering)
+      {
+         const char* const szT = MakeChar(m_wzName);
+         PLOGE << "Setting type on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+         delete[] szT;
+      }
    }
 
    return S_OK;
@@ -1641,7 +1647,12 @@ STDMETHODIMP Ramp::put_Image(BSTR newVal)
    {
       m_d.m_szImage = szImage;
       m_dynamicVertexBufferRegenerate = true;
-      PLOGE_IF(m_isStaticRendering) << "Setting image on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+      if (m_isStaticRendering)
+      {
+         const char* const szT = MakeChar(m_wzName);
+         PLOGE << "Setting image on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+         delete[] szT;
+      }
    }
 
    return S_OK;
@@ -1660,7 +1671,12 @@ STDMETHODIMP Ramp::put_ImageAlignment(RampImageAlignment newVal)
    {
       m_d.m_imagealignment = newVal;
       m_dynamicVertexBufferRegenerate = true;
-      PLOGE_IF(m_isStaticRendering) << "Setting image alignment on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+      if (m_isStaticRendering)
+      {
+         const char* const szT = MakeChar(m_wzName);
+         PLOGE << "Setting image alignment on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+         delete[] szT;
+      }
    }
 
    return S_OK;
@@ -1679,7 +1695,12 @@ STDMETHODIMP Ramp::put_HasWallImage(VARIANT_BOOL newVal)
    {
       m_d.m_imageWalls = VBTOb(newVal);
       m_dynamicVertexBufferRegenerate = true;
-      PLOGE_IF(m_isStaticRendering) << "Setting wall image on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+      if (m_isStaticRendering)
+      {
+         const char* const szT = MakeChar(m_wzName);
+         PLOGE << "Setting wall image on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+         delete[] szT;
+      }
    }
 
    return S_OK;
@@ -1740,8 +1761,13 @@ STDMETHODIMP Ramp::put_VisibleLeftWallHeight(float newVal)
    {
       m_d.m_leftwallheightvisible = nv;
       m_dynamicVertexBufferRegenerate = true;
-      PLOGE_IF(m_isStaticRendering) << "Setting visible left wall height on ramp '" << m_wzName
-                                    << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+      if (m_isStaticRendering)
+      {
+         const char* const szT = MakeChar(m_wzName);
+         PLOGE << "Setting visible left wall height on ramp '" << szT
+               << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+         delete[] szT;
+      }
    }
 
    return S_OK;
@@ -1762,8 +1788,13 @@ STDMETHODIMP Ramp::put_VisibleRightWallHeight(float newVal)
    {
       m_d.m_rightwallheightvisible = nv;
       m_dynamicVertexBufferRegenerate = true;
-      PLOGE_IF(m_isStaticRendering) << "Setting visible right wall height on ramp '" << m_wzName
-                                    << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+      if (m_isStaticRendering)
+      {
+         const char* const szT = MakeChar(m_wzName);
+         PLOGE << "Setting visible right wall height on ramp '" << szT
+               << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+         delete[] szT;
+      }
    }
 
    return S_OK;
@@ -1874,7 +1905,12 @@ STDMETHODIMP Ramp::put_Visible(VARIANT_BOOL newVal)
 {
    m_d.m_visible = VBTOb(newVal);
 
-   PLOGE_IF(m_isStaticRendering) << "Setting visibility on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+   if (m_isStaticRendering)
+   {
+      const char* const szT = MakeChar(m_wzName);
+      PLOGE << "Setting visibility on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+      delete[] szT;
+   }
 
    return S_OK;
 }
@@ -1904,8 +1940,13 @@ STDMETHODIMP Ramp::put_DepthBias(float newVal)
 {
    m_d.m_depthBias = newVal;
 
-   PLOGE_IF(m_isStaticRendering) << "Setting depth bias on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
- 
+   if (m_isStaticRendering)
+   {
+      const char* const szT = MakeChar(m_wzName);
+      PLOGE << "Setting depth bias on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+      delete[] szT;
+   }
+
    return S_OK;
 }
 
@@ -1922,7 +1963,12 @@ STDMETHODIMP Ramp::put_WireDiameter(float newVal)
    {
        m_d.m_wireDiameter = newVal;
        m_dynamicVertexBufferRegenerate = true;
-       PLOGE_IF(m_isStaticRendering) << "Setting wire diameter on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+       if (m_isStaticRendering)
+       {
+          const char* const szT = MakeChar(m_wzName);
+          PLOGE << "Setting wire diameter on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+          delete[] szT;
+       }
    }
 
    return S_OK;
@@ -1941,7 +1987,12 @@ STDMETHODIMP Ramp::put_WireDistanceX(float newVal)
    {
        m_d.m_wireDistanceX = newVal;
        m_dynamicVertexBufferRegenerate = true;
-       PLOGE_IF(m_isStaticRendering) << "Setting X wire distance on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+       if (m_isStaticRendering)
+       {
+          const char* const szT = MakeChar(m_wzName);
+          PLOGE << "Setting X wire distance on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+          delete[] szT;
+       }
    }
 
    return S_OK;
@@ -1960,7 +2011,12 @@ STDMETHODIMP Ramp::put_WireDistanceY(float newVal)
    {
        m_d.m_wireDistanceY = newVal;
        m_dynamicVertexBufferRegenerate = true;
-       PLOGE_IF(m_isStaticRendering) << "Setting Y wire distance on ramp '" << m_wzName << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+       if (m_isStaticRendering)
+       {
+          const char* const szT = MakeChar(m_wzName);
+          PLOGE << "Setting Y wire distance on ramp '" << szT << "' is not supported (the ramp is prerendered and static since its material is not transparent)";
+          delete[] szT;
+       }
    }
 
    return S_OK;
