@@ -27,8 +27,10 @@ void RenderCommand::Execute(const bool log)
    {
    case RC_CLEAR:
    {
-      if (log)
+      if (log) {
          PLOGI << "> Clear";
+      }
+
       m_renderState.Apply(m_rd);
       const D3DVALUE z = 1.0f;
       const DWORD stencil = 0L;
@@ -65,8 +67,9 @@ void RenderCommand::Execute(const bool log)
 
    case RC_COPY:
    {
-      if (log)
+      if (log) {
          PLOGI << "> Copy " << m_copyFrom->m_name << " => " << m_copyTo->m_name;
+      }
 
       // Original VPX code state that on DirectX 9 StretchRect must not be called between BeginScene/EndScene.
       // This does not seem to appear in Microsoft's docs and I could not find any glitch.
@@ -200,6 +203,8 @@ void RenderCommand::Execute(const bool log)
          }
          break;
       }
+      default:
+         break;
       }
       m_shader->End();
 
