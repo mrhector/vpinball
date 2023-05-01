@@ -106,7 +106,11 @@ static constexpr int regkey_defdik[eCKeys] = {
    DIK_SLASH,
    DIK_SPACE,
    DIK_RETURN,
+#if !defined(__APPLE__) && !defined(__ANDROID__)
    DIK_F11,
+#else
+   DIK_F1,
+#endif
    DIK_O,
    DIK_D,
    DIK_5,
@@ -751,5 +755,7 @@ public:
    bool m_overwriteBallImages;
    Texture *m_ballImage;
    Texture *m_decalImage;
+#ifndef __STANDALONE__
    DebuggerDialog m_debuggerDialog;
+#endif
 };
