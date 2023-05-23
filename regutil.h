@@ -61,6 +61,8 @@ void InitRegistry(const string &path);
 HRESULT LoadValue(const string &szKey, const string &zValue, string &buffer);
 HRESULT LoadValue(const string &szKey, const string &szValue, void* const szbuffer, const DWORD size);
 
+string  LoadValueWithDefault(const string &szKey, const string &szValue, const string def);
+
 HRESULT LoadValue(const string &szKey, const string &szValue, float &pfloat);
 float   LoadValueWithDefault(const string &szKey, const string &szValue, const float def); 
 
@@ -69,7 +71,6 @@ HRESULT LoadValue(const string &szKey, const string &szValue, unsigned int &pint
 int     LoadValueWithDefault(const string &szKey, const string &szValue, const int def);
 
 bool    LoadValueWithDefault(const string &szKey, const string &szValue, const bool def);
-
 
 HRESULT SaveValue(const string &szKey, const string &szValue, const char *val);
 HRESULT SaveValue(const string &szKey, const string &szValue, const string &val);

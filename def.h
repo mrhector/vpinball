@@ -86,7 +86,9 @@ inline int FindIndexOf(const vector<T>& v, const T& val)
 #define fTrue 1
 #define fFalse 0
 
+#ifndef __STANDALONE__
 #define BOOL int
+#endif
 
 typedef uint32_t        U32;
 typedef int32_t         S32;
@@ -532,3 +534,16 @@ char* replace(const char* const original, const char* const pattern, const char*
  * @brief Detect whether the program is running on the Wine compatibility layer
  */
 bool IsOnWine();
+
+#ifdef __STANDALONE__
+#include "typedefs3D.h"
+
+void copy_folder(const char* srcPath, const char* dstPath);
+float calc_brightness(float x);
+const char* gl_to_string(GLuint value);
+
+extern "C" HRESULT external_open_storage(const OLECHAR* pwcsName, IStorage* pstgPriority, DWORD grfMode, SNB snbExclude, DWORD reserved, IStorage **ppstgOpen);
+extern "C" HRESULT external_create_object(const WCHAR *progid, IClassFactory* cf, IUnknown* obj);
+extern "C" void external_log_info(const char* format, ...);
+extern "C" void external_log_debug(const char* format, ...);
+#endif

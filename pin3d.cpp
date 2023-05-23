@@ -3,7 +3,9 @@
 #include "Shader.h"
 #include "math/math.h"
 #include "inc/ThreadPool.h"
+#ifndef __STANDALONE__
 #include "inc/BAM/BAMView.h"
+#endif
 
 Pin3D::Pin3D()
 {
@@ -461,7 +463,9 @@ HRESULT Pin3D::InitPrimary(const bool fullScreen, const int colordepth, int &ref
    if (!m_pd3dPrimaryDevice->LoadShaders())
       return E_FAIL;
 
+#ifndef __STANDALONE__
    BAMView::init();
+#endif
 
    const bool compressTextures = LoadValueWithDefault(regKey[RegName::Player], "CompressTextures"s, false);
    m_pd3dPrimaryDevice->CompressTextures(compressTextures);
@@ -503,6 +507,7 @@ HRESULT Pin3D::InitPin3D(const bool fullScreen, const int width, const int heigh
    else
       m_backGlass = nullptr;
 
+#ifndef __STANDALONE__
    // This used to be a spheremap BMP, upgraded in 10.8 for an quirectangular HDR env map
    //m_pinballEnvTexture.CreateFromResource(IDB_BALL);
    HMODULE handle = ::GetModuleHandle(NULL);
@@ -516,9 +521,18 @@ HRESULT Pin3D::InitPin3D(const bool fullScreen, const int width, const int heigh
    free(copy);
 
    m_aoDitherTexture.CreateFromResource(IDB_AO_DITHER);
+#else
+   m_pinballEnvTexture.CreateFromResource("BallEnv.exr");
+   m_aoDitherTexture.CreateFromResource("AOdither.bmp");
+#endif
 
    m_envTexture = g_pplayer->m_ptable->GetImage(g_pplayer->m_ptable->m_envImage);
+
+#ifndef __STANDALONE__
    m_builtinEnvTexture.CreateFromResource(IDB_ENV);
+#else
+   m_builtinEnvTexture.CreateFromResource("envmap.bmp");
+#endif
 
    const Texture * const envTex = m_envTexture ? m_envTexture : &m_builtinEnvTexture;
 
@@ -730,7 +744,9 @@ void Pin3D::UpdateBAMHeadTracking()
 {
    Matrix3D m_matView;
    Matrix3D m_matProj[2];
+#ifndef __STANDALONE__
    BAMView::createProjectionAndViewMatrix(&m_matProj[0]._11, &m_matView._11);
+#endif
    m_mvp->SetView(m_matView);
    for (unsigned int eye = 0; eye < m_mvp->m_nEyes; eye++)
       m_mvp->SetProj(eye, m_matProj[eye]);

@@ -139,6 +139,8 @@ private:
    U32 m_OpenUITime = 0; // Used to delay keyboard shortcut
    U64 m_StartTime_usec = 0; // Used for timed splash overlays
    int m_show_fps = 0; // 0=disabled / 1=FPS / 2=FPS+dynamic plot
+   bool m_ShowTouchOverlay = false;
+   bool m_ForceShowTouchOverlay = false;
 
    // 3D editor
    ImGuizmo::OPERATION m_gizmoOperation = ImGuizmo::NONE;

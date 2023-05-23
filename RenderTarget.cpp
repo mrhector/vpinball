@@ -65,7 +65,7 @@ RenderTarget::RenderTarget(RenderDevice* const rd, const RenderTargetType type, 
    m_color_sampler = nullptr;
    m_depth_sampler = nullptr;
 #ifdef ENABLE_SDL
-   const GLuint col_type = ((format == RGBA32F) || (format == RGB32F)) ? GL_FLOAT : ((format == RGBA16F) || (format == RGB16F)) ? GL_HALF_FLOAT : GL_UNSIGNED_BYTE;
+   const GLuint col_type = ((format == RGBA32F) || (format == RGB32F)) ? GL_FLOAT : ((format == RGB16F) || (format == RGBA16F)) ? GL_HALF_FLOAT : GL_UNSIGNED_BYTE;
    const GLuint col_format = ((format == GREY8) || (format == RED16F))                                                                                                      ? GL_RED
       : ((format == GREY_ALPHA) || (format == RG16F))                                                                                                                       ? GL_RG
       : ((format == RGB) || (format == RGB8) || (format == SRGB) || (format == SRGB8) || (format == RGB5) || (format == RGB10) || (format == RGB16F) || (format == RGB32F)) ? GL_RGB
@@ -92,11 +92,16 @@ RenderTarget::RenderTarget(RenderDevice* const rd, const RenderTargetType type, 
    tex_unit->sampler = nullptr;
    glActiveTexture(GL_TEXTURE0 + tex_unit->unit);
 
+#ifndef __OPENGLES__
    const unsigned int target = nMSAASamples != 1 ? (type == RT_DEFAULT ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D_MULTISAMPLE_ARRAY)
                                                  : (type == RT_DEFAULT ? GL_TEXTURE_2D : type == RT_STEREO ? GL_TEXTURE_2D_ARRAY : GL_TEXTURE_CUBE_MAP);
+#else
+   const unsigned int target = (type == RT_DEFAULT ? GL_TEXTURE_2D : type == RT_STEREO ? GL_TEXTURE_2D_ARRAY : GL_TEXTURE_CUBE_MAP);
+#endif
 
    if (nMSAASamples > 1)
    {
+#ifndef __OPENGLES__
       glGenTextures(1, &m_color_tex);
       glBindTexture(target, m_color_tex);
       glTexImage2DMultisample(target, nMSAASamples, format, width, height, GL_TRUE);
@@ -113,6 +118,7 @@ RenderTarget::RenderTarget(RenderDevice* const rd, const RenderTargetType type, 
          }
          glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_depth_tex);
       }
+#endif
    }
    else
    {
@@ -128,7 +134,11 @@ RenderTarget::RenderTarget(RenderDevice* const rd, const RenderTargetType type, 
          break;
       }
       glTexParameteri(target, GL_TEXTURE_MAX_LEVEL, 0);
+#ifndef __OPENGLES__
       glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, m_color_tex, 0);
+#else
+      glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_color_tex, 0);
+#endif
       if (with_depth)
       {
          if (!m_shared_depth)
@@ -151,12 +161,18 @@ RenderTarget::RenderTarget(RenderDevice* const rd, const RenderTargetType type, 
                break;
             }
          }
+#ifndef __OPENGLES__
          glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, m_depth_tex, 0);
+#else
+         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, m_depth_tex, 0);
+#endif
       }
    }
 
+#ifndef __OPENGLES__
    if (GLAD_GL_VERSION_4_3)
       glObjectLabel(GL_FRAMEBUFFER, m_framebuffer, (GLsizei) name.length(), name.c_str());
+#endif
 
    constexpr GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
    glDrawBuffers(1, DrawBuffers);
@@ -184,6 +200,12 @@ RenderTarget::RenderTarget(RenderDevice* const rd, const RenderTargetType type, 
       }
       sprintf_s(msg, sizeof(msg), "glCheckFramebufferStatus returned 0x%0002X %s", glCheckFramebufferStatus(m_framebuffer), errorCode);
       ShowError(msg);
+
+#ifndef __OPENGLES__
+      PLOGI.printf("failed - message=%s (rd=%p, width=%d, height=%d, colorFormat=%d, with_depth=%d, nMSAASamples=%d)",
+              failureMessage, rd, width, height, format, with_depth, nMSAASamples);
+#endif
+
       exit(-1);
    }
 
@@ -419,19 +441,23 @@ void RenderTarget::Activate(const bool ignoreStereo)
    case STEREO_INT:
    case STEREO_FLIPPED_INT:
       glViewport(0, 0, m_width, m_height / 2); // Set default viewport width/height values of all viewports before we define the array or we get undefined behaviour in shader (flickering viewports).
+#ifndef __OPENGLES__
       viewPorts[2] = viewPorts[6] = (float)m_width;
       viewPorts[3] = viewPorts[7] = (float)(m_height * 0.5);
       viewPorts[4] = 0.0f;
       viewPorts[5] = (float)(m_height * 0.5);
       glViewportArrayv(0, 2, viewPorts);
+#endif
       break;
    default: //For all other stereo mode, render left eye in the left part, and right eye in the right part
       glViewport(0, 0, m_width / 2, m_height); // Set default viewport width/height values of all viewports before we define the array or we get undefined behaviour in shader (flickering viewports).
+#ifndef __OPENGLES__
       viewPorts[2] = viewPorts[6] = (float)(m_width * 0.5);
       viewPorts[3] = viewPorts[7] = (float)m_height;
       viewPorts[4] = (float)(m_width * 0.5);
       viewPorts[5] = 0.0f;
       glViewportArrayv(0, 2, viewPorts);
+#endif
       break;
    }
 #else

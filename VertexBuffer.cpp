@@ -148,7 +148,7 @@ void VertexBuffer::CreateSharedBuffer(SharedBuffer* sharedBuffer)
    }
    free(data);
 
-   #else ENABLE_SDL // DirectX 9
+   #else // DirectX 9
    CHECKD3D(vb->Unlock());
    #endif
 
