@@ -11,16 +11,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <filesystem>
 #include "inc/robin_hood.h"
-#include <regex>
 
 ShaderTechniques Shader::m_boundTechnique = ShaderTechniques::SHADER_TECHNIQUE_INVALID;
+
+#ifdef __STANDALONE__
+#include <sstream>
 #endif
 
-#ifdef __OPENGLES__
-#define FLT_MIN_VALUE 0.00006103515625
-#else
-#define FLT_MIN_VALUE 0.0000001
 #endif
 
 #define SHADER_TECHNIQUE(name) #name
@@ -119,14 +118,18 @@ const string Shader::shaderTechniqueNames[SHADER_TECHNIQUE_COUNT]
    SHADER_TECHNIQUE(basic_noLight),
    SHADER_TECHNIQUE(bulb_light),
    SHADER_TECHNIQUE(bulb_light_with_ball_shadows),
+#ifndef __OPENGLES__
    SHADER_TECHNIQUE(SMAA_ColorEdgeDetection),
    SHADER_TECHNIQUE(SMAA_BlendWeightCalculation),
    SHADER_TECHNIQUE(SMAA_NeighborhoodBlending),
+#endif
    SHADER_TECHNIQUE(stereo),
    SHADER_TECHNIQUE(stereo_Int),
    SHADER_TECHNIQUE(stereo_Flipped_Int),
    SHADER_TECHNIQUE(stereo_anaglyph),
+#ifndef __OPENGLES__
    SHADER_TECHNIQUE(irradiance),
+#endif
 };
 #undef SHADER_TECHNIQUE
 
@@ -355,6 +358,7 @@ Shader::Shader(RenderDevice* renderDevice, const std::string& src1, const std::s
             case SUT_Float4x4: m_stateSizes[uniform] = shaderUniformNames[uniform].count * 16 * sizeof(float); break;
             case SUT_DataBlock: m_stateSizes[uniform] = shaderUniformNames[uniform].count; break;
             case SUT_Sampler: m_stateSizes[uniform] = shaderUniformNames[uniform].count * sizeof(Sampler*); break;
+            default: break;
             }
             m_stateSize += m_stateSizes[uniform];
          }
@@ -904,8 +908,8 @@ void Shader::ApplyUniform(const ShaderUniforms uniformName)
          }
       }
       break;
-   default: assert(false);
 #endif
+   default: assert(false);
    }
 }
 
@@ -1024,7 +1028,12 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
       ReportError(msg, -1, __FILE__, __LINE__);
       free(errorText);
       success = false;
+
+#ifdef __STANDALONE__
+      PLOGI.printf("vertex:\n\n%s\n\n", vertexSource);
+#endif
    }
+#ifndef __STANDALONE__
    //Geometry Shader
    if (success && geometry.length()>0) {
       geometrySource = new GLchar[geometry.length() + 1];
@@ -1051,6 +1060,7 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
          success = false;
       }
    }
+#endif
    //Fragment Shader
    if (success) {
       fragmentSource = new GLchar[fragment.length() + 1];
@@ -1075,6 +1085,10 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
          ReportError(msg, -1, __FILE__, __LINE__);
          free(errorText);
          success = false;
+
+#ifdef __STANDALONE__
+         PLOGI.printf("fragment:\n\n%s\n\n", fragmentSource);
+#endif
       }
    }
 
@@ -1107,9 +1121,15 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
          PLOGE << shaderCodeName << ": Linking Shader failed with: " << errorText;
          free(errorText);
          success = false;
+
+#ifdef __STANDALONE__
+         PLOGI.printf("vertex - %s\n\n", vertexSource);
+         PLOGI.printf("fragment - %s\n\n", fragmentSource);
+#endif
       }
    }
 
+#ifndef __OPENGLES__
    if (GLAD_GL_VERSION_4_3)
    {
       string vs_name = shaderCodeName + ".VS"s;
@@ -1124,6 +1144,7 @@ Shader::ShaderTechnique* Shader::compileGLShader(const ShaderTechniques techniqu
       if (fragmentShader > 0)
          glObjectLabel(GL_SHADER, fragmentShader, (GLsizei) fs_name.length(), fs_name.c_str());
    }
+#endif
 
    if ((WRITE_SHADER_FILES == 2) || ((WRITE_SHADER_FILES == 1) && !success))
    {
@@ -1244,21 +1265,57 @@ string Shader::analyzeFunction(const string& shaderCodeName, const string& _tech
       string param;
       int paramID = 0;
       while (std::getline(params, param, ',')) {
-         functionCode = std::regex_replace(functionCode, std::regex(string("%PARAM").append(std::to_string(paramID)).append("%")), param);
+         string token = "%PARAM" + std::to_string(paramID) + "%";
+         std::size_t pos = 0;
+         while ((pos = functionCode.find(token, pos)) != string::npos) {
+            functionCode.replace(pos, token.length(), param);
+            pos += param.length();
+         }
          paramID++;
       }
    }
    return functionCode;
 }
 
+#ifdef __STANDALONE__
+string Shader::preprocessGLShader(const string& shaderCode) {
+   std::istringstream iss(shaderCode);
+   string header;
+   string extensions;
+   string code;
+
+   for (std::string line; std::getline(iss, line); )
+   {
+      if (line.compare(0, 9, "#version ") == 0) {
+#if defined(__OPENGLES__)
+         header += "#version 300 es\n";
+         header += "#define SHADER_GLES30\n";
+#if defined(__APPLE__) && ((defined(TARGET_OS_IOS) && TARGET_OS_IOS) || (defined(TARGET_OS_TV) && TARGET_OS_TV))
+         header += "#define SHADER_APPLE\n";
+#endif
+#elif defined(__APPLE__)
+         header += "#version 410\n";
+         header += "#define SHADER_GL410\n";
+         header += "#define SHADER_APPLE\n";
+#else
+         header += line + "\n";
+#endif
+         header += "#define SHADER_STANDALONE\n";
+      }
+      else if (line.compare(0, 11, "#extension ") == 0)
+         extensions += line + "\n";
+      else
+         code += line + "\n";
+   }
+
+   return header + extensions + code;
+}
+#endif
+
 bool Shader::Load(const std::string& name, const BYTE* code, unsigned int codeSize)
 {
    m_shaderCodeName = name;
-   char glShaderPath[MAX_PATH];
-   /*DWORD length =*/ GetModuleFileName(nullptr, glShaderPath, MAX_PATH);
-   m_shaderPath = string(glShaderPath);
-   m_shaderPath = m_shaderPath.substr(0, m_shaderPath.find_last_of("\\/"));
-   m_shaderPath.append(PATH_SEPARATOR_CHAR + "shader"s + PATH_SEPARATOR_CHAR);
+   m_shaderPath = g_pvp->m_szMyPath + "shader"s + PATH_SEPARATOR_CHAR;
    PLOGI << "Parsing file " << name;
    robin_hood::unordered_map<string, string> values;
    const bool parsing = parseFile(m_shaderCodeName, m_shaderCodeName, 0, values, "GLOBAL");
@@ -1314,6 +1371,9 @@ bool Shader::Load(const std::string& name, const BYTE* code, unsigned int codeSi
                string vertexShaderCode = vertex;
                vertexShaderCode.append("\n//").append(_technique).append("\n//").append(element[2]).append("\n");
                vertexShaderCode.append(analyzeFunction(m_shaderCodeName, _technique, element[2], values)).append("\0");
+#ifdef __STANDALONE__
+               vertexShaderCode = preprocessGLShader(vertexShaderCode);
+#endif
                string geometryShaderCode;
                if (elem == 5 && element[3].length() > 0)
                {
@@ -1321,9 +1381,15 @@ bool Shader::Load(const std::string& name, const BYTE* code, unsigned int codeSi
                   geometryShaderCode.append("\n//").append(_technique).append("\n//").append(element[3]).append("\n");
                   geometryShaderCode.append(analyzeFunction(m_shaderCodeName, _technique, element[3], values)).append("\0");
                }
+#ifdef __STANDALONE__
+               geometryShaderCode = preprocessGLShader(geometryShaderCode);
+#endif
                string fragmentShaderCode = fragment;
                fragmentShaderCode.append("\n//").append(_technique).append("\n//").append(element[elem - 1]).append("\n");
                fragmentShaderCode.append(analyzeFunction(m_shaderCodeName, _technique, element[elem - 1], values)).append("\0");
+#ifdef __STANDALONE__
+               fragmentShaderCode = preprocessGLShader(fragmentShaderCode);
+#endif
                ShaderTechnique* build = compileGLShader(technique, m_shaderCodeName, element[0] /*.append("_").append(element[1])*/, vertexShaderCode, geometryShaderCode, fragmentShaderCode);
                if (build != nullptr)
                {
