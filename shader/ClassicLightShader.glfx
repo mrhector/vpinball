@@ -37,13 +37,21 @@ uniform sampler2D tex_light_color; // base texture
 layout(location=1) in vec3 vNormal;
 layout(location=2) in vec2 tc;
 
+#ifndef SHADER_STANDALONE
 out vec2 tex0_gs;
 out vec3 worldPos_gs;
 out vec3 normal_gs;
 out float3 tablePos_gs;
+#else
+out vec2 tex0;
+out vec3 worldPos;
+out vec3 normal;
+out float3 tablePos;
+#endif
 
 void main()
 {
+#ifndef SHADER_STANDALONE
     // trafo all into worldview space (as most of the weird trafos happen in view, world is identity so far)
     float3 P = (matWorldView * vec4(vPosition,1.0)).xyz;
     // No need to use a dedicated 'normal' matrix and normalize since the matWorldView is orthonormal (world is identity and view is always orthonormal) and we normalize in fragment shader
@@ -56,6 +64,24 @@ void main()
     gl_ClipDistance[0] = dot(vec4(tablePos_gs, 1.0), clip_plane);
     worldPos_gs = P;
     normal_gs = N;
+#else
+    // trafo all into worldview space (as most of the weird trafos happen in view, world is identity so far)
+    float3 P = (matWorldView * vec4(vPosition,1.0)).xyz;
+    // No need to use a dedicated 'normal' matrix and normalize since the matWorldView is orthonormal (world is identity and view is always orthonormal) and we normalize in fragment shader
+    //float3 N = normalize((matWorldViewInverseTranspose * vNormal).xyz);
+    float3 N = (matWorldView * float4(vNormal, 0.0)).xyz;
+
+    gl_Position = float4(vPosition, 1.0);
+    tex0 = tc;
+    tablePos = vPosition.xyz;
+#ifndef SHADER_GLES30
+    gl_ClipDistance[0] = dot(vec4(tablePos, 1.0), clip_plane);
+#endif
+    worldPos = P;
+    normal = N;
+
+    gl_Position = matWorldViewProj[0]*gl_Position;
+#endif
 }
 
 ////gs_light_main

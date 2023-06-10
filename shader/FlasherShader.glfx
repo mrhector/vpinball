@@ -23,7 +23,11 @@ layout(location=0) in vec3 vPosition;
 layout(location=1) in vec3 vNormal;
 layout(location=2) in vec2 tc;
 
+#ifndef SHADER_STANDALONE
 out vec2 tex0_gs;
+#else
+out vec2 tex0;
+#endif
 
 uniform vec4 clip_plane; // Clip plane defined in table coordinate system
 
@@ -61,11 +65,26 @@ out vec4 color;
 
 ////vs_simple_main
 
+#ifdef SHADER_STANDALONE
+out vec3 tablePos;
+#endif
+
 void main()
 {
+#ifndef SHADER_STANDALONE
    gl_Position = vec4(vPosition, 1.0);
    gl_ClipDistance[0] = dot(vec4(vPosition, 1.0), clip_plane);
    tex0_gs = tc;
+#else
+   gl_Position = vec4(vPosition, 1.0);
+#ifndef SHADER_GLES30
+   gl_ClipDistance[0] = dot(vec4(vPosition, 1.0), clip_plane);
+#endif
+   tex0 = tc;
+
+   gl_Position = (matWorldViewProj[0]*gl_Position);
+   tablePos = gl_Position.xyz;
+#endif
 }
 
 ////gs_simple_main
@@ -79,7 +98,7 @@ void main()
 	gl_ViewportIndex = gl_InvocationID;
 	for (int i=0;i<gl_in.length();i++) {
 		gl_Position = (matWorldViewProj[gl_InvocationID]*gl_in[i].gl_Position);
-        gl_ClipDistance[0] = gl_in[i].gl_ClipDistance[0];
+		gl_ClipDistance[0] = gl_in[i].gl_ClipDistance[0];
 		tablePos = gl_in[i].gl_Position.xyz;
 		tex0 = tex0_gs[i];
 		EmitVertex();

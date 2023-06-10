@@ -98,7 +98,9 @@
 //  ES 3.0    300       "#version 300 es"   = WebGL 2.0
 //----------------------------------------
 
+#ifndef __STANDALONE__
 #include "stdafx.h"
+#endif
 
 #if defined(_MSC_VER) && !defined(_CRT_SECURE_NO_WARNINGS)
 #define _CRT_SECURE_NO_WARNINGS
@@ -130,6 +132,11 @@
 #pragma GCC diagnostic ignored "-Wpragmas"                  // warning: unknown option after '#pragma GCC diagnostic' kind
 #pragma GCC diagnostic ignored "-Wunknown-warning-option"   // warning: unknown warning group 'xxx'
 #pragma GCC diagnostic ignored "-Wcast-function-type"       // warning: cast between incompatible function types (for loader)
+#endif
+
+#ifdef __RK3588__
+#define IMGUI_IMPL_OPENGL_ES3
+#include <glad/gles2.h>
 #endif
 
 // GL includes
@@ -311,12 +318,13 @@ bool    ImGui_ImplOpenGL3_Init(const char* glsl_version)
             bd->UseBufferSubData = true;
 #endif
     */
+#if defined(IMGUI_IMPL_OPENGL_ES3)
+    bd->GlVersion = 300; // Don't raise version as it is intended as a desktop version check for now.
+    bd->GlProfileIsES3 = true;
+#endif
 #elif defined(IMGUI_IMPL_OPENGL_ES2)
     bd->GlVersion = 200; // GLES 2
     bd->GlProfileIsES2 = true;
-#elif defined(IMGUI_IMPL_OPENGL_ES3)
-    bd->GlVersion = 200; // Don't raise version as it is intended as a desktop version check for now.
-    bd->GlProfileIsES3 = true;
 #endif
 
 #ifdef IMGUI_IMPL_OPENGL_DEBUG
