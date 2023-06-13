@@ -4,6 +4,7 @@
 #ifdef SHADER_GLES30
 precision highp float;
 #define noperspective
+#define flat
 #endif
 
 ////DEFINES
@@ -28,7 +29,11 @@ layout(location=2) in vec2 tex0;
 uniform vec4 clip_plane; // Clip plane defined in table coordinate system
 uniform int layer; // Layer being rendered (set to 0 is using layered rendering, that is to say rendering multiple layers using instanced rendering)
 
+#ifndef SHADER_STANDALONE
 out int eye_gs;
+#else
+flat out float eye;
+#endif
 
 ////GEOMETRY
 #extension GL_ARB_viewport_array : enable
@@ -64,18 +69,24 @@ uniform bool  disableLighting;
 out vec4 color;
 
 ////vsBall
+#ifndef SHADER_STANDALONE
 out vec4 normal_t0x_gs;
 out vec4 worldPos_t0y_gs;
+#else
+out vec4 normal_t0x;
+out vec4 worldPos_t0y;
+#endif
 
 void main()
 {
+#ifndef SHADER_STANDALONE
 	// apply spinning and move the ball to it's actual position
 	float4 pos = vec4(vPosition, 1.0);
 	pos.xyz = (orientation * pos).xyz;
 
 	// apply spinning to the normals too to get the sphere mapping effect
 	const float3 nspin = (orientation * vec4(vNormal,0.0)).xyz;
-    // Needs to use a 'normal' matrix, and to normalize since we allow non uniform stretching, therefore matWorldView is not orthonormal
+	// Needs to use a 'normal' matrix, and to normalize since we allow non uniform stretching, therefore matWorldView is not orthonormal
 	const float3 normal = normalize((vec4(nspin, 0.0) * matWorldViewInverse).xyz); // actually: mul(vec4(nspin,0.), matWorldViewInverseTranspose), but optimized to save one matrix
 
 	const float3 p = (matWorldView * pos).xyz;
@@ -84,19 +95,55 @@ void main()
 	normal_t0x_gs = float4(normal,tex0.x);
 	worldPos_t0y_gs = float4(p,tex0.y);
 
-    gl_ClipDistance[0] = dot(vec4(pos.xyz, 1.0), clip_plane);
+	gl_ClipDistance[0] = dot(vec4(pos.xyz, 1.0), clip_plane);
 
-    eye_gs = gl_InstanceID + layer;
+	eye_gs = gl_InstanceID + layer;
+#else
+	// apply spinning and move the ball to it's actual position
+	float4 pos = vec4(vPosition, 1.0);
+	pos.xyz = (orientation * pos).xyz;
+
+	// apply spinning to the normals too to get the sphere mapping effect
+	const float3 nspin = (orientation * vec4(vNormal,0.0)).xyz;
+	// Needs to use a 'normal' matrix, and to normalize since we allow non uniform stretching, therefore matWorldView is not orthonormal
+	const float3 normal = normalize((vec4(nspin, 0.0) * matWorldViewInverse).xyz); // actually: mul(vec4(nspin,0.), matWorldViewInverseTranspose), but optimized to save one matrix
+
+	const float3 p = (matWorldView * pos).xyz;
+
+	gl_Position = pos;
+	normal_t0x = float4(normal,tex0.x);
+	worldPos_t0y = float4(p,tex0.y);
+
+#ifndef SHADER_GLES30
+	gl_ClipDistance[0] = dot(vec4(pos.xyz, 1.0), clip_plane);
+#endif
+
+	eye = float(gl_InstanceID + layer);
+
+	gl_Position = matWorldViewProj[0] * gl_Position;
+#endif
 }
 
 ////vsBallTrail
+#ifndef SHADER_STANDALONE
 out vec3 tex0_alpha_gs;
+#else
+out vec3 tex0_alpha;
+#endif
 
 void main()
 {
+#ifndef SHADER_STANDALONE
 	gl_Position = vec4(vPosition, 1.0);
 	tex0_alpha_gs = vec3(tex0, vNormal.x); //!! abuses normal for now
-    eye_gs = gl_InstanceID + layer;
+	eye_gs = gl_InstanceID + layer;
+#else
+	gl_Position = vec4(vPosition, 1.0);
+	tex0_alpha = vec3(tex0, vNormal.x); //!! abuses normal for now
+	eye = float(gl_InstanceID + layer);
+
+	gl_Position = matWorldViewProj[0] * gl_Position;
+#endif
 }
 
 ////gsBall

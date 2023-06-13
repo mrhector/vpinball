@@ -51,30 +51,6 @@ enum EnumAssignKeys
    eCKeys
 };
 
-#define MAX_TOUCHREGION 8
-
-static constexpr RECT touchregion[MAX_TOUCHREGION] = { //left,top,right,bottom (in % of screen)
-   { 0, 0, 50, 10 },      // ExtraBall
-   { 0, 10, 50, 50 },     // 2nd Left Button
-   { 0, 50, 50, 90 },     // 1st Left Button (Flipper)
-   { 0, 90, 50, 100 },    // Start
-   { 50, 0, 100, 10 },    // Exit
-   { 50, 10, 100, 50 },   // 2nd Right Button
-   { 50, 50, 100, 90 },   // 1st Right Button (Flipper)
-   { 50, 90, 100, 100 }   // Plunger
-};
-
-static EnumAssignKeys touchkeymap[MAX_TOUCHREGION] = {
-   eAddCreditKey, //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-   eLeftMagnaSave,
-   eLeftFlipperKey,
-   eStartGameKey,
-   eExitGame,
-   eRightMagnaSave,
-   eRightFlipperKey,
-   ePlungerKey
-};
-
 static const char* regkey_string[eCKeys] = {
    "LFlipKey",
    "RFlipKey",
@@ -101,6 +77,7 @@ static const char* regkey_string[eCKeys] = {
    "TableDownKey",
    "EscapeKey"
 };
+
 static constexpr int regkey_defdik[eCKeys] = {
    DIK_LSHIFT,
    DIK_RSHIFT,
@@ -108,7 +85,11 @@ static constexpr int regkey_defdik[eCKeys] = {
    DIK_SLASH,
    DIK_SPACE,
    DIK_RETURN,
+#if !defined(__APPLE__) && !defined(__ANDROID__)
    DIK_F11,
+#else
+   DIK_F1,
+#endif
    DIK_O,
    DIK_D,
    DIK_5,
@@ -127,6 +108,45 @@ static constexpr int regkey_defdik[eCKeys] = {
    DIK_NUMPAD2,
    DIK_ESCAPE
 };
+
+#define MAX_TOUCHREGION 11
+
+static constexpr RECT touchregion[MAX_TOUCHREGION] = { //left,top,right,bottom (in % of screen)
+   { 0, 0, 50, 10 },      // Extra Ball
+   { 50, 0, 100, 10 },    // Exit
+
+   { 0, 10, 50, 30 },     // 2nd Left Button
+   { 50, 10, 100, 30 },   // 2nd Right Button
+
+   { 0, 30, 50, 60 },     // Left Nudge Button
+   { 50, 30, 100, 60 },   // Right Nudge Button
+
+   { 0, 60, 30, 90 },     // 1st Left Button (Flipper)
+   { 30, 60, 70, 100 },   // Center Nudge Button
+   { 70, 60, 100, 90 },   // 1st Right Button (Flipper)
+
+   { 0, 90, 30, 100 },    // Start
+   { 70, 90, 100, 100 },  // Plunger
+};
+
+static EnumAssignKeys touchkeymap[MAX_TOUCHREGION] = {
+   eAddCreditKey,
+   eExitGame,
+
+   eLeftMagnaSave,
+   eRightMagnaSave,
+
+   eLeftTiltKey,
+   eRightTiltKey,
+
+   eLeftFlipperKey,
+   eCenterTiltKey,
+   eRightFlipperKey,
+
+   eStartGameKey,
+   ePlungerKey
+};
+
 static constexpr int regkey_idc[eCKeys] = {
    IDC_LEFTFLIPPER,
    IDC_RIGHTFLIPPER,
@@ -672,6 +692,7 @@ public:
 
    bool m_supportsTouch; // Display is a touchscreen?
    bool m_showTouchMessage;
+   bool m_showTouchOverlay;
 
    U32 m_phys_iterations;
 
@@ -743,5 +764,7 @@ public:
    bool m_overwriteBallImages;
    Texture *m_ballImage;
    Texture *m_decalImage;
+#ifndef __STANDALONE__
    DebuggerDialog m_debuggerDialog;
+#endif
 };

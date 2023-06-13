@@ -4,6 +4,7 @@
 #ifdef SHADER_GLES30
 precision highp float;
 #define noperspective
+#define flat
 #endif
 
 ////DEFINES
@@ -25,8 +26,13 @@ layout(location=2) in vec2 tc;
 uniform vec4 clip_plane; // Clip plane defined in table coordinate system
 uniform int layer; // Layer being rendered (set to 0 is using layered rendering, that is to say rendering multiple layers using instanced rendering)
 
+#ifndef SHADER_STANDALONE
 out vec2 tex0_gs;
 out int eye_gs;
+#else
+out vec2 tex0;
+flat out float eye;
+#endif
 
 ////GEOMETRY
 #extension GL_ARB_viewport_array : enable
@@ -59,12 +65,28 @@ out vec4 color;
 
 ////vs_simple_main
 
+#ifdef SHADER_STANDALONE
+out vec3 tablePos;
+#endif
+
 void main()
 {
+#ifndef SHADER_STANDALONE
    gl_Position = vec4(vPosition, 1.0);
    gl_ClipDistance[0] = dot(vec4(vPosition, 1.0), clip_plane);
    tex0_gs = tc;
    eye_gs = gl_InstanceID + layer;
+#else
+   gl_Position = vec4(vPosition, 1.0);
+#ifndef SHADER_GLES30
+   gl_ClipDistance[0] = dot(vec4(vPosition, 1.0), clip_plane);
+#endif
+   tex0 = tc;
+   eye = float(gl_InstanceID + layer);
+
+   gl_Position = matWorldViewProj[0] * gl_Position;
+   tablePos = gl_Position.xyz;
+#endif
 }
 
 ////gs_simple_main

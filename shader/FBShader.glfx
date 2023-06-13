@@ -4,6 +4,7 @@
 #ifdef SHADER_GLES30
 precision highp float;
 #define noperspective
+#define flat
 #endif
 
 ////DEFINES
@@ -25,8 +26,13 @@ layout(location=1) in vec2 tc;
 uniform int layer; // Layer being rendered (set to 0 is using layered rendering, that is to say rendering multiple layers using instanced rendering)
 
 // Pixel perfect coordinates of corresponding sample from source texture (tex_fb_filtered/tex_fb_unfiltered/tex_mirror/...)
+#ifndef SHADER_STANDALONE
 out vec2 tex0_gs;
 out int eye_gs;
+#else
+out vec2 tex0;
+flat out float eye;
+#endif
 
 ////GEOMETRY
 
@@ -219,20 +225,35 @@ float3 FBColorGrade(float3 color)
 ////vs_main_no_trafo
 void main()
 { 
+#ifndef SHADER_STANDALONE
    // OpenGL texture coordinates are centered on texel center (0,0 is first texel center) so no offset. Rendering is bottom up with regards to DirectX though
    gl_Position = float4(vPosition.x, -vPosition.y,0.0,1.0);
    tex0_gs = toScreenSpaceUV(tc, gl_InstanceID + layer);
    eye_gs = gl_InstanceID + layer;
+#else
+   // OpenGL texture coordinates are centered on texel center (0,0 is first texel center) so no offset. Rendering is bottom up with regards to DirectX though
+   gl_Position = float4(vPosition.x, -vPosition.y,0.0,1.0);
+   tex0 = toScreenSpaceUV(tc, gl_InstanceID + layer);
+   eye = float(gl_InstanceID + layer);
+#endif
 }
 
 ////vs_main_no_trafo_subpixel
 void main()
-{ 
+{
+#ifndef SHADER_STANDALONE
    // OpenGL texture coordinates are centered on texel center (0,0 is first texel center) so no offset. Rendering is bottom up with regards to DirectX though
    gl_Position = float4(vPosition.x, -vPosition.y,0.0,1.0);
    // Here we apply an offset to sample in between the samples for filtering
    tex0_gs = toScreenSpaceUV(tc + 0.5 * w_h_height.xy, gl_InstanceID + layer);
    eye_gs = gl_InstanceID + layer;
+#else
+   // OpenGL texture coordinates are centered on texel center (0,0 is first texel center) so no offset. Rendering is bottom up with regards to DirectX though
+   gl_Position = float4(vPosition.x, -vPosition.y,0.0,1.0);
+   // Here we apply an offset to sample in between the samples for filtering
+   tex0 = toScreenSpaceUV(tc + 0.5 * w_h_height.xy, gl_InstanceID + layer);
+   eye = float(gl_InstanceID + layer);
+#endif
 }
 
 
