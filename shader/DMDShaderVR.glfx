@@ -1,11 +1,6 @@
 ////GLOBAL
 #version 410
 
-#ifdef SHADER_GLES30
-precision highp float;
-#define noperspective
-#endif
-
 ////DEFINES
 #include "Helpers.fxh"
 
@@ -21,7 +16,11 @@ uniform mat4 matWorldViewProj[N_EYES];
 ////VERTEX
 uniform int layer; // Layer being rendered (set to 0 is using layered rendering, that is to say rendering multiple layers using instanced rendering)
 
+#ifndef SHADER_STANDALONE
 out int eye_gs;
+#else
+flat out float eye;
+#endif
 
 ////GEOMETRY
 #extension GL_ARB_viewport_array : enable
@@ -47,13 +46,25 @@ layout(location=0) in vec3 vPosition;
 layout(location=1) in vec3 vNormal;
 layout(location=2) in vec2 tc;
 
+#ifndef SHADER_STANDALONE
 out vec2 tex0_gs;
+#else
+out vec2 tex0;
+#endif
 
 void main()
 {
+#ifndef SHADER_STANDALONE
    gl_Position = float4(vPosition.x*backBoxSize.z+backBoxSize.x, 0.0, vPosition.y*backBoxSize.w+backBoxSize.y, 1.0);
    tex0_gs = tc;
    eye_gs = gl_InstanceID + layer;
+#else
+   gl_Position = float4(vPosition.x*backBoxSize.z+backBoxSize.x, 0.0, vPosition.y*backBoxSize.w+backBoxSize.y, 1.0);
+   tex0 = tc;
+   eye = float(gl_InstanceID + layer);
+
+   gl_Position = matWorldViewProj[0] * gl_Position;
+#endif
 }
 
 ////vs_simple_world
@@ -66,9 +77,17 @@ out vec2 tex0_gs;
 
 void main()
 {
+#ifndef SHADER_STANDALONE
    gl_Position = float4(vPosition, 1.0);
    tex0_gs = tc;
    eye_gs = gl_InstanceID + layer;
+#else
+   gl_Position = float4(vPosition, 1.0);
+   tex0 = tc;
+   eye = float(gl_InstanceID + layer);
+
+   gl_Position = matWorldViewProj[0] * gl_Position;
+#endif
 }
 
 ////gs_simple

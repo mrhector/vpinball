@@ -1,11 +1,6 @@
 ////GLOBAL
 #version 450 core
 
-#ifdef SHADER_GLES30
-precision highp float;
-#define noperspective
-#endif
-
 ////DEFINES
 #extension GL_ARB_viewport_array : enable
 #include "Helpers.fxh"
@@ -229,7 +224,7 @@ void main()
 
 ////vs_main_no_trafo_subpixel
 void main()
-{ 
+{
    // OpenGL texture coordinates are centered on texel center (0,0 is first texel center) so no offset. Rendering is bottom up with regards to DirectX though
    VS_EYE();
    VS_POSITION(float4(vPosition.x, -vPosition.y, 0.0, 1.0), float4(vPosition.x, -vPosition.y, 0.0, 1.0));

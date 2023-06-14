@@ -1,11 +1,6 @@
 ////GLOBAL
 #version 410
 
-#ifdef SHADER_GLES30
-precision highp float;
-#define noperspective
-#endif
-
 ////DEFINES
 #include "Helpers.fxh"
 
