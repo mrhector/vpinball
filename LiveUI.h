@@ -23,6 +23,9 @@ private:
    // Interactive Camera Mode
    void UpdateCameraModeUI();
 
+   // Touch UI
+   void UpdateTouchUI();
+
    // Main UI frame & panels
    void UpdateMainUI();
    void UpdateOutlinerUI();
