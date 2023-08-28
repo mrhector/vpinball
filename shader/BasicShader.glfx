@@ -493,7 +493,11 @@ void main() {
    }
 
    BRANCH if (doReflections)
+#ifndef SHADER_GLES30
       color.rgb += compute_reflection(gl_FragCoord.xy * w_h_height.xy, N, eye);
+#else
+      color.rgb += compute_reflection(gl_FragCoord.xy * 0.5 + vec2(0.5), N, eye);
+#endif
 
    BRANCH if (doRefractions)
    {
@@ -553,7 +557,11 @@ void main() {
    }
 
    BRANCH if (doReflections)
+#ifndef SHADER_GLES30
       color.rgb += compute_reflection(gl_FragCoord.xy * w_h_height.xy, N, eye);
+#else
+      color.rgb += compute_reflection(gl_FragCoord.xy * 0.5 + vec2(0.5), N, eye);
+#endif
 
    BRANCH if (doRefractions)
    {
@@ -575,7 +583,11 @@ flat in float eye;
 
 void main() {
    float3 N = normalize(normal);
+#ifndef SHADER_GLES30
    color.rgb = compute_reflection(gl_FragCoord.xy * w_h_height.xy, N, eye);
+#else
+   color.rgb = compute_reflection(gl_FragCoord.xy * 0.5 + vec2(0.5), N, eye);
+#endif
    color.a = 1.0;
    color *= staticColor_Alpha;
 }
@@ -599,7 +611,11 @@ void main() {
    result.a *= cBase_Alpha.a;
 
    float3 N = normalize(normal);
+#ifndef SHADER_GLES30
    result.rgb = compute_reflection(gl_FragCoord.xy * w_h_height.xy, N, eye);
+#else
+   result.rgb = compute_reflection(gl_FragCoord.xy * 0.5 + vec2(0.5), N, eye);
+#endif
 
    BRANCH if (cBase_Alpha.a < 1.0 && result.a < 1.0)
    {
