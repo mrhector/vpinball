@@ -9,6 +9,7 @@ Window::Window(const string& szTitle, int x, int y, int w, int h, int z)
    m_pWindow = nullptr;
    m_id = 0;
    m_pRenderer = nullptr;
+   m_glContext = nullptr;
    m_szTitle = szTitle;
    m_x = x;
    m_y = y;
@@ -23,17 +24,15 @@ Window::Window(const string& szTitle, int x, int y, int w, int h, int z)
 
 bool Window::Init()
 {
-   UINT32 flags = SDL_WINDOW_SKIP_TASKBAR | SDL_WINDOW_BORDERLESS | SDL_WINDOW_HIDDEN | SDL_WINDOW_UTILITY | SDL_WINDOW_ALWAYS_ON_TOP;
+   UINT32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SKIP_TASKBAR | SDL_WINDOW_BORDERLESS | SDL_WINDOW_HIDDEN | SDL_WINDOW_UTILITY | SDL_WINDOW_ALWAYS_ON_TOP;
 
    if (g_pplayer->m_ptable->m_settings.LoadValueWithDefault(Settings::Standalone, "HighDPI"s, true))
       flags |= SDL_WINDOW_ALLOW_HIGHDPI;
 
    m_pWindow = SDL_CreateWindow(m_szTitle.c_str(), m_x, m_y, m_w, m_h, flags);
    if (m_pWindow) {
-      m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, SDL_RENDERER_ACCELERATED);
-      if (m_pRenderer) {
-         SDL_RenderSetLogicalSize(m_pRenderer, m_w, m_h);
-
+      m_glContext = SDL_GL_CreateContext(m_pWindow);
+      if (m_glContext) {
          m_id = SDL_GetWindowID(m_pWindow);
 
          PLOGI.printf("Window initialized: title=%s, id=%d, size=%dx%d, pos=%d,%d, z=%d, visible=%d", m_szTitle.c_str(), m_id, m_w, m_h, m_x, m_y, m_z, m_visible);
@@ -116,17 +115,8 @@ void Window::OnUpdate()
 
 void Window::OnRender()
 {
-   if (m_init && m_visible) {
-      Uint64 now = SDL_GetTicks64();
-      Uint64 timeSinceLastRender = now - m_lastRenderTime;
-
-      if(timeSinceLastRender < m_frameDuration)
-         return;
-
-       Render();
-
-       m_lastRenderTime = now;
-   }
+   if (m_init && m_visible)
+      Render();
 }
 
 }

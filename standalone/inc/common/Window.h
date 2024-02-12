@@ -23,7 +23,6 @@ public:
    virtual void Render() { };
 
 private:
-   SDL_Window* m_pWindow;
    string m_szTitle;
    int m_id;
    int m_x;
@@ -33,10 +32,10 @@ private:
    int m_z;
    bool m_visible;
    bool m_init;
-   const Uint64 m_frameDuration = 16;
-   Uint64 m_lastRenderTime;
 
 protected:
+   SDL_Window* m_pWindow;
+   SDL_GLContext m_glContext;
    SDL_Renderer* m_pRenderer;
 };
 

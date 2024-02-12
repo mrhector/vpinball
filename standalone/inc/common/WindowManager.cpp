@@ -103,13 +103,21 @@ void WindowManager::ProcessUpdates()
 
 void WindowManager::Render()
 {
-   if (!m_init)
+   if (!m_init || !g_pplayer)
+      return;
+
+   Uint64 now = SDL_GetTicks64();
+   Uint64 timeSinceLastRender = now - m_lastRenderTime;
+
+   if(timeSinceLastRender < m_frameDuration)
       return;
 
    for (Window* pWindow: m_windows)
       pWindow->OnRender();
 
    SDL_GL_MakeCurrent(g_pplayer->m_sdl_playfieldHwnd, g_pplayer->m_renderer->m_pd3dPrimaryDevice->m_sdl_context);
+
+   m_lastRenderTime = now;
 }
 
 }

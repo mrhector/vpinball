@@ -24,6 +24,8 @@ private:
    bool m_init;
    bool m_updateLock;
    Uint64 m_lastEventTime;
+   const Uint64 m_frameDuration = 16;
+   Uint64 m_lastRenderTime;
 };
 
 }
